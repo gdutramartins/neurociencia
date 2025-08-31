@@ -15,7 +15,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
             background: white;
             border-radius: 10px;
@@ -43,38 +43,39 @@
         
         .content {
             display: flex;
-            min-height: 600px;
+            min-height: 700px;
         }
         
         #network {
             flex: 1;
-            padding: 20px;
+            padding: 30px;
             border-right: 1px solid #eee;
         }
         
         .sidebar {
-            width: 300px;
+            width: 350px;
             padding: 20px;
             background-color: #f9f9f9;
         }
         
         .node {
             stroke: #fff;
-            stroke-width: 2px;
+            stroke-width: 3px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .node:hover {
             stroke: #ffeb3b;
-            stroke-width: 3px;
-            r: 25;
+            stroke-width: 4px;
+            r: 35;
         }
         
         .node.selected {
             stroke: #ff9800;
-            stroke-width: 3px;
-            filter: drop-shadow(0 0 8px rgba(255, 152, 0, 0.6));
+            stroke-width: 4px;
+            filter: drop-shadow(0 0 10px rgba(255, 152, 0, 0.8));
+            r: 35;
         }
         
         .link {
@@ -92,14 +93,14 @@
         }
         
         .node-label {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             pointer-events: none;
             text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
         }
         
         .link-label {
-            font-size: 10px;
+            font-size: 11px;
             fill: #666;
             font-weight: 500;
             text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
@@ -123,7 +124,9 @@
             padding: 30px;
             border-radius: 10px;
             width: 80%;
-            max-width: 500px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
             position: relative;
         }
@@ -160,16 +163,37 @@
             background: #f8f9fa;
             border-radius: 8px;
             border-left: 4px solid #3498db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .info-section:hover {
+            background: #e3f2fd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .info-section h4 {
             margin: 0 0 10px 0;
             color: #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .info-section h4::after {
+            content: "↗";
+            font-size: 18px;
+            color: #3498db;
         }
         
         .info-section p {
             margin: 0;
             color: #555;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .tooltip {
@@ -222,14 +246,14 @@
         }
         
         .legend-color {
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             margin-right: 10px;
             border-radius: 50%;
         }
         
         .legend-line {
-            width: 30px;
+            width: 35px;
             height: 3px;
             margin-right: 10px;
             background-color: #999;
@@ -294,6 +318,23 @@
             gap: 10px;
             margin-top: 15px;
         }
+        
+        .node-info-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .node-color-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .section-modal {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -312,6 +353,7 @@
                     <p>• Clique em um nó para destacar suas conexões</p>
                     <p>• Passe o mouse sobre um nó para ver informações</p>
                     <p>• Clique com o botão direito para ver opções detalhadas</p>
+                    <p>• Clique em qualquer seção de informações para expandir</p>
                 </div>
                 
                 <h3 id="selected-node-title">Nenhum nó selecionado</h3>
@@ -337,6 +379,18 @@
                         <div class="legend-line"></div>
                         <span>Conexão neural</span>
                     </div>
+                    <div class="legend-item">
+                        <div style="width: 30px; height: 15px; margin-right: 10px; background-color: #2ca02c;"></div>
+                        <span>Conexão aferente (entrada)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div style="width: 30px; height: 15px; margin-right: 10px; background-color: #d62728;"></div>
+                        <span>Conexão eferente (saída)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div style="width: 30px; height: 15px; margin-right: 10px; background-color: #3498db;"></div>
+                        <span>Conexão bidirecional</span>
+                    </div>
                 </div>
                 
                 <div class="controls">
@@ -346,23 +400,44 @@
         </div>
     </div>
     
+    <!-- Modal principal -->
     <div class="modal" id="info-modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h3 class="modal-title" id="modal-title">Detalhes do Nó</h3>
             <div class="modal-body" id="modal-body">
-                <div class="info-section">
-                    <h4>Funções</h4>
-                    <p id="modal-functions">Carregando informações...</p>
-                </div>
-                <div class="info-section">
-                    <h4>Disfunções</h4>
-                    <p id="modal-dysfunctions">Carregando informações...</p>
-                </div>
-                <div class="info-section">
-                    <h4>Detalhes</h4>
-                    <p id="modal-details">Carregando informações...</p>
-                </div>
+                <!-- O conteúdo será preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modais para cada seção -->
+    <div class="modal section-modal" id="functions-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 class="modal-title" id="functions-modal-title">Funções</h3>
+            <div class="modal-body" id="functions-modal-body">
+                <!-- O conteúdo será preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal section-modal" id="dysfunctions-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 class="modal-title" id="dysfunctions-modal-title">Disfunções</h3>
+            <div class="modal-body" id="dysfunctions-modal-body">
+                <!-- O conteúdo será preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal section-modal" id="details-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 class="modal-title" id="details-modal-title">Detalhes</h3>
+            <div class="modal-body" id="details-modal-body">
+                <!-- O conteúdo será preenchido via JavaScript -->
             </div>
         </div>
     </div>
@@ -380,14 +455,14 @@
     <script>
         // Dados dos nós (centros de processamento do sistema nervoso central)
         const nodes = [
-            { id: "medula", name: "Medula Espinhal", x: 500, y: 500, color: "#1f77b4" },
-            { id: "tronco", name: "Tronco Encefálico", x: 500, y: 300, color: "#ff7f0e" },
-            { id: "cerebelo", name: "Cerebelo", x: 300, y: 250, color: "#2ca02c" },
-            { id: "amigdala", name: "Amígdala", x: 650, y: 200, color: "#d62728" },
+            { id: "medula", name: "Medula Espinhal", x: 600, y: 600, color: "#1f77b4" },
+            { id: "tronco", name: "Tronco Encefálico", x: 600, y: 350, color: "#ff7f0e" },
+            { id: "cerebelo", name: "Cerebelo", x: 300, y: 300, color: "#2ca02c" },
+            { id: "amigdala", name: "Amígdala", x: 800, y: 250, color: "#d62728" },
             { id: "nucleos", name: "Núcleos da Base", x: 350, y: 150, color: "#9467bd" },
-            { id: "neocortex", name: "Neocórtex", x: 500, y: 50, color: "#8c564b" },
-            { id: "talamo", name: "Tálamo", x: 600, y: 150, color: "#e377c2" },
-            { id: "hipotalamo", name: "Hipotálamo", x: 700, y: 250, color: "#7f7f7f" }
+            { id: "neocortex", name: "Neocórtex", x: 600, y: 50, color: "#8c564b" },
+            { id: "talamo", name: "Tálamo", x: 750, y: 150, color: "#e377c2" },
+            { id: "hipotalamo", name: "Hipotálamo", x: 850, y: 350, color: "#7f7f7f" }
         ];
 
         // Dados das conexões (relacionamentos entre os nós)
@@ -413,44 +488,44 @@
         // Informações detalhadas sobre cada nó
         const nodeInfo = {
             "medula": {
-                functions: "Condução de impulsos nervosos, reflexos simples, controle de funções autonômicas.",
-                dysfunctions: "Paralisia, perda de sensibilidade, disfunções autonômicas.",
-                details: "Localizada na coluna vertebral, é responsável pela comunicação entre o cérebro e o corpo."
+                functions: "A medula espinhal é responsável pela condução de impulsos nervosos entre o cérebro e o resto do corpo. Ela também controla reflexos simples e funções autonômicas como sudorese, dilatação de vasos sanguíneos e controle da bexiga. Atua como um centro de processamento para informações sensoriais e motoras, permitindo respostas rápidas a estímulos sem a necessidade de envolvimento cerebral.",
+                dysfunctions: "Lesões na medula espinhal podem resultar em paralisia, perda de sensibilidade e disfunções autonômicas. Dependendo do nível da lesão, pode haver paraplegia (paralisia dos membros inferiores) ou tetraplegia (paralisia de todos os quatro membros). Outras disfunções incluem incontinência urinária e fecal, disfunção sexual, espasticidade muscular e dor neuropática. Doenças como esclerose múltipla e poliomielite também podem afetar a medula espinhal.",
+                details: "A medula espinhal é uma estrutura cilíndrica alongada que se estende desde o forame magno do occipital até a primeira ou segunda vértebra lombar. É envolta pelas meninges (dura-máter, aracnoide e pia-máter) e protegida pela coluna vertebral. É dividida em 31 segmentos: 8 cervicais, 12 torácicos, 5 lombares, 5 sacrais e 1 coccígeo. Cada segmento dá origem a um par de nervos espinhais que se conectam com diferentes partes do corpo."
             },
             "tronco": {
-                functions: "Controle de funções vitais (respiração, batimento cardíaco), alerta, consciência.",
-                dysfunctions: "Coma, distúrbios do sono, problemas respiratórios ou cardíacos.",
-                details: "Conecta o cérebro à medula espinhal e contém núcleos de nervos cranianos."
+                functions: "O tronco encefálico controla funções vitais como respiração, frequência cardíaca e pressão arterial. Também regula o ciclo sono-vigília, o alerta e a consciência. Serve como via de passagem para todas as fibras nervosas que conectam o cérebro à medula espinhal e contém os núcleos da maioria dos nervos cranianos. Participa do controle de reflexos como o vômito, tosse, espirro e deglutição.",
+                dysfunctions: "Lesões no tronco encefálico podem causar coma, distúrbios do sono, problemas respiratórios ou cardíacos. A síndrome de locked-in resulta de danos à ponte, onde o paciente está consciente mas incapaz de se mover ou falar. Outras condições incluem acidente vascular cerebral (AVC) do tronco encefálico, tumores como gliomas, e doenças neurodegenerativas como esclerose lateral amiotrófica (ELA).",
+                details: "O tronco encefálico localiza-se na base do cérebro, conectando-o com a medula espinhal. É composto por três estruturas principais: mesencéfalo, ponte e bulbo (medula oblonga). Contém numerosos núcleos de nervos cranianos (III a XII) e centros vitais como o centro respiratório e cardiovascular. A formação reticular, uma rede neural difusa no tronco encefálico, é crucial para a regulação da consciência e do estado de alerta."
             },
             "cerebelo": {
-                functions: "Coordenação motora, equilibro, tônus muscular, aprendizagem motora.",
-                dysfunctions: "Ataxia, tremores, falta de coordenação, equilíbrio prejudicado.",
-                details: "Localizado na parte posterior do crânio, contém mais neurônios que todo o resto do cérebro."
+                functions: "O cerebelo é fundamental para a coordenação motora, equilíbrio, tônus muscular e aprendizagem motora. Ajusta e refine os movimentos voluntários, garantindo precisão e timing adequado. Participa do controle postural e do equilíbrio, integrando informações vestibulares, proprioceptivas e visuais. Também está envolvido em funções cognitivas como atenção, processamento linguístico e regulação emocional.",
+                dysfunctions: "Disfunções cerebelares causam ataxia (falta de coordenação muscular), tremores, nistagmo (movimentos oculares involuntários), disartria (dificuldade na articulação da fala) e hipotonia (tônus muscular reduzido). Condições como ataxia de Friedreich, malformação de Chiari, tumores cerebelares e degeneração alcoólica podem afetar o cerebelo. Lesões podem resultar em síndromes como a síndrome do vermis ou síndrome hemisférica cerebelar.",
+                details: "O cerebelo localiza-se na fossa craniana posterior, abaixo do lobo occipital do cérebro. É dividido em dois hemisférios conectados pelo vermis. Sua estrutura inclui um córtex altamente pregueado com inúmeras camadas celulares. Contém mais da metade de todos os neurônios do encéfalo, apesar de representar apenas 10% do volume encefálico. Recebe input de quase todos os sistemas sensoriais e projeta para várias áreas motoras."
             },
             "amigdala": {
-                functions: "Processamento de emoções, especialmente medo e prazer, memória emocional.",
-                dysfunctions: "Ansiedade, transtorno de estresse pós-traumático, dificuldades com memória emocional.",
-                details: "Conjunto de núcleos em forma de amêndoa localizados no lobo temporal."
+                functions: "A amígdala processa emoções, especialmente medo e prazer, e está envolvida na formação de memórias emocionais. Desempenha papel crucial na resposta a estímulos ameaçadores e na modulação de respostas autonômicas e endócrinas a estímulos emocionais. Participa do reconhecimento de expressões faciais emocionais e da tomada de decisões baseadas em emoções. Também está envolvida no comportamento sexual e agressivo.",
+                dysfunctions: "Disfunções na amígdala estão associadas a ansiedade, transtorno de estresse pós-traumático, fobias, depressão e dificuldades com memória emocional. A síndrome de Urbach-Wiethe causa calcificação bilateral da amígdala, resultando em diminuição do reconhecimento do medo. Autismo e esquizofrenia também apresentam alterações na função amigdaliana. Hiperatividade amigdaliana está correlacionada com transtornos de ansiedade.",
+                details: "A amígdala é um conjunto de núcleos em forma de amêndoa localizados no lobo temporal medial, anterior ao hipocampo. Faz parte do sistema límbico e é dividida em vários subnúcleos com funções distintas. Recebe informações de múltiplos sistemas sensoriais e se conecta com diversas regiões cerebrais incluindo hipotálamo, tronco encefálico e córtex pré-frontal. Desempenha papel central no processamento emocional e na modulação de memórias."
             },
             "nucleos": {
-                functions: "Controle de movimentos voluntários, aprendizagem de hábitos, cognição.",
-                dysfunctions: "Doença de Parkinson, coreia de Huntington, distonia.",
-                details: "Conjunto de núcleos subcorticais envolvidos principalmente no controle motor."
+                functions: "Os núcleos da base controlam movimentos voluntários, aprendizagem de hábitos, cognição e emoções. Modulam a atividade cortical para produzir movimentos suaves e coordenados. Participam do planejamento e iniciação de movimentos, controle postural e aprendizagem procedural. Também estão envolvidos em funções cognitivas como atenção, tomada de decisões e processamento de recompensas.",
+                dysfunctions: "Doenças dos núcleos da base incluem doença de Parkinson (degeneração da substância nigra), coreia de Huntington (degeneração progressiva), distonia (contrações musculares sustentadas), hemibalismo (movimentos violentos involuntários) e síndrome de Tourette (tiques motores e vocais). Estas condições resultam em distúrbios do movimento como tremor, rigidez, acinesia e discinesia.",
+                details: "Os núcleos da base são um grupo de estruturas subcorticais interconectadas que incluem o corpo estriado (putâmen e núcleo caudado), globo pálido, núcleo subtalâmico e substância nigra. Formam circuitos complexos com o córtex cerebral e o tálamo. Utilizam principalmente o neurotransmissor GABA, com modulação dopaminérgica da substância nigra. São cruciais para o controle motor, aprendizagem de hábitos e processamento de recompensas."
             },
             "neocortex": {
-                functions: "Pensamento consciente, percepção sensorial, linguagem, raciocínio.",
-                dysfunctions: "Afasia, agnosia, apraxia, demências, epilepsia.",
-                details: "Camada externa do cérebro, dividida em lobos frontais, parietais, temporais e occipitais."
+                functions: "O neocórtex é responsável pelo pensamento consciente, percepção sensorial, linguagem, raciocínio e tomada de decisões. Processa informações sensoriais de todos os sentidos e inicia movimentos voluntários. É o substrato neural da consciência, memória explícita, atenção e funções executivas. Áreas especializadas incluem o córtex visual (visão), auditivo (audição), somatossensorial (tato) e motor (movimento).",
+                dysfunctions: "Lesões corticais podem causar afasia (distúrbios de linguagem), agnosia (incapacidade de reconhecer objetos), apraxia (incapacidade de realizar movimentos voluntários), demências (como Alzheimer), epilepsia e distúrbios psiquiátricos. Acidentes vasculares cerebrais, traumatismos cranianos, tumores e infecções podem danificar áreas específicas do córtex, resultando em deficits neurológicos específicos.",
+                details: "O neocórtex é a camada externa do cérebro, com espessura de 2-4mm e altamente pregueada formando giros e sulcos. É dividido em lobos frontais (funções executivas), parietais (integração sensorial), temporais (audição e memória) e occipitais (visão). Possui seis camadas histológicas distintas com diferentes tipos neuronais. É exclusivo de mamíferos e mais desenvolvido em primatas e humanos, onde ocupa cerca de 76% do volume cerebral."
             },
             "talamo": {
-                functions: "Estação de retransmissão sensorial, regulação da consciência e alerta.",
-                dysfunctions: "Distúrbios sensoriais, problemas de atenção, distúrbios do sono.",
-                details: "Estrutura localizada no diencéfalo que processa e retransmite informações sensoriais."
+                functions: "O tálamo atua como estação de retransmissão sensorial, processando e direcionando informações sensoriais para o córtex cerebral apropriado. Regula a consciência, alerta e sono através de suas conexões com a formação reticular. Participa da integração sensitivo-motora e modulação da atividade cortical. Também está envolvido na regulação de emoções e memória através de suas conexões com o sistema límbico.",
+                dysfunctions: "Distúrbios talâmicos podem causar problemas sensoriais como perda ou distorção da sensibilidade, dor talâmica (síndrome de Dejerine-Roussy), problemas de atenção, distúrbios do sono e movimentos anormais. Lesões vasculares (como infartos talâmicos) são comuns devido à irrigação arterial vulnerável. Tumores, esclerose múltipla e degeneração também podem afetar o tálamo.",
+                details: "O tálamo é uma grande estrutura oval localizada no diencéfalo, acima do tronco encefálico. É composto por vários núcleos especializados que processam diferentes modalidades sensoriais (excepto olfato). Cada núcleo talâmico se conecta com áreas corticais específicas, formando circuitos recíprocos. Atua como filtro sensorial, regulando quais informações alcançam a consciência. Também participa da regulação do estado de alerta e consciência."
             },
             "hipotalamo": {
-                functions: "Regulação da homeostase, temperatura, fome, sede, ritmo circadiano.",
-                dysfunctions: "Distúrbios alimentares, desregulação térmica, distúrbios do sono.",
-                details: "Pequena região na base do cérebro que liga o sistema nervoso ao sistema endócrino."
+                functions: "O hipotálamo regula a homeostase corporal, incluindo temperatura, fome, sede, balanço hídrico e ritmo circadiano. Controla o sistema endócrino através da hipófise, regulando hormônios e funções como crescimento, metabolismo e reprodução. Modula respostas autonômicas e está envolvido em emoções como raiva e medo. Integra informações viscerais, autonômicas e endócrinas para manter a constância do ambiente interno.",
+                dysfunctions: "Distúrbios hipotalâmicos podem causar desregulação térmica (hipertermia ou hipotermia), distúrbios alimentares (hiperfagia ou anorexia), diabetes insípido (deficiência de ADH), distúrbios do sono, puberdade precoce ou tardia e alterações emocionais. Tumores como craniofaringioma, hamartomas e gliomas podem comprimir o hipotálamo. Lesões podem resultar em distúrbios autonômicos e endócrinos graves.",
+                details: "O hipotálamo é uma pequena região na base do cérebro, abaixo do tálamo e acima da hipófise. Pesando apenas 4g, é composto por vários núcleos com funções especializadas. Conecta o sistema nervoso ao sistema endócrino através do eixo hipotálamo-hipófise. Recebe input de várias regiões cerebrais e periféricas, integrando informações sobre estado corporal, ambiente externo e ritmos circadianos. É crucial para a sobrevivência e comportamento adaptativo."
             }
         };
 
@@ -469,7 +544,7 @@
             .enter().append('marker')
             .attr('id', d => d)
             .attr('viewBox', '0 -5 10 10')
-            .attr('refX', 32)
+            .attr('refX', 38)  // Ajustado para que a seta termine na borda do nó
             .attr('refY', 0)
             .attr('markerWidth', 8)
             .attr('markerHeight', 8)
@@ -498,20 +573,16 @@
             .attr('class', 'link-label')
             .text(d => d.label);
         
-        // Desenhar os nós
+        // Desenhar os nós (agora maiores)
         const node = svg.append('g')
             .selectAll('circle')
             .data(nodes)
             .enter().append('circle')
             .attr('class', 'node')
-            .attr('r', 20)
+            .attr('r', 30)  // Aumentado de 20 para 30
             .attr('cx', d => d.x)
             .attr('cy', d => d.y)
-            .attr('fill', d => d.color)
-            .call(d3.drag()
-                .on('start', dragStarted)
-                .on('drag', dragged)
-                .on('end', dragEnded));
+            .attr('fill', d => d.color);
         
         // Adicionar rótulos aos nós
         const label = svg.append('g')
@@ -521,28 +592,57 @@
             .attr('class', 'node-label')
             .attr('x', d => d.x)
             .attr('y', d => d.y)
-            .attr('dy', -25)
+            .attr('dy', -35)  // Ajustado para acomodar o nó maior
             .attr('text-anchor', 'middle')
             .text(d => d.name);
+        
+        // Calcular posição da seta para terminar na borda do nó
+        function calculateArrowPosition(source, target, radius) {
+            const dx = target.x - source.x;
+            const dy = target.y - source.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            const ratio = (distance - radius) / distance;
+            
+            return {
+                x: source.x + dx * ratio,
+                y: source.y + dy * ratio
+            };
+        }
         
         // Atualizar a posição dos elementos
         function update() {
             link
                 .attr('x1', d => {
                     const sourceNode = nodes.find(n => n.id === d.source);
-                    return sourceNode ? sourceNode.x : 0;
+                    const targetNode = nodes.find(n => n.id === d.target);
+                    if (!sourceNode || !targetNode) return 0;
+                    
+                    const startPoint = calculateArrowPosition(targetNode, sourceNode, 30);
+                    return startPoint.x;
                 })
                 .attr('y1', d => {
                     const sourceNode = nodes.find(n => n.id === d.source);
-                    return sourceNode ? sourceNode.y : 0;
+                    const targetNode = nodes.find(n => n.id === d.target);
+                    if (!sourceNode || !targetNode) return 0;
+                    
+                    const startPoint = calculateArrowPosition(targetNode, sourceNode, 30);
+                    return startPoint.y;
                 })
                 .attr('x2', d => {
+                    const sourceNode = nodes.find(n => n.id === d.source);
                     const targetNode = nodes.find(n => n.id === d.target);
-                    return targetNode ? targetNode.x : 0;
+                    if (!sourceNode || !targetNode) return 0;
+                    
+                    const endPoint = calculateArrowPosition(sourceNode, targetNode, 30);
+                    return endPoint.x;
                 })
                 .attr('y2', d => {
+                    const sourceNode = nodes.find(n => n.id === d.source);
                     const targetNode = nodes.find(n => n.id === d.target);
-                    return targetNode ? targetNode.y : 0;
+                    if (!sourceNode || !targetNode) return 0;
+                    
+                    const endPoint = calculateArrowPosition(sourceNode, targetNode, 30);
+                    return endPoint.y;
                 });
             
             // Atualizar posição dos rótulos das ligações
@@ -569,25 +669,27 @@
         
         update();
         
-        // Funções de arrastar
-        function dragStarted(event, d) {
-            d3.select(this).raise().attr('stroke', 'black');
-        }
-        
-        function dragged(event, d) {
-            d.x = event.x;
-            d.y = event.y;
-            update();
-        }
-        
-        function dragEnded(event, d) {
-            d3.select(this).attr('stroke', null);
-        }
-        
         // Interatividade
         const tooltip = d3.select('#tooltip');
-        const modal = document.getElementById('info-modal');
+        const mainModal = document.getElementById('info-modal');
+        const functionsModal = document.getElementById('functions-modal');
+        const dysfunctionsModal = document.getElementById('dysfunctions-modal');
+        const detailsModal = document.getElementById('details-modal');
         const contextMenu = document.getElementById('context-menu');
+        
+        // Função para mostrar um modal de seção
+        function showSectionModal(modal, title, content) {
+            document.getElementById(`${modal.id}-title`).textContent = title;
+            document.getElementById(`${modal.id}-body`).innerHTML = `<p>${content}</p>`;
+            modal.style.display = 'flex';
+        }
+        
+        // Fechar todos os modais
+        function closeAllModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
         
         // Eventos de mouse para os nós
         node.on('mouseover', function(event, d) {
@@ -599,7 +701,7 @@
                 .style('top', (event.pageY - 25) + 'px');
             
             // Destacar o nó
-            d3.select(this).attr('r', 25);
+            d3.select(this).attr('r', 35);
         })
         .on('mouseout', function(event, d) {
             // Esconder tooltip
@@ -607,7 +709,7 @@
             
             // Voltar ao tamanho normal se não estiver selecionado
             if (!d3.select(this).classed('selected')) {
-                d3.select(this).attr('r', 20);
+                d3.select(this).attr('r', 30);
             }
         })
         .on('click', function(event, d) {
@@ -626,19 +728,41 @@
             // Atualizar informações na sidebar
             document.getElementById('selected-node-title').textContent = d.name;
             document.getElementById('node-info').innerHTML = `
-                <div class="info-section">
+                <div class="node-info-header">
+                    <div class="node-color-indicator" style="background-color: ${d.color};"></div>
+                    <h3>${d.name}</h3>
+                </div>
+                <div class="info-section" data-node="${d.id}" data-section="functions">
                     <h4>Funções</h4>
                     <p>${nodeInfo[d.id].functions}</p>
                 </div>
-                <div class="info-section">
+                <div class="info-section" data-node="${d.id}" data-section="dysfunctions">
                     <h4>Disfunções</h4>
                     <p>${nodeInfo[d.id].dysfunctions}</p>
                 </div>
-                <div class="info-section">
+                <div class="info-section" data-node="${d.id}" data-section="details">
                     <h4>Detalhes</h4>
                     <p>${nodeInfo[d.id].details}</p>
                 </div>
             `;
+            
+            // Adicionar event listeners para as seções
+            document.querySelectorAll('.info-section').forEach(section => {
+                section.addEventListener('click', function() {
+                    const nodeId = this.getAttribute('data-node');
+                    const sectionType = this.getAttribute('data-section');
+                    const title = `${nodes.find(n => n.id === nodeId).name} - ${this.querySelector('h4').textContent}`;
+                    const content = nodeInfo[nodeId][sectionType];
+                    
+                    if (sectionType === 'functions') {
+                        showSectionModal(functionsModal, title, content);
+                    } else if (sectionType === 'dysfunctions') {
+                        showSectionModal(dysfunctionsModal, title, content);
+                    } else if (sectionType === 'details') {
+                        showSectionModal(detailsModal, title, content);
+                    }
+                });
+            });
             
             event.stopPropagation();
         })
@@ -654,6 +778,21 @@
             contextMenu.setAttribute('data-node', d.id);
         });
         
+        // Adicionar capacidade de arrastar aos nós
+        node.call(d3.drag()
+            .on('start', function(event, d) {
+                d3.select(this).raise().attr('stroke', 'black');
+            })
+            .on('drag', function(event, d) {
+                d.x = event.x;
+                d.y = event.y;
+                update();
+            })
+            .on('end', function(event, d) {
+                d3.select(this).attr('stroke', null);
+            })
+        );
+        
         // Fechar o menu de contexto ao clicar em outro lugar
         document.addEventListener('click', () => {
             contextMenu.style.display = 'none';
@@ -664,27 +803,31 @@
             item.addEventListener('click', function() {
                 const option = this.getAttribute('data-option');
                 const nodeId = contextMenu.getAttribute('data-node');
+                const nodeData = nodes.find(n => n.id === nodeId);
                 
-                // Preencher e mostrar o modal
-                document.getElementById('modal-title').textContent = nodes.find(n => n.id === nodeId).name;
-                document.getElementById('modal-functions').textContent = nodeInfo[nodeId].functions;
-                document.getElementById('modal-dysfunctions').textContent = nodeInfo[nodeId].dysfunctions;
-                document.getElementById('modal-details').textContent = nodeInfo[nodeId].details;
+                if (option === 'functions') {
+                    showSectionModal(functionsModal, `${nodeData.name} - Funções`, nodeInfo[nodeId].functions);
+                } else if (option === 'dysfunctions') {
+                    showSectionModal(dysfunctionsModal, `${nodeData.name} - Disfunções`, nodeInfo[nodeId].dysfunctions);
+                } else if (option === 'details') {
+                    showSectionModal(detailsModal, `${nodeData.name} - Detalhes`, nodeInfo[nodeId].details);
+                }
                 
-                modal.style.display = 'flex';
                 contextMenu.style.display = 'none';
             });
         });
         
-        // Fechar o modal
-        document.querySelector('.close-button').addEventListener('click', () => {
-            modal.style.display = 'none';
+        // Fechar os modais
+        document.querySelectorAll('.close-button').forEach(button => {
+            button.addEventListener('click', () => {
+                closeAllModals();
+            });
         });
         
-        // Fechar o modal ao clicar fora dele
+        // Fechar os modais ao clicar fora deles
         window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
+            if (event.target.classList.contains('modal')) {
+                closeAllModals();
             }
         });
         
@@ -692,8 +835,8 @@
         document.getElementById('reset-btn').addEventListener('click', () => {
             // Reposicionar nós
             nodes.forEach((node, i) => {
-                node.x = [500, 500, 300, 650, 350, 500, 600, 700][i];
-                node.y = [500, 300, 250, 200, 150, 50, 150, 250][i];
+                node.x = [600, 600, 300, 800, 350, 600, 750, 850][i];
+                node.y = [600, 350, 300, 250, 150, 50, 150, 350][i];
             });
             
             // Remover seleções
