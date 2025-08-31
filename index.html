@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Nervoso Central - Visualização Interativa</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: flex;
+            min-height: 600px;
+        }
+        
+        #network {
+            flex: 1;
+            padding: 20px;
+            border-right: 1px solid #eee;
+        }
+        
+        .sidebar {
+            width: 300px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .node {
+            stroke: #fff;
+            stroke-width: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .node:hover {
+            stroke: #ffeb3b;
+            stroke-width: 3px;
+            r: 25;
+        }
+        
+        .node.selected {
+            stroke: #ff9800;
+            stroke-width: 3px;
+            filter: drop-shadow(0 0 8px rgba(255, 152, 0, 0.6));
+        }
+        
+        .link {
+            stroke: #999;
+            stroke-opacity: 0.8;
+            stroke-width: 2px;
+            fill: none;
+        }
+        
+        .link.highlighted {
+            stroke: #e74c3c;
+            stroke-width: 3px;
+            stroke-opacity: 1;
+            filter: drop-shadow(0 0 4px rgba(231, 76, 60, 0.5));
+        }
+        
+        .node-label {
+            font-size: 12px;
+            font-weight: bold;
+            pointer-events: none;
+            text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+        }
+        
+        .link-label {
+            font-size: 10px;
+            fill: #666;
+            font-weight: 500;
+            text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+            transition: color 0.3s;
+        }
+        
+        .close-button:hover {
+            color: #333;
+        }
+        
+        .modal-title {
+            color: #2c3e50;
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .modal-body {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        
+        .info-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .info-section h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .info-section p {
+            margin: 0;
+            color: #555;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 14px;
+            z-index: 999;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .instructions {
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #1565c0;
+        }
+        
+        .legend {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 16px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+        
+        .legend-line {
+            width: 30px;
+            height: 3px;
+            margin-right: 10px;
+            background-color: #999;
+        }
+        
+        .context-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            width: 180px;
+        }
+        
+        .context-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .context-menu li {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .context-menu li:last-child {
+            border-bottom: none;
+        }
+        
+        .context-menu li:hover {
+            background-color: #f0f8ff;
+            color: #2196f3;
+        }
+        
+        #node-info {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema Nervoso Central - Visualização Interativa</h1>
+            <p class="subtitle">Explore os principais centros de processamento e suas conexões</p>
+        </header>
+        
+        <div class="content">
+            <div id="network"></div>
+            
+            <div class="sidebar">
+                <div class="instructions">
+                    <h3>Como usar</h3>
+                    <p>• Clique em um nó para destacar suas conexões</p>
+                    <p>• Passe o mouse sobre um nó para ver informações</p>
+                    <p>• Clique com o botão direito para ver opções detalhadas</p>
+                </div>
+                
+                <h3 id="selected-node-title">Nenhum nó selecionado</h3>
+                <div id="node-info">
+                    <p>Selecione um nó para ver informações detalhadas.</p>
+                </div>
+                
+                <div class="legend">
+                    <h3>Legenda</h3>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #1f77b4;"></div>
+                        <span>Medula Espinhal</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #ff7f0e;"></div>
+                        <span>Tronco Encefálico</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: #2ca02c;"></div>
+                        <span>Cerebelo</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-line"></div>
+                        <span>Conexão neural</span>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn" id="reset-btn">Redefinir Visualização</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="info-modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 class="modal-title" id="modal-title">Detalhes do Nó</h3>
+            <div class="modal-body" id="modal-body">
+                <div class="info-section">
+                    <h4>Funções</h4>
+                    <p id="modal-functions">Carregando informações...</p>
+                </div>
+                <div class="info-section">
+                    <h4>Disfunções</h4>
+                    <p id="modal-dysfunctions">Carregando informações...</p>
+                </div>
+                <div class="info-section">
+                    <h4>Detalhes</h4>
+                    <p id="modal-details">Carregando informações...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+    
+    <div class="context-menu" id="context-menu">
+        <ul>
+            <li data-option="functions">Ver Funções</li>
+            <li data-option="dysfunctions">Ver Disfunções</li>
+            <li data-option="details">Ver Detalhes</li>
+        </ul>
+    </div>
+
+    <script>
+        // Dados dos nós (centros de processamento do sistema nervoso central)
+        const nodes = [
+            { id: "medula", name: "Medula Espinhal", x: 500, y: 500, color: "#1f77b4" },
+            { id: "tronco", name: "Tronco Encefálico", x: 500, y: 300, color: "#ff7f0e" },
+            { id: "cerebelo", name: "Cerebelo", x: 300, y: 250, color: "#2ca02c" },
+            { id: "amigdala", name: "Amígdala", x: 650, y: 200, color: "#d62728" },
+            { id: "nucleos", name: "Núcleos da Base", x: 350, y: 150, color: "#9467bd" },
+            { id: "neocortex", name: "Neocórtex", x: 500, y: 50, color: "#8c564b" },
+            { id: "talamo", name: "Tálamo", x: 600, y: 150, color: "#e377c2" },
+            { id: "hipotalamo", name: "Hipotálamo", x: 700, y: 250, color: "#7f7f7f" }
+        ];
+
+        // Dados das conexões (relacionamentos entre os nós)
+        const links = [
+            { source: "medula", target: "tronco", type: "bidirectional", label: "Via espinhal" },
+            { source: "tronco", target: "cerebelo", type: "bidirectional", label: "Pedúnculos" },
+            { source: "tronco", target: "amigdala", type: "afferent", label: "Via aferente" },
+            { source: "tronco", target: "talamo", type: "afferent", label: "Via sensorial" },
+            { source: "tronco", target: "hipotalamo", type: "efferent", label: "Via autonômica" },
+            { source: "cerebelo", target: "nucleos", type: "efferent", label: "Via motora" },
+            { source: "amigdala", target: "hipotalamo", type: "efferent", label: "Resposta emocional" },
+            { source: "nucleos", target: "talamo", type: "efferent", label: "Via talâmica" },
+            { source: "neocortex", target: "talamo", type: "bidirectional", label: "Radições talâmicas" },
+            { source: "neocortex", target: "nucleos", type: "efferent", label: "Via córtico-nuclear" },
+            { source: "neocortex", target: "amigdala", type: "bidirectional", label: "Conexão límbica" },
+            { source: "talamo", target: "hipotalamo", type: "bidirectional", label: "Via diencefálica" },
+            { source: "talamo", target: "neocortex", type: "afferent", label: "Projeções" },
+            { source: "hipotalamo", target: "tronco", type: "efferent", label: "Resposta autonômica" },
+            { source: "medula", target: "cerebelo", type: "afferent", label: "Via espinocerebelar" },
+            { source: "talamo", target: "cerebelo", type: "efferent", label: "Via cerebelotalâmica" }
+        ];
+
+        // Informações detalhadas sobre cada nó
+        const nodeInfo = {
+            "medula": {
+                functions: "Condução de impulsos nervosos, reflexos simples, controle de funções autonômicas.",
+                dysfunctions: "Paralisia, perda de sensibilidade, disfunções autonômicas.",
+                details: "Localizada na coluna vertebral, é responsável pela comunicação entre o cérebro e o corpo."
+            },
+            "tronco": {
+                functions: "Controle de funções vitais (respiração, batimento cardíaco), alerta, consciência.",
+                dysfunctions: "Coma, distúrbios do sono, problemas respiratórios ou cardíacos.",
+                details: "Conecta o cérebro à medula espinhal e contém núcleos de nervos cranianos."
+            },
+            "cerebelo": {
+                functions: "Coordenação motora, equilibro, tônus muscular, aprendizagem motora.",
+                dysfunctions: "Ataxia, tremores, falta de coordenação, equilíbrio prejudicado.",
+                details: "Localizado na parte posterior do crânio, contém mais neurônios que todo o resto do cérebro."
+            },
+            "amigdala": {
+                functions: "Processamento de emoções, especialmente medo e prazer, memória emocional.",
+                dysfunctions: "Ansiedade, transtorno de estresse pós-traumático, dificuldades com memória emocional.",
+                details: "Conjunto de núcleos em forma de amêndoa localizados no lobo temporal."
+            },
+            "nucleos": {
+                functions: "Controle de movimentos voluntários, aprendizagem de hábitos, cognição.",
+                dysfunctions: "Doença de Parkinson, coreia de Huntington, distonia.",
+                details: "Conjunto de núcleos subcorticais envolvidos principalmente no controle motor."
+            },
+            "neocortex": {
+                functions: "Pensamento consciente, percepção sensorial, linguagem, raciocínio.",
+                dysfunctions: "Afasia, agnosia, apraxia, demências, epilepsia.",
+                details: "Camada externa do cérebro, dividida em lobos frontais, parietais, temporais e occipitais."
+            },
+            "talamo": {
+                functions: "Estação de retransmissão sensorial, regulação da consciência e alerta.",
+                dysfunctions: "Distúrbios sensoriais, problemas de atenção, distúrbios do sono.",
+                details: "Estrutura localizada no diencéfalo que processa e retransmite informações sensoriais."
+            },
+            "hipotalamo": {
+                functions: "Regulação da homeostase, temperatura, fome, sede, ritmo circadiano.",
+                dysfunctions: "Distúrbios alimentares, desregulação térmica, distúrbios do sono.",
+                details: "Pequena região na base do cérebro que liga o sistema nervoso ao sistema endócrino."
+            }
+        };
+
+        // Configuração do SVG e da visualização
+        const width = document.getElementById('network').clientWidth;
+        const height = window.innerHeight - document.querySelector('header').clientHeight - 40;
+        
+        const svg = d3.select('#network')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+        
+        // Definições para marcações de setas
+        svg.append('defs').selectAll('marker')
+            .data(['afferent', 'efferent', 'bidirectional'])
+            .enter().append('marker')
+            .attr('id', d => d)
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 32)
+            .attr('refY', 0)
+            .attr('markerWidth', 8)
+            .attr('markerHeight', 8)
+            .attr('orient', 'auto')
+            .append('path')
+            .attr('d', 'M0,-5L10,0L0,5')
+            .attr('fill', d => {
+                if (d === 'afferent') return '#2ca02c';
+                if (d === 'efferent') return '#d62728';
+                return '#3498db';
+            });
+        
+        // Desenhar as ligações
+        const link = svg.append('g')
+            .selectAll('line')
+            .data(links)
+            .enter().append('line')
+            .attr('class', 'link')
+            .attr('marker-end', d => `url(#${d.type})`);
+        
+        // Adicionar rótulos para as ligações
+        const linkLabel = svg.append('g')
+            .selectAll('text')
+            .data(links)
+            .enter().append('text')
+            .attr('class', 'link-label')
+            .text(d => d.label);
+        
+        // Desenhar os nós
+        const node = svg.append('g')
+            .selectAll('circle')
+            .data(nodes)
+            .enter().append('circle')
+            .attr('class', 'node')
+            .attr('r', 20)
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .attr('fill', d => d.color)
+            .call(d3.drag()
+                .on('start', dragStarted)
+                .on('drag', dragged)
+                .on('end', dragEnded));
+        
+        // Adicionar rótulos aos nós
+        const label = svg.append('g')
+            .selectAll('text')
+            .data(nodes)
+            .enter().append('text')
+            .attr('class', 'node-label')
+            .attr('x', d => d.x)
+            .attr('y', d => d.y)
+            .attr('dy', -25)
+            .attr('text-anchor', 'middle')
+            .text(d => d.name);
+        
+        // Atualizar a posição dos elementos
+        function update() {
+            link
+                .attr('x1', d => {
+                    const sourceNode = nodes.find(n => n.id === d.source);
+                    return sourceNode ? sourceNode.x : 0;
+                })
+                .attr('y1', d => {
+                    const sourceNode = nodes.find(n => n.id === d.source);
+                    return sourceNode ? sourceNode.y : 0;
+                })
+                .attr('x2', d => {
+                    const targetNode = nodes.find(n => n.id === d.target);
+                    return targetNode ? targetNode.x : 0;
+                })
+                .attr('y2', d => {
+                    const targetNode = nodes.find(n => n.id === d.target);
+                    return targetNode ? targetNode.y : 0;
+                });
+            
+            // Atualizar posição dos rótulos das ligações
+            linkLabel
+                .attr('x', d => {
+                    const sourceNode = nodes.find(n => n.id === d.source);
+                    const targetNode = nodes.find(n => n.id === d.target);
+                    return sourceNode && targetNode ? (sourceNode.x + targetNode.x) / 2 : 0;
+                })
+                .attr('y', d => {
+                    const sourceNode = nodes.find(n => n.id === d.source);
+                    const targetNode = nodes.find(n => n.id === d.target);
+                    return sourceNode && targetNode ? (sourceNode.y + targetNode.y) / 2 - 10 : 0;
+                });
+            
+            node
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y);
+            
+            label
+                .attr('x', d => d.x)
+                .attr('y', d => d.y);
+        }
+        
+        update();
+        
+        // Funções de arrastar
+        function dragStarted(event, d) {
+            d3.select(this).raise().attr('stroke', 'black');
+        }
+        
+        function dragged(event, d) {
+            d.x = event.x;
+            d.y = event.y;
+            update();
+        }
+        
+        function dragEnded(event, d) {
+            d3.select(this).attr('stroke', null);
+        }
+        
+        // Interatividade
+        const tooltip = d3.select('#tooltip');
+        const modal = document.getElementById('info-modal');
+        const contextMenu = document.getElementById('context-menu');
+        
+        // Eventos de mouse para os nós
+        node.on('mouseover', function(event, d) {
+            // Mostrar tooltip
+            tooltip
+                .style('opacity', 1)
+                .html(`<strong>${d.name}</strong><br/>Clique para mais detalhes`)
+                .style('left', (event.pageX + 10) + 'px')
+                .style('top', (event.pageY - 25) + 'px');
+            
+            // Destacar o nó
+            d3.select(this).attr('r', 25);
+        })
+        .on('mouseout', function(event, d) {
+            // Esconder tooltip
+            tooltip.style('opacity', 0);
+            
+            // Voltar ao tamanho normal se não estiver selecionado
+            if (!d3.select(this).classed('selected')) {
+                d3.select(this).attr('r', 20);
+            }
+        })
+        .on('click', function(event, d) {
+            // Remover seleção anterior
+            node.classed('selected', false);
+            link.classed('highlighted', false);
+            
+            // Selecionar este nó
+            d3.select(this).classed('selected', true);
+            
+            // Destacar conexões relacionadas
+            link.classed('highlighted', l => 
+                l.source === d.id || l.target === d.id
+            );
+            
+            // Atualizar informações na sidebar
+            document.getElementById('selected-node-title').textContent = d.name;
+            document.getElementById('node-info').innerHTML = `
+                <div class="info-section">
+                    <h4>Funções</h4>
+                    <p>${nodeInfo[d.id].functions}</p>
+                </div>
+                <div class="info-section">
+                    <h4>Disfunções</h4>
+                    <p>${nodeInfo[d.id].dysfunctions}</p>
+                </div>
+                <div class="info-section">
+                    <h4>Detalhes</h4>
+                    <p>${nodeInfo[d.id].details}</p>
+                </div>
+            `;
+            
+            event.stopPropagation();
+        })
+        .on('contextmenu', function(event, d) {
+            event.preventDefault();
+            
+            // Mostrar menu de contexto
+            contextMenu.style.display = 'block';
+            contextMenu.style.left = event.pageX + 'px';
+            contextMenu.style.top = event.pageY + 'px';
+            
+            // Armazenar o nó selecionado no menu
+            contextMenu.setAttribute('data-node', d.id);
+        });
+        
+        // Fechar o menu de contexto ao clicar em outro lugar
+        document.addEventListener('click', () => {
+            contextMenu.style.display = 'none';
+        });
+        
+        // Lidar com as opções do menu de contexto
+        document.querySelectorAll('#context-menu li').forEach(item => {
+            item.addEventListener('click', function() {
+                const option = this.getAttribute('data-option');
+                const nodeId = contextMenu.getAttribute('data-node');
+                
+                // Preencher e mostrar o modal
+                document.getElementById('modal-title').textContent = nodes.find(n => n.id === nodeId).name;
+                document.getElementById('modal-functions').textContent = nodeInfo[nodeId].functions;
+                document.getElementById('modal-dysfunctions').textContent = nodeInfo[nodeId].dysfunctions;
+                document.getElementById('modal-details').textContent = nodeInfo[nodeId].details;
+                
+                modal.style.display = 'flex';
+                contextMenu.style.display = 'none';
+            });
+        });
+        
+        // Fechar o modal
+        document.querySelector('.close-button').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        // Fechar o modal ao clicar fora dele
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Botão de redefinir
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            // Reposicionar nós
+            nodes.forEach((node, i) => {
+                node.x = [500, 500, 300, 650, 350, 500, 600, 700][i];
+                node.y = [500, 300, 250, 200, 150, 50, 150, 250][i];
+            });
+            
+            // Remover seleções
+            node.classed('selected', false);
+            link.classed('highlighted', false);
+            
+            // Atualizar visualização
+            update();
+            
+            // Limpar informações
+            document.getElementById('selected-node-title').textContent = 'Nenhum nó selecionado';
+            document.getElementById('node-info').innerHTML = '<p>Selecione um nó para ver informações detalhadas.</p>';
+        });
+        
+        // Ajustar o tamanho do SVG quando a janela for redimensionada
+        window.addEventListener('resize', () => {
+            const newWidth = document.getElementById('network').clientWidth;
+            const newHeight = window.innerHeight - document.querySelector('header').clientHeight - 40;
+            
+            svg.attr('width', newWidth).attr('height', newHeight);
+            update();
+        });
+    </script>
+</body>
+</html>
