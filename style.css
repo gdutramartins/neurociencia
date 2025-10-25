@@ -291,18 +291,38 @@ ul {
 
 /* Media Query para telas menores que 992px (tablets e alguns desktops menores) */
 @media (max-width: 992px) {
+    .hero-section {
+        /* * ESTA É A CORREÇÃO PRINCIPAL:
+         * Remove a centralização vertical (align-items: center) 
+         * e deixa o conteúdo fluir do topo.
+        */
+        align-items: flex-start;
+        padding-top: 40px; /* Ajusta o padding para o modo "coluna" */
+        padding-bottom: 40px;
+    }
+
     .hero-content {
-        flex-direction: column; /* Coloca imagem e texto em coluna */
+        flex-direction: column; /* Empilha os itens verticalmente */
         text-align: center;
     }
 
     .hero-image-wrapper {
-        order: -1; /* Coloca a imagem acima do texto no mobile */
+        order: -1; /* Coloca a imagem acima do texto */
         margin-bottom: 40px;
+        
+        /* * CORREÇÃO: Reseta as propriedades flex e define a largura 
+        */
+        flex: none; /* Desativa o flex-grow/shrink */
+        width: 100%; /* Ocupa 100% da largura do container */
+        min-width: unset; /* Remove o min-width do desktop */
     }
 
     .hero-text-content {
-        min-width: unset; /* Remove o min-width para o texto */
+        /* * CORREÇÃO: Reseta as propriedades flex e define a largura 
+        */
+        flex: none; /* Desativa o flex-grow/shrink */
+        width: 100%; /* Ocupa 100% da largura do container */
+        min-width: unset; /* Remove o min-width do desktop */
     }
 
     .hero-text-content h1 {
