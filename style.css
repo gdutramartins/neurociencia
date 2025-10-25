@@ -1,411 +1,234 @@
-/* Variáveis CSS para cores e fontes */
-:root {
-    --dark-bg: #000;
-    --primary-color: #0d3838; /* Fundo mais escuro do gradiente */
-    --secondary-color: #004d4d; /* Fundo mais claro do gradiente */
-    --text-light: #f0f0f0;
-    --text-accent: #00e6e6; /* Verde/azul turquesa */
-    --button-bg: #009999;
-    --button-hover-bg: #00cccc;
-    --font-heading: 'Poppins', sans-serif; /* Sugestão, ajuste se tiver uma fonte específica */
-    --font-body: 'Open Sans', sans-serif; /* Sugestão */
-}
-
-/* Base Reset e Fontes */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* ---------- Reset/Setup ---------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-    font-family: var(--font-body);
-    color: var(--text-light);
-    background: radial-gradient(circle at top left, var(--primary-color) 0%, var(--dark-bg) 50%, var(--secondary-color) 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden; /* Evita scroll horizontal em layouts responsivos */
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+  color: #e6e6e6;
+  background: #0b0b0b; /* defina --page-bg se quiser trocar por tema */
+  --page-bg: #0b0b0b;
+  --accent: #70e1ff;
+  --muted: #b7b7b7;
+  --container: 1140px;
 }
 
+img { max-width: 100%; display: block; }
+
+/* ---------- Helpers ---------- */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 24px;
 }
 
-a {
-    color: var(--text-light);
-    text-decoration: none;
-    transition: color 0.3s ease;
+/* ---------- Header / Navegação ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(180deg, rgba(11,11,11,.9) 0%, rgba(11,11,11,.6) 100%);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
-a:hover {
-    color: var(--text-accent);
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  gap: 16px;
 }
 
-ul {
-    list-style: none;
+.brand {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .2px;
+  font-size: 20px;
+}
+.brand span { color: var(--accent); }
+
+/* Menu */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-/* Header */
-.header {
-    padding: 20px 0;
-    background: transparent;
-    position: relative;
-    z-index: 100;
+.nav-link {
+  color: #eaeaea;
+  text-decoration: none;
+  font-size: 16px;          /* base desktop */
+  line-height: 1.2;
+  padding: 10px 4px;
+  border-radius: 6px;
+  transition: color .2s ease, background .2s ease;
+}
+.nav-link:hover { color: #fff; background: rgba(255,255,255,.06); }
+
+/* Toggle (hambúrguer) — visível só no mobile */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+.nav-toggle .nav-toggle-bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  margin: 5px 0;
+  border-radius: 2px;
 }
 
-.header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* ---------- Hero ---------- */
+.hero {
+  padding: clamp(32px, 6vw, 72px) 0;
 }
 
-.logo {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-accent); /* O logo é um pouco mais vibrante na imagem */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  align-items: center;
+  gap: clamp(24px, 5vw, 64px);
 }
 
-.nav-desktop .nav-links {
-    display: flex;
-    gap: 25px;
-    align-items: center;
+.hero-title {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 4.2vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
-.nav-desktop .nav-links li a {
-    font-size: 0.9rem;
-    text-transform: uppercase;
+.hero-subtitle {
+  margin: 0 0 24px;
+  color: var(--muted);
+  font-size: clamp(16px, 2vw, 18px);
+  max-width: 52ch;
 }
 
-.nav-desktop .nav-links .dropdown-toggle i {
-    margin-left: 5px;
-    font-size: 0.7rem;
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #fff;
+  color: #111;
+  text-decoration: none;
+  font-weight: 700;
+}
+.btn:hover { filter: brightness(0.92); }
+
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  outline: 1px solid rgba(255,255,255,.25);
+}
+.btn-secondary:hover { background: rgba(255,255,255,.08); }
+
+/* ---------- Foto do Hero (sem borda + fade) ---------- */
+.hero-photo-wrap {
+  position: relative;
+  overflow: hidden;    /* evita qualquer bleed parecer “borda” */
+  border: 0;
+  box-shadow: none;
 }
 
-/* Mobile Nav Toggle */
-.menu-toggle {
-    display: none; /* Escondido por padrão no desktop */
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: var(--text-light);
+/* A imagem em si: sem borda, sem halo, com máscara de opacidade */
+.hero-photo {
+  display: block;
+  width: min(420px, 100%);
+  height: auto;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent;
+
+  /* Fade da esquerda (0%) para direita (100%) — ajuste os pontos conforme sua foto */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 12%, #000 38%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.35) 12%, #000 38%, #000 100%);
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+          mask-size: 100% 100%;
 }
 
-/* Mobile Navigation Overlay */
-.mobile-nav-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 200;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(100%); /* Começa fora da tela */
-    transition: transform 0.3s ease-in-out;
+/* Se houver um halo branco do recorte, esta leve “podada” visual ajuda */
+.hero-photo { clip-path: inset(.5px round 0); }
+
+/* Alternativa de fade “simulando” com overlay (caso precise) */
+/*
+.hero-photo-wrap::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--page-bg) 0%, transparent 35%);
+  pointer-events: none;
+}
+*/
+
+/* ---------- Seções ---------- */
+.section {
+  padding: clamp(40px, 7vw, 96px) 0;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.section h2 {
+  margin: 0 0 10px;
+  font-size: clamp(22px, 3.6vw, 34px);
 }
 
-.mobile-nav-overlay.active {
-    transform: translateX(0); /* Entra na tela */
+/* ---------- Rodapé ---------- */
+.site-footer {
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding: 24px 0 40px;
+  color: var(--muted);
 }
 
-.mobile-nav-content {
-    text-align: center;
-    padding: 40px;
-    position: relative;
-    width: 100%;
-}
+/* ---------- Responsividade ---------- */
 
-.close-btn {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 3rem;
-    color: var(--text-light);
-    cursor: pointer;
-}
-
-.nav-mobile .nav-links {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.nav-mobile .nav-links li a {
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: var(--text-light);
-}
-
-.nav-mobile .nav-links li a:hover {
-    color: var(--text-accent);
-}
-
-.mobile-main-links {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 40px;
-}
-
-/* Hero Section */
-.hero-section {
-    flex-grow: 1; /* Faz com que esta seção ocupe o espaço restante */
-    display: flex;
-    align-items: center;
-    padding: 60px 0;
-}
-
-.hero-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px; /* Espaço entre a imagem e o texto */
-    flex-wrap: wrap; /* Permite que os itens quebrem linha em telas menores */
-}
-
-.hero-image-wrapper {
-    flex: 1; /* Ocupa metade do espaço disponível */
-    min-width: 300px; /* Garante um tamanho mínimo para a imagem */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative; /* Para posicionar a imagem corretamente */
-}
-
-.hero-profile-img {
-    width: 100%;
-    max-width: 500px; /* Limita o tamanho máximo da imagem */
-    height: auto;
-    display: block;
-    border-radius: 8px; /* Adicione borda se quiser */
-    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
-    /* Para replicar o efeito de luz da imagem, podemos usar um pseudo-elemento ou box-shadow */
-    box-shadow: 0 0 50px rgba(0, 230, 230, 0.3); /* Exemplo de glow */
-}
-
-.hero-text-content {
-    flex: 1; /* Ocupa a outra metade do espaço */
-    min-width: 300px; /* Garante um tamanho mínimo para o texto */
+/* <= 980px: grid vira 1 coluna; foto desce abaixo do texto */
+@media (max-width: 980px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
     text-align: left;
+  }
+  .hero-photo-wrap {
+    justify-self: end; /* mantém foto alinhada à direita, opcional */
+  }
 }
 
-.subtitle {
-    font-size: 0.9rem;
-    color: var(--text-accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
+/* <= 720px: ativa o nav mobile e reduz tipografia do menu */
+@media (max-width: 720px) {
+  .nav-toggle { display: inline-block; }
+  .nav {
+    position: fixed;
+    inset: 64px 0 auto 0;   /* abaixo do header */
+    background: rgba(11,11,11,.98);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 16px 16px;
+  }
+  .nav.open { display: flex; }
+
+  /* Texto menor no mobile (seu ponto #3) */
+  .nav-link {
+    font-size: 14px;      /* menor que o desktop */
+    padding: 12px 8px;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  body.nav-open { overflow: hidden; } /* evita “rolar” com menu aberto */
 }
 
-.hero-text-content h1 {
-    font-family: var(--font-heading);
-    /* Esta é a mágica: 
-       Tamanho mínimo: 1.8rem
-       Tamanho preferido (fluido): 1.5rem + 3vw (3% da largura da tela)
-       Tamanho máximo: 3.5rem 
-    */
-    font-size: clamp(1.8rem, 1.5rem + 3vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 25px;
-}
-
-.hero-text-content .description {
-/* Também adicionamos clamp() aqui */
-    font-size: clamp(0.9rem, 0.8rem + 1vw, 1.1rem);
-    line-height: 1.6;
-    margin-bottom: 35px;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.linkedin-button {
-    display: inline-flex;
-    align-items: center;
-    padding: 15px 30px;
-    background: var(--button-bg);
-    border-radius: 50px;
-    color: var(--text-light);
-    font-size: 1rem;
-    font-weight: 600;
-    transition: background 0.3s ease, transform 0.2s ease;
-    border: 2px solid transparent; /* Para o efeito de hover */
-}
-
-.linkedin-button:hover {
-    background: var(--button-hover-bg);
-    transform: translateY(-2px);
-    border-color: var(--text-accent);
-}
-
-.linkedin-button i {
-    margin-left: 10px;
-    font-size: 1.2rem;
-}
-
-/* Bottom Navigation */
-.bottom-nav {
-    background: rgba(0, 0, 0, 0.4); /* Fundo semi-transparente como na imagem */
-    padding: 20px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.bottom-nav ul {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-}
-
-.bottom-nav ul li a {
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    padding: 5px 0; /* Para dar área de clique */
-    position: relative;
-}
-
-.bottom-nav ul li a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 2px;
-    background-color: var(--text-accent);
-    transition: width 0.3s ease;
-}
-
-.bottom-nav ul li a:hover::after,
-.bottom-nav ul li a.active::after { /* Você pode adicionar uma classe 'active' para a página atual */
-    width: 100%;
-}
-
-.bottom-nav ul li:last-child a i {
-    margin-left: 8px;
-    font-size: 0.8rem;
-}
-
-
-/* --- Responsividade --- */
-
-/* Media Query para telas menores que 992px (tablets e alguns desktops menores) */
-@media (max-width: 992px) {
-    .hero-section {
-        /* * ESTA É A CORREÇÃO PRINCIPAL:
-         * Remove a centralização vertical (align-items: center) 
-         * e deixa o conteúdo fluir do topo.
-        */
-        align-items: flex-start;
-        padding-top: 40px; /* Ajusta o padding para o modo "coluna" */
-        padding-bottom: 40px;
-    }
-
-    .hero-content {
-        flex-direction: column; /* Empilha os itens verticalmente */
-        text-align: center;
-    }
-
-    .hero-image-wrapper {
-        order: -1; /* Coloca a imagem acima do texto */
-        margin-bottom: 40px;
-        
-        /* * CORREÇÃO: Reseta as propriedades flex e define a largura 
-        */
-        flex: none; /* Desativa o flex-grow/shrink */
-        width: 100%; /* Ocupa 100% da largura do container */
-        min-width: unset; /* Remove o min-width do desktop */
-    }
-
-    .hero-text-content {
-        /* * CORREÇÃO: Reseta as propriedades flex e define a largura 
-        */
-        flex: none; /* Desativa o flex-grow/shrink */
-        width: 100%; /* Ocupa 100% da largura do container */
-        min-width: unset; /* Remove o min-width do desktop */
-    }
-
-    .hero-text-content h1 {
-        font-size: 3rem; /* Ajusta o tamanho da fonte */
-    }
-
-    .bottom-nav ul {
-        gap: 20px;
-        flex-wrap: wrap; /* Permite que os links quebrem linha */
-        justify-content: center;
-    }
-
-    .bottom-nav ul li {
-        margin: 5px 0; /* Espaçamento vertical entre links quebrados */
-    }
-}
-
-
-/* Media Query para telas menores que 768px (smartphones) */
-@media (max-width: 768px) {
-    .nav-desktop {
-        display: none; /* Esconde a navegação desktop */
-    }
-
-    .menu-toggle {
-        display: block; /* Mostra o ícone de hambúrguer */
-    }
-
-    .header .container {
-        justify-content: space-between;
-    }
-
-    .hero-text-content h1 {
-        font-size: 2.2rem;
-    }
-
-    .hero-text-content .description {
-        font-size: 1rem;
-    }
-
-    .linkedin-button {
-        padding: 12px 25px;
-        font-size: 0.9rem;
-    }
-
-    .bottom-nav {
-        display: none; /* Esconde a navegação inferior no mobile, pois estará no menu hambúrguer */
-    }
-}
-
-/* Media Query para telas muito pequenas */
-@media (max-width: 480px) {
-    .logo {
-        font-size: 1.2rem;
-    }
-    .hero-text-content h1 {
-        font-size: 1.8rem;
-    }
-    .hero-text-content .description {
-        font-size: 0.9rem;
-    }
-    .linkedin-button {
-        width: 100%; /* Botão ocupa toda a largura */
-        justify-content: center;
-        text-align: center;
-    }
-    .mobile-nav-content {
-        padding: 20px;
-    }
-    .close-btn {
-        font-size: 2.5rem;
-        right: 20px;
-    }
-    .nav-mobile .nav-links li a {
-        font-size: 1.3rem; /* REDUZIDO de 1.5rem */
-        text-transform: uppercase;
-        font-weight: 600;
-        color: var(--text-light);
-    }
+/* <= 420px: apertos finais */
+@media (max-width: 420px) {
+  .brand { font-size: 18px; }
+  .hero-title { font-size: clamp(26px, 8vw, 36px); }
+  .nav-link { font-size: 13.5px; } /* ainda mais contido se precisar */
 }
