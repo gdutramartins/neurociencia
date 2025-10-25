@@ -1,100 +1,117 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gustavo Martins - Meu Estudo em Neurociência</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <a href="#" class="logo">evekayser</a>
-            
-            <nav class="nav-desktop">
-                <ul class="nav-links top-links">
-                    <li><a href="#">Digital Marketing</a></li>
-                    <li><a href="#">For Work</a></li>
-                    <li><a href="#">Available</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle">EN <i class="fas fa-chevron-down"></i></a>
-                        </li>
-                </ul>
-            </nav>
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Neurociência — Gustavo Dutra Martins</title>
+    <meta name="description" content="Materiais e estudos em Neurociência." />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Header / Navegação -->
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="/">Gustavo<span>Neuro</span></a>
 
-            <div class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
+        <!-- Botão mobile -->
+        <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+
+        <!-- Menu -->
+        <nav class="nav" id="siteNav" aria-label="principal">
+          <a class="nav-link" href="#inicio">Início</a>
+          <a class="nav-link" href="#projetos">Projetos</a>
+          <a class="nav-link" href="#artigos">Artigos</a>
+          <a class="nav-link" href="#contato">Contato</a>
+        </nav>
+      </div>
     </header>
 
-    <div class="mobile-nav-overlay" id="mobileNavOverlay">
-        <div class="mobile-nav-content">
-            <div class="close-btn" id="closeNavBtn">&times;</div>
-            <nav class="nav-mobile">
-                <ul class="nav-links mobile-top-links">
-                    <li><a href="#">Digital Marketing</a></li>
-                    <li><a href="#">For Work</a></li>
-                    <li><a href="#">Available</a></li>
-                    <li><a href="#">EN</a></li>
-                </ul>
-                <ul class="nav-links mobile-main-links">
-                    <li><a href="#home">HOME</a></li>
-                    <li><a href="#about">ABOUT ME</a></li>
-                    <li><a href="#work">WORK</a></li>
-                    <li><a href="#services">SERVICES</a></li>
-                    <li><a href="#webflow">WEBFLOW EXPERT</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <!-- Hero -->
+    <main id="inicio">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <h1 class="hero-title">Neurociência na prática</h1>
+            <p class="hero-subtitle">
+              Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.
+            </p>
+            <div class="hero-cta">
+              <a class="btn" href="#projetos">Ver projetos</a>
+              <a class="btn btn-secondary" href="#artigos">Ler artigos</a>
+            </div>
+          </div>
 
-    <main class="hero-section">
-        <div class="container hero-content">
-            <div class="hero-image-wrapper">
-                <img src="imagens/imagem-gustavo-transparente.png" alt="Foto de Evekayser" class="hero-profile-img">
-            </div>
-            
-            <div class="hero-text-content">
-                <p class="subtitle">DESIGNER & WEBFLOW EXPERT</p>
-                <h1>Agency-level web development services at freelancer rates</h1>
-                <p class="description">My mission is to design and develop a website that you and your audience love.</p>
-                <a href="https://www.linkedin.com/in/seu-perfil-linkedin" target="_blank" class="linkedin-button">
-                    Happy to connect on LinkedIn <i class="fab fa-linkedin"></i>
-                </a>
-            </div>
+          <!-- Foto com fade (sem borda) -->
+          <div class="hero-photo-wrap">
+            <!-- Substitua por sua imagem transparente/PNG -->
+            <img
+              src="img/gustavo.png"
+              alt="Retrato de Gustavo"
+              class="hero-photo"
+              decoding="async"
+              loading="eager"
+            />
+          </div>
         </div>
+      </section>
+
+      <!-- Seções de exemplo -->
+      <section id="projetos" class="section">
+        <div class="container">
+          <h2>Projetos</h2>
+          <p>Seleção de trabalhos e explorações visuais.</p>
+        </div>
+      </section>
+
+      <section id="artigos" class="section">
+        <div class="container">
+          <h2>Artigos</h2>
+          <p>Notas e resumos comentados.</p>
+        </div>
+      </section>
+
+      <section id="contato" class="section">
+        <div class="container">
+          <h2>Contato</h2>
+          <p>Fale comigo sobre colaborações e apresentações.</p>
+        </div>
+      </section>
     </main>
 
-    <nav class="bottom-nav">
-        <div class="container">
-            <ul>
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#about">ABOUT ME</a></li>
-                <li><a href="#work">WORK</a></li>
-                <li><a href="#services">SERVICES</a></li>
-                <li><a href="#webflow">WEBFLOW EXPERT <i class="fas fa-chevron-right"></i></a></li>
-            </ul>
-        </div>
-    </nav>
+    <footer class="site-footer">
+      <div class="container">
+        <small>© <span id="year"></span> Gustavo Dutra Martins</small>
+      </div>
+    </footer>
 
     <script>
-        document.getElementById('menuToggle').addEventListener('click', function() {
-            document.getElementById('mobileNavOverlay').classList.add('active');
-        });
+      // Ano automático no rodapé
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-        document.getElementById('closeNavBtn').addEventListener('click', function() {
-            document.getElementById('mobileNavOverlay').classList.remove('active');
-        });
+      // Toggle do menu mobile
+      const navToggle = document.getElementById('navToggle');
+      const siteNav = document.getElementById('siteNav');
 
-        // Fechar menu ao clicar em um link (opcional, para navegação em single page)
-        document.querySelectorAll('.nav-mobile a').forEach(item => {
-            item.addEventListener('click', () => {
-                document.getElementById('mobileNavOverlay').classList.remove('active');
-            })
+      navToggle.addEventListener('click', () => {
+        const open = siteNav.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.classList.toggle('nav-open', open);
+      });
+
+      // Fechar menu ao clicar em um link (mobile)
+      siteNav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          siteNav.classList.remove('open');
+          document.body.classList.remove('nav-open');
+          navToggle.setAttribute('aria-expanded', 'false');
         });
+      });
     </script>
-</body>
+  </body>
 </html>
