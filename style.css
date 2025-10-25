@@ -206,14 +206,20 @@ ul {
 
 .hero-text-content h1 {
     font-family: var(--font-heading);
-    font-size: 3.5rem;
+    /* Esta é a mágica: 
+       Tamanho mínimo: 1.8rem
+       Tamanho preferido (fluido): 1.5rem + 3vw (3% da largura da tela)
+       Tamanho máximo: 3.5rem 
+    */
+    font-size: clamp(1.8rem, 1.5rem + 3vw, 3.5rem);
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 25px;
 }
 
 .hero-text-content .description {
-    font-size: 1.1rem;
+/* Também adicionamos clamp() aqui */
+    font-size: clamp(0.9rem, 0.8rem + 1vw, 1.1rem);
     line-height: 1.6;
     margin-bottom: 35px;
     color: rgba(255, 255, 255, 0.8);
@@ -397,6 +403,9 @@ ul {
         right: 20px;
     }
     .nav-mobile .nav-links li a {
-        font-size: 1.2rem;
+        font-size: 1.3rem; /* REDUZIDO de 1.5rem */
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--text-light);
     }
 }
