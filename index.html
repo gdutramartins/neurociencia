@@ -25,6 +25,7 @@
         <!-- Menu -->
         <nav class="nav" id="siteNav" aria-label="principal">
           <a class="nav-link" href="#inicio">Início</a>
+          <a class="nav-link" href="#sobre">Sobre mim</a>
           <a class="nav-link" href="#projetos">Projetos</a>
           <a class="nav-link" href="#artigos">Artigos</a>
           <a class="nav-link" href="#contato">Contato</a>
@@ -36,32 +37,62 @@
     <main id="inicio">
       <section class="hero">
         <div class="container hero-grid">
-          <div class="hero-copy">
-            <h1 class="hero-title">Neurociência na prática</h1>
-            <p class="hero-subtitle">
-              Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.
-            </p>
-            <div class="hero-cta">
-              <a class="btn" href="#projetos">Ver projetos</a>
-              <a class="btn btn-secondary" href="#artigos">Ler artigos</a>
-            </div>
-          </div>
-
-          <!-- Foto com fade (sem borda) -->
+          <!-- Foto à esquerda (o fade está EMBUTIDO no arquivo) -->
           <div class="hero-photo-wrap">
-            <!-- Substitua por sua imagem transparente/PNG -->
             <img
-              src="imagens/gustavo.png"
+              src="img/gustavo.png"
               alt="Retrato de Gustavo"
               class="hero-photo"
               decoding="async"
               loading="eager"
             />
           </div>
+
+          <div class="hero-copy">
+            <h1 class="hero-title">Neurociência na prática</h1>
+            <p class="hero-subtitle">
+              Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.
+            </p>
+
+            <!-- Botão único LinkedIn -->
+            <div class="hero-cta">
+              <a class="btn-linkedin" href="https://www.linkedin.com/in/SEU-USUARIO" target="_blank" rel="noopener">
+                <span class="btn-text">Me contacte no LinkedIn</span>
+                <span class="btn-icon">
+                  <!-- Ícone LinkedIn -->
+                  <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
+                    <path d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8h4v15h-4V8zm7.5 0h3.84v2.08h.05c.53-1.02 1.83-2.13 3.77-2.13 4.07 0 4.84 2.68 4.84 6.18V23h-4v-6.98c0-1.66-.03-3.79-2.38-3.79-2.38 0-2.75 1.77-2.75 3.68V23h-4V8z"/>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra inferior arredondada (menu secundário) -->
+        <nav class="section-pill" aria-label="atalhos">
+          <ul class="pill-list">
+            <li><a href="#inicio" class="pill-link active">Home</a></li>
+            <li><span class="divider" aria-hidden="true"></span></li>
+            <li><a href="#sobre" class="pill-link">About me</a></li>
+            <li><span class="divider" aria-hidden="true"></span></li>
+            <li><a href="#projetos" class="pill-link">Work</a></li>
+            <li><span class="divider" aria-hidden="true"></span></li>
+            <li><a href="#artigos" class="pill-link">Services</a></li>
+            <li><span class="divider" aria-hidden="true"></span></li>
+            <li><a href="#contato" class="pill-link pill-ext">Webflow Expert</a></li>
+          </ul>
+        </nav>
+      </section>
+
+      <!-- Seções -->
+      <section id="sobre" class="section">
+        <div class="container">
+          <h2>Sobre mim</h2>
+          <p>Breve apresentação e objetivos do projeto.</p>
         </div>
       </section>
 
-      <!-- Seções de exemplo -->
       <section id="projetos" class="section">
         <div class="container">
           <h2>Projetos</h2>
@@ -112,6 +143,22 @@
           navToggle.setAttribute('aria-expanded', 'false');
         });
       });
+
+      // Destacar item ativo da pill conforme rolagem (opcional simples)
+      const pillLinks = document.querySelectorAll('.pill-link');
+      const sections = [...pillLinks].map(l => document.querySelector(l.getAttribute('href')));
+      const onScroll = () => {
+        const y = window.scrollY + 120;
+        sections.forEach((sec, i) => {
+          if (!sec) return;
+          const top = sec.offsetTop;
+          const bottom = top + sec.offsetHeight;
+          const link = pillLinks[i];
+          link.classList.toggle('active', y >= top && y < bottom);
+        });
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll);
     </script>
   </body>
 </html>
