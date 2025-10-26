@@ -87,10 +87,26 @@ body {
 
 /* hamburger visível no desktop tb (fica à esquerda) */
 .nav-toggle {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: transparent; border: 0; padding: .4rem; margin-right: .25rem;
+  display: none; /* oculto por padrão */
+  background: transparent;
+  border: 0;
+  padding: .4rem;
+  margin-right: .25rem;
 }
-.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; }
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  margin: 4px 0;
+  border-radius: 2px;
+}
+/* Remove o retângulo azul (outline) ao clicar */
+.nav-toggle:focus,
+.nav-toggle:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
 
 /* Hero */
 .hero { padding: clamp(2rem, 3vw + 2rem, 6rem) 0 var(--space-6); }
@@ -198,6 +214,13 @@ body {
 }
 
 @media (max-width: 800px) {
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
   .links { position: fixed; inset: 64px 0 auto 0; background: var(--panel);
            border-bottom: 1px solid var(--border); padding: var(--space-3);
            transform: translateY(-120%); transition: transform .2s ease; flex-direction: column; gap: .25rem; }
