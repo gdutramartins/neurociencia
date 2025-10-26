@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Meus Estudos Sobre Neurociência — Gustavo Dutra Martins</title>
-  <meta name="description" content="Estudos de neurociência aplicada a empresas: trabalhos, anotações, mapas mentais e projeto final." />
+  <title>Neurociência na Prática — Gustavo Dutra Martins</title>
+  <meta name="description" content="Estudos de neurociência aplicada a empresas: trabalhos, estudos autorais, mapa mental (Kumu) e projeto final." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -15,12 +15,12 @@
     <div class="container nav">
       <div class="brand" aria-label="Neurociência na Prática">
         <span class="dot" aria-hidden="true"></span>
-        <h1>Neurociência na Prática</h1>
+        <h1>Meus Estudos Sobre Neurociência</h1>
       </div>
       <nav aria-label="Seções do site">
         <ul>
           <li><a href="#inicio">Início</a></li>
-		  <li><a href="#trabalhos">Trabalhos</a></li>
+          <li><a href="#trabalhos">Trabalhos</a></li>
           <li><a href="#estudos">Meus Estudos</a></li>
           <li><a href="#mapa-mental">Mapa Mental</a></li>
           <li><a href="#projeto-final">Projeto Final</a></li>
@@ -32,16 +32,17 @@
   <main id="inicio" class="container">
     <section class="hero">
       <div>
-        <div class="pill">Neurociência aplicada as organizações</div>
+        <div class="pill">Neurociência aplicada a empresas</div>
         <h2>Da observação ao impacto: estudos, mapas e materiais que conectam cérebro e decisões.</h2>
-        <p>Neste espaço reúno os <strong>trabalhos da pós</strong>, meus <strong>estudos autorais</strong>, um <strong>mapa mental em grafo</strong> das principais aferências/eferências e atualizações do <strong>projeto final</strong>.</p>
+        <p>Neste espaço reúno os <strong>trabalhos da pós</strong>, meus <strong>estudos autorais</strong>, um <strong>mapa mental</strong> (Kumu) com as principais aferências/eferências e as atualizações do <strong>projeto final</strong>.</p>
         <div class="cta">
           <a class="btn primary" href="#trabalhos">Ver trabalhos</a>
-          <a class="btn" href="#estudos">Explorar estudos</a>
+          <a class="btn" href="#mapa-mental">Mapa Mental</a>
         </div>
       </div>
       <aside class="card">
         <div class="avatar-wrap">
+          <!-- Usa sua imagem existente -->
           <img src="imagens/gustavo.png" alt="Foto de Gustavo Dutra Martins" class="avatar" />
         </div>
         <div class="avatar-caption">Foto suavizada via CSS (feathering) e tamanho ajustado — sem alterar o arquivo original.</div>
@@ -53,31 +54,36 @@
       <h3>Trabalhos</h3>
       <p class="lead">Entregas e projetos desenvolvidos nas disciplinas da pós-graduação.</p>
       <div class="grid">
+        <!-- Card REAL já existente -->
         <article class="item col-6">
-          <h4>Trabalho: Neocortex — Da Perceção a Ação</h4>
+          <h4>Neocortex — Da Perceção a Ação</h4>
           <p>Síntese do processamento em níveis, aferências/eferências e principais disfunções, com referências.</p>
-          <div>
+          <div class="cta">
             <a class="btn" href="trabalhos/neocortex.html">Abrir página</a>
+            <!-- Se existir PDF, habilite:
+            <a class="btn" href="trabalhos/neocortex.pdf">PDF</a>
+            -->
           </div>
         </article>
+
+        <!-- Placeholder para o próximo trabalho -->
         <article class="item col-6">
-          <h4>Trabalho: (Exemplo)</h4>
+          <h4>(Exemplo) Trabalho — Título</h4>
           <p>Resumo curto (2–3 linhas) explicando objetivo, método e principais achados.</p>
-          <div>
-            <span class="tag">PDF</span><span class="tag">Apresentação</span>
-          </div>
+          <div><span class="tag">PDF</span><span class="tag">Apresentação</span></div>
         </article>
       </div>
+      <div class="section-divider"></div>
     </section>
 
     <!-- Meus Estudos -->
     <section id="estudos">
       <h3>Meus Estudos</h3>
-      <p class="lead">Tópicos que explorei por conta própria e que estou publicando como material de referência.</p>
+      <p class="lead">Tópicos que explorei e estou publicando como material de referência.</p>
       <div class="grid">
         <article class="item col-4">
           <h4>(Exemplo) Lobo Límbico — síntese</h4>
-          <p>Notas comentadas, Papez e interfaces com PFC e tálamo.</p>
+          <p>Notas comentadas, circuito de Papez e interfaces com PFC e tálamo.</p>
           <div><span class="tag">Notas</span><span class="tag">Referências</span></div>
         </article>
         <article class="item col-4">
@@ -91,23 +97,47 @@
           <div><span class="tag">Mapa</span></div>
         </article>
       </div>
+      <div class="section-divider"></div>
     </section>
 
     <!-- Mapa Mental (Kumu) -->
     <section id="mapa-mental">
       <h3>Mapa Mental (Grafo Kumu)</h3>
-      <p class="lead">Visualização das principais aferências e eferências. A página dedicada explica o racional do grafo, como usar os filtros e traz um preview do grafo.</p>
+      <p class="lead">Visualização das principais <strong>aferências</strong> (entradas) e <strong>eferências</strong> (saídas) entre neocórtex, hipocampo, amígdala, tálamo, núcleos da base, cerebelo e tronco.</p>
+
       <div class="grid">
         <article class="item col-8">
           <h4>Sobre o grafo</h4>
-          <p>O grafo organiza núcleos, vias e moduladores em camadas. Cada aresta possui notas com justificativas e fontes. Na página dedicada você encontra instruções de leitura e um quadro-resumo.</p>
-          <p><a class="btn" href="mapa-mental.html">Abrir página do Mapa Mental</a></p>
+          <p>O grafo organiza núcleos, vias e moduladores em camadas. Cada aresta possui notas com justificativas e fontes. Ele serve como guia para discutir processamento em níveis e modulação top-down/bottom-up.</p>
+          <div class="cta">
+            <a class="btn primary" href="https://kumu.io/gdms/snc#integracao-aferencias-e-eferencias/aferencias-eferencias" target="_blank" rel="noopener">Abrir no Kumu</a>
+          </div>
         </article>
+
         <aside class="item col-4">
-          <h4>Como ler</h4>
-          <p>Cores = classes (córtex, tálamo, tronco etc.). Espessura = força/certeza da conexão. Tags = função (atenção, afeto, memória…).</p>
+          <h4>Como usar</h4>
+          <ul>
+            <li><strong>Filtro (parte inferior):</strong> use os filtros para mostrar/esconder classes e tipos de conexão.</li>
+            <li><strong>Clique nas arestas:</strong> detalhes/justificativas/fontes aparecem no painel lateral.</li>
+            <li><strong>Zoom & pan:</strong> role para aproximar/afastar e arraste para navegar.</li>
+            <li><strong>Buscar:</strong> procure nós por nome (ex.: “PFC”, “tálamo anterior”).</li>
+          </ul>
         </aside>
       </div>
+
+      <!-- Preview embutido (opcional). Se não quiser, basta remover o bloco abaixo. -->
+      <details class="item col-12" style="margin-top:16px">
+        <summary>Ver preview interativo (iframe)</summary>
+        <div class="frame" style="border:1px solid var(--stroke); border-radius:16px; overflow:hidden; height:65vh; background:var(--panel); margin-top:12px">
+          <iframe
+            title="Kumu — Aferências & Eferências"
+            src="https://kumu.io/gdms/snc#integracao-aferencias-e-eferencias/aferencias-eferencias"
+            width="100%" height="100%" frameborder="0" loading="lazy" referrerpolicy="no-referrer">
+          </iframe>
+        </div>
+      </details>
+
+      <div class="section-divider"></div>
     </section>
 
     <!-- Projeto Final -->
@@ -131,9 +161,7 @@
   <footer>
     <div class="container foot">
       <div>© <span id="year"></span> Gustavo Dutra Martins</div>
-      <div>
-        <a href="https://github.com/gdutramartins/neurociencia" target="_blank" rel="noopener">Repositório no GitHub</a>
-      </div>
+      <div><a href="https://github.com/gdutramartins/neurociencia" target="_blank" rel="noopener">Repositório no GitHub</a></div>
     </div>
   </footer>
 

@@ -1,60 +1,71 @@
 :root{
-  --bg: #0b0d12;
-  --panel: #121620;
-  --muted:#9aa3b2;
-  --text:#e9eef7;
-  --brand:#7cc3ff;
-  --brand-2:#8bffd1;
+  --bg: #0c0f16;            /* fundo geral (escuro elegante) */
+  --bg-accent:
+    radial-gradient(1200px 600px at 85% -10%, rgba(124,195,255,.12), transparent 45%),
+    radial-gradient(900px 500px at 15% -10%, rgba(139,255,209,.10), transparent 40%),
+    linear-gradient(180deg, #0c0f16, #0c0f16);
+  --panel: #121826;         /* cartões e painéis */
+  --panel-2:#0f1420;        /* cabeçalho fixo */
+  --muted:#9aa3b2;          /* texto secundário */
+  --text:#e8eef8;           /* texto principal */
+  --brand:#7cc3ff;          /* cor 1 da marca */
+  --brand-2:#8bffd1;        /* cor 2 da marca */
   --stroke: rgba(255,255,255,.08);
-  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --shadow: 0 20px 50px rgba(0,0,0,.45);
   --radius: 16px;
   --radius-lg: 24px;
-  --maxw: 1200px;
+  --maxw: 1180px;
+  --space-1: 8px;  --space-2: 12px; --space-3: 16px; --space-4: 24px; --space-5: 32px; --space-6: 48px; --space-7: 64px;
 }
 @media (prefers-color-scheme: light){
-  :root{ --bg:#f6f8fb; --panel:#ffffff; --muted:#5b6472; --text:#111827; --stroke:rgba(0,0,0,.08); --shadow:0 10px 30px rgba(0,0,0,.07);} 
+  :root{
+    --bg:#f6f8fb;
+    --bg-accent: linear-gradient(180deg, #f6f8fb, #ffffff);
+    --panel:#ffffff; --panel-2:#ffffff;
+    --muted:#5b6472; --text:#0f172a;
+    --stroke:rgba(0,0,0,.08); --shadow:0 18px 45px rgba(0,0,0,.08);
+  }
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 html,body{
-  margin:0;
-  background:radial-gradient(1200px 600px at 80% -10%, rgba(124,195,255,.18), transparent 40%),linear-gradient(180deg, var(--bg), var(--bg));
-  color:var(--text);
+  margin:0; color:var(--text);
+  background:var(--bg-accent);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size:16px; line-height:1.72;
 }
 a{color:inherit;text-decoration:none}
-.container{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+.container{max-width:var(--maxw); margin:0 auto; padding:0 var(--space-4)}
 
 /* Header */
 header{
-  position:sticky; top:0; z-index:50;
-  backdrop-filter:saturate(140%) blur(8px);
-  background:color-mix(in oklab, var(--panel) 86%, transparent);
-  border-bottom:1px solid var(--stroke)
+  position:sticky; top:0; z-index:50; border-bottom:1px solid var(--stroke);
+  backdrop-filter:saturate(140%) blur(10px);
+  background:color-mix(in oklab, var(--panel-2) 86%, transparent);
 }
-.nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+.nav{display:flex; align-items:center; justify-content:space-between; height:72px}
 .brand{display:flex; gap:12px; align-items:center}
 .brand .dot{
-  width:12px; height:12px; border-radius:50%;
+  width:14px; height:14px; border-radius:50%;
   background:linear-gradient(135deg, var(--brand), var(--brand-2));
-  box-shadow:0 0 0 4px color-mix(in oklab, var(--brand) 15%, transparent)
+  box-shadow:0 0 0 6px color-mix(in oklab, var(--brand) 16%, transparent)
 }
-.brand h1{font-size:16px; margin:0; letter-spacing:.3px}
-nav ul{display:flex; gap:10px; margin:0; padding:0; list-style:none}
-nav a{padding:10px 12px; border-radius:10px; border:1px solid transparent}
-nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--panel) 70%, transparent)}
+.brand h1{font-size:18px; margin:0; letter-spacing:.2px; font-weight:600}
+nav ul{display:flex; gap:6px; margin:0; padding:0; list-style:none}
+nav a{padding:10px 14px; border-radius:12px; border:1px solid transparent}
+nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--panel) 72%, transparent)}
 
 /* Hero */
-.hero{display:grid; grid-template-columns: 1fr; gap:28px; padding:36px 0 28px}
-@media(min-width:900px){
-  .hero{grid-template-columns: 1.25fr .75fr; align-items:center; padding:56px 0 40px}
+.hero{display:grid; grid-template-columns: 1fr; gap:var(--space-5); padding:var(--space-6) 0 var(--space-5)}
+@media(min-width:980px){
+  .hero{grid-template-columns: 1.25fr .75fr; align-items:center; padding:var(--space-7) 0 var(--space-6)}
 }
-.hero h2{font-size:clamp(28px, 4vw, 44px); line-height:1.1; margin:0 0 10px}
-.hero p{font-size:clamp(16px, 2.2vw, 18px); color:var(--muted); margin:0 0 18px}
-.cta{display:flex; gap:12px; flex-wrap:wrap}
+.hero h2{font-size:clamp(30px, 4.4vw, 52px); line-height:1.15; margin:0 0 var(--space-2); letter-spacing:.2px}
+.hero p{font-size:clamp(16px, 2.1vw, 18px); color:var(--muted); margin:0 0 var(--space-4)}
+.cta{display:flex; gap:var(--space-3); flex-wrap:wrap}
 .btn{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:12px 16px; border-radius:12px;
-  border:1px solid var(--stroke);
+  display:inline-flex; align-items:center; gap:10px; padding:12px 18px;
+  border-radius:14px; border:1px solid var(--stroke);
   background:linear-gradient(180deg,
     color-mix(in oklab, var(--panel) 85%, transparent),
     color-mix(in oklab, var(--panel) 92%, transparent));
@@ -63,63 +74,85 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
 .btn.primary{
   border-color:color-mix(in oklab, var(--brand) 40%, var(--stroke));
   background:linear-gradient(180deg,
-    color-mix(in oklab, var(--brand) 20%, var(--panel)),
-    color-mix(in oklab, var(--panel) 95%, var(--brand)))
+    color-mix(in oklab, var(--brand) 22%, var(--panel)),
+    color-mix(in oklab, var(--panel) 95%, var(--brand)));
+  font-weight:600
 }
 
-/* Avatar – bordas suavizadas e tamanho menor */
+/* Cards & Blocks */
 .card{background:var(--panel); border:1px solid var(--stroke); border-radius:var(--radius-lg); box-shadow:var(--shadow)}
-.avatar-wrap{display:flex; justify-content:center; align-items:center; padding:18px}
-.avatar{
-  width:min(220px, 70%);
-  aspect-ratio:1/1; object-fit:cover;
-  border-radius:22px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25),
-              inset 0 0 0 1px color-mix(in oklab, white 6%, transparent);
-  -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, black 60%, transparent 95%);
-  mask-image: radial-gradient(120% 120% at 50% 50%, black 60%, transparent 95%);
-  filter: saturate(.96) contrast(.98) brightness(1.02);
-}
-.avatar-caption{font-size:13px; color:var(--muted); text-align:center; padding:0 0 14px}
-
-/* Sections */
-section{padding:24px 0 10px}
-section h3{font-size:22px; margin:0 0 6px}
-section p.lead{color:var(--muted); margin:0 0 16px}
-
-/* Cards grid */
-.grid{display:grid; gap:16px}
-@media(min-width:700px){ .grid{grid-template-columns: repeat(12, 1fr)} }
-.col-4{grid-column: span 12}
-.col-6{grid-column: span 12}
-.col-8{grid-column: span 12}
-.col-12{grid-column: span 12}
-@media(min-width:700px){
-  .col-4{grid-column: span 4}
-  .col-6{grid-column: span 6}
-  .col-8{grid-column: span 8}
-}
 .item{
-  padding:18px; border-radius:var(--radius);
+  padding:var(--space-4); border-radius:var(--radius);
   border:1px solid var(--stroke);
   background:linear-gradient(180deg,
     color-mix(in oklab, var(--panel) 88%, transparent),
     color-mix(in oklab, var(--panel) 96%, transparent))
 }
-.item h4{margin:0 0 6px; font-size:18px}
-.item p{margin:0 0 12px; color:var(--muted)}
+.item h4{margin:0 0 var(--space-2); font-size:20px}
+.item p{margin:0 0 var(--space-3); color:var(--muted)}
 .item .tag{
-  display:inline-block; font-size:12px;
-  padding:4px 8px; border:1px solid var(--stroke);
-  border-radius:100px; margin-right:8px
+  display:inline-block; font-size:12px; padding:6px 10px;
+  border:1px solid var(--stroke); border-radius:999px; margin-right:8px
+}
+
+/* Avatar com suavização e respiro */
+.avatar-wrap{display:flex; justify-content:center; align-items:center; padding:var(--space-4)}
+.avatar{
+  width:min(240px, 78%);
+  aspect-ratio:1/1; object-fit:cover;
+  border-radius:26px;
+  box-shadow:0 16px 40px rgba(0,0,0,.35),
+              inset 0 0 0 1px color-mix(in oklab, white 6%, transparent);
+  -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, black 58%, transparent 95%);
+          mask-image: radial-gradient(120% 120% at 50% 50%, black 58%, transparent 95%);
+  filter: saturate(.96) contrast(.98) brightness(1.02);
+}
+.avatar-caption{font-size:13px; color:var(--muted); text-align:center; padding:0 0 var(--space-4)}
+
+/* Sections com mais respiro e separadores */
+section{padding:var(--space-6) 0 var(--space-2)}
+section h3{font-size:24px; margin:0 0 var(--space-2); letter-spacing:.2px}
+section p.lead{color:var(--muted); margin:0 0 var(--space-4)}
+.section-divider{height:1px; background:var(--stroke); margin:var(--space-6) 0}
+
+/* Grid responsivo mais espaçado */
+.grid{display:grid; gap:var(--space-4)}
+@media(min-width:760px){ .grid{grid-template-columns: repeat(12, 1fr)} }
+.col-4{grid-column: span 12}
+.col-6{grid-column: span 12}
+.col-8{grid-column: span 12}
+.col-12{grid-column: span 12}
+@media(min-width:760px){
+  .col-4{grid-column: span 4}
+  .col-6{grid-column: span 6}
+  .col-8{grid-column: span 8}
 }
 
 /* Footer */
-footer{padding:28px 0 40px; color:var(--muted)}
-.foot{display:flex; gap:16px; justify-content:space-between; align-items:center; flex-wrap:wrap}
-.foot a{opacity:.9}
+footer{padding:var(--space-6) 0 var(--space-6); color:var(--muted)}
+.foot{display:flex; gap:var(--space-4); justify-content:space-between; align-items:center; flex-wrap:wrap}
+.foot a{opacity:.95}
 .foot a:hover{opacity:1}
 
-/* Small helpers */
-.pill{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--stroke)}
+/* Utilitários */
+.pill{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:8px 12px; border-radius:999px; border:1px solid var(--stroke)}
 .spacer{height:10px}
+
+/* Conteúdo: links em textos */
+.item a, .lead a{
+  text-decoration:underline;
+  text-decoration-color: color-mix(in oklab, var(--brand) 50%, transparent);
+  text-underline-offset:2px
+}
+.item a:hover{ text-decoration-color: var(--brand) }
+
+/* Preview (Kumu) dentro do <details> */
+details summary{
+  cursor:pointer; list-style:none; outline:none;
+  font-weight:600; padding:12px 14px; border-radius:12px;
+  border:1px solid var(--stroke);
+  background:linear-gradient(180deg,
+    color-mix(in oklab, var(--panel) 90%, transparent),
+    color-mix(in oklab, var(--panel) 98%, transparent));
+}
+details[open] summary{ border-bottom-left-radius:0; border-bottom-right-radius:0 }
