@@ -1,9 +1,8 @@
 :root{
   --bg: #0c0f16;            /* fundo geral (escuro elegante) */
-  --bg-accent:
-    radial-gradient(1200px 600px at 85% -10%, rgba(124,195,255,.12), transparent 45%),
-    radial-gradient(900px 500px at 15% -10%, rgba(139,255,209,.10), transparent 40%),
-    linear-gradient(180deg, #0c0f16, #0c0f16);
+  --bg-accent: radial-gradient(1200px 600px at 85% -10%, rgba(124,195,255,.12), transparent 45%),
+               radial-gradient(900px 500px at 15% -10%, rgba(139,255,209,.10), transparent 40%),
+               linear-gradient(180deg, #0c0f16, #0c0f16);
   --panel: #121826;         /* cartões e painéis */
   --panel-2:#0f1420;        /* cabeçalho fixo */
   --muted:#9aa3b2;          /* texto secundário */
@@ -32,14 +31,15 @@ html,body{
   margin:0; color:var(--text);
   background:var(--bg-accent);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size:16px; line-height:1.72;
+  font-size:16px; line-height:1.65;
 }
 a{color:inherit;text-decoration:none}
 .container{max-width:var(--maxw); margin:0 auto; padding:0 var(--space-4)}
+.no-scroll{overflow:hidden}
 
 /* Header */
 header{
-  position:sticky; top:0; z-index:50; border-bottom:1px solid var(--stroke);
+  position:sticky; top:0; z-index:100; border-bottom:1px solid var(--stroke);
   backdrop-filter:saturate(140%) blur(10px);
   background:color-mix(in oklab, var(--panel-2) 86%, transparent);
 }
@@ -51,9 +51,36 @@ header{
   box-shadow:0 0 0 6px color-mix(in oklab, var(--brand) 16%, transparent)
 }
 .brand h1{font-size:18px; margin:0; letter-spacing:.2px; font-weight:600}
+
+/* Nav (desktop) */
 nav ul{display:flex; gap:6px; margin:0; padding:0; list-style:none}
 nav a{padding:10px 14px; border-radius:12px; border:1px solid transparent}
 nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--panel) 72%, transparent)}
+
+/* Hamburger (mobile) */
+.hamburger{
+  display:none; position:relative; width:40px; height:40px;
+  border-radius:10px; border:1px solid var(--stroke);
+  background:linear-gradient(180deg,
+    color-mix(in oklab, var(--panel) 88%, transparent),
+    color-mix(in oklab, var(--panel) 96%, transparent));
+}
+.hamburger .bar{
+  position:absolute; left:9px; right:9px; height:2px; background:var(--text);
+  border-radius:4px; transition:transform .25s ease, opacity .2s ease;
+}
+.hamburger .bar:nth-child(1){ top:12px }
+.hamburger .bar:nth-child(2){ top:19px }
+.hamburger .bar:nth-child(3){ top:26px }
+.hamburger[aria-expanded="true"] .bar:nth-child(1){ transform:translateY(7px) rotate(45deg) }
+.hamburger[aria-expanded="true"] .bar:nth-child(2){ opacity:0 }
+.hamburger[aria-expanded="true"] .bar:nth-child(3){ transform:translateY(-7px) rotate(-45deg) }
+
+/* Overlay (mobile) */
+.nav-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.4);
+  z-index:90; backdrop-filter: blur(2px);
+}
 
 /* Hero */
 .hero{display:grid; grid-template-columns: 1fr; gap:var(--space-5); padding:var(--space-6) 0 var(--space-5)}
@@ -94,6 +121,7 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
   display:inline-block; font-size:12px; padding:6px 10px;
   border:1px solid var(--stroke); border-radius:999px; margin-right:8px
 }
+.status-row{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
 
 /* Avatar com suavização e respiro */
 .avatar-wrap{display:flex; justify-content:center; align-items:center; padding:var(--space-4)}
@@ -109,7 +137,7 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
 }
 .avatar-caption{font-size:13px; color:var(--muted); text-align:center; padding:0 0 var(--space-4)}
 
-/* Sections com mais respiro e separadores */
+/* Sections com mais respiro e separadores sutis */
 section{padding:var(--space-6) 0 var(--space-2)}
 section h3{font-size:24px; margin:0 0 var(--space-2); letter-spacing:.2px}
 section p.lead{color:var(--muted); margin:0 0 var(--space-4)}
@@ -134,11 +162,11 @@ footer{padding:var(--space-6) 0 var(--space-6); color:var(--muted)}
 .foot a{opacity:.95}
 .foot a:hover{opacity:1}
 
-/* Utilitários */
+/* Pequenos utilitários */
 .pill{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:8px 12px; border-radius:999px; border:1px solid var(--stroke)}
 .spacer{height:10px}
 
-/* Conteúdo: links em textos */
+/* Links destacados dentro de textos longos */
 .item a, .lead a{
   text-decoration:underline;
   text-decoration-color: color-mix(in oklab, var(--brand) 50%, transparent);
@@ -146,13 +174,17 @@ footer{padding:var(--space-6) 0 var(--space-6); color:var(--muted)}
 }
 .item a:hover{ text-decoration-color: var(--brand) }
 
-/* Preview (Kumu) dentro do <details> */
-details summary{
-  cursor:pointer; list-style:none; outline:none;
-  font-weight:600; padding:12px 14px; border-radius:12px;
-  border:1px solid var(--stroke);
-  background:linear-gradient(180deg,
-    color-mix(in oklab, var(--panel) 90%, transparent),
-    color-mix(in oklab, var(--panel) 98%, transparent));
+/* ====== RESPONSIVIDADE DO MENU (hamburger + drawer) ====== */
+@media (max-width: 920px){
+  .hamburger{display:block}
+  /* nav vira drawer lateral direito */
+  #navmenu{
+    position:fixed; top:72px; right:0; bottom:0; width:min(84vw, 360px);
+    background:var(--panel); border-left:1px solid var(--stroke);
+    transform:translateX(100%); transition:transform .28s ease;
+    padding:var(--space-5) var(--space-4); z-index:99; box-shadow:var(--shadow);
+  }
+  #navmenu ul{display:flex; flex-direction:column; gap:12px}
+  #navmenu a{display:block; padding:12px 14px; border-radius:12px}
+  #navmenu.open{ transform:translateX(0) }
 }
-details[open] summary{ border-bottom-left-radius:0; border-bottom-right-radius:0 }

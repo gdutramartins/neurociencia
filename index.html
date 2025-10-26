@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Neurociência na Prática — Gustavo Dutra Martins</title>
-  <meta name="description" content="Estudos de neurociência aplicada a empresas: trabalhos, estudos autorais, mapa mental (Kumu) e projeto final." />
+  <title>Neurociência nas Empresas</title>
+  <meta name="description" content="Estudos de neurociência aplicada a empresas: trabalhos da pós, estudos autorais, mapa mental (Kumu) e projeto final." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,11 +13,20 @@
 <body>
   <header>
     <div class="container nav">
-      <div class="brand" aria-label="Neurociência na Prática">
+      <a class="brand" href="#inicio" aria-label="Neurociência na Prática">
         <span class="dot" aria-hidden="true"></span>
         <h1>Meus Estudos Sobre Neurociência</h1>
-      </div>
-      <nav aria-label="Seções do site">
+      </a>
+
+      <!-- Botão hamburger (mobile) -->
+      <button class="hamburger" aria-label="Abrir menu" aria-controls="navmenu" aria-expanded="false">
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+      </button>
+
+      <!-- Navegação -->
+      <nav id="navmenu" aria-label="Seções do site">
         <ul>
           <li><a href="#inicio">Início</a></li>
           <li><a href="#trabalhos">Trabalhos</a></li>
@@ -27,6 +36,8 @@
         </ul>
       </nav>
     </div>
+    <!-- Overlay (para clicar fora e fechar o menu no mobile) -->
+    <div class="nav-overlay" hidden></div>
   </header>
 
   <main id="inicio" class="container">
@@ -53,6 +64,7 @@
     <section id="trabalhos">
       <h3>Trabalhos</h3>
       <p class="lead">Entregas e projetos desenvolvidos nas disciplinas da pós-graduação.</p>
+
       <div class="grid">
         <!-- Card REAL já existente -->
         <article class="item col-6">
@@ -60,19 +72,20 @@
           <p>Síntese do processamento em níveis, aferências/eferências e principais disfunções, com referências.</p>
           <div class="cta">
             <a class="btn" href="trabalhos/neocortex.html">Abrir página</a>
-            <!-- Se existir PDF, habilite:
+            <!-- Se houver PDF, habilite:
             <a class="btn" href="trabalhos/neocortex.pdf">PDF</a>
             -->
           </div>
         </article>
 
-        <!-- Placeholder para o próximo trabalho -->
+        <!-- Placeholder para próximos trabalhos -->
         <article class="item col-6">
           <h4>(Exemplo) Trabalho — Título</h4>
           <p>Resumo curto (2–3 linhas) explicando objetivo, método e principais achados.</p>
           <div><span class="tag">PDF</span><span class="tag">Apresentação</span></div>
         </article>
       </div>
+
       <div class="section-divider"></div>
     </section>
 
@@ -80,23 +93,27 @@
     <section id="estudos">
       <h3>Meus Estudos</h3>
       <p class="lead">Tópicos que explorei e estou publicando como material de referência.</p>
+
       <div class="grid">
         <article class="item col-4">
           <h4>(Exemplo) Lobo Límbico — síntese</h4>
           <p>Notas comentadas, circuito de Papez e interfaces com PFC e tálamo.</p>
           <div><span class="tag">Notas</span><span class="tag">Referências</span></div>
         </article>
+
         <article class="item col-4">
           <h4>(Exemplo) Níveis corticais</h4>
           <p>Primário → secundário → terciário com casos práticos.</p>
           <div><span class="tag">Artigo curto</span></div>
         </article>
+
         <article class="item col-4">
           <h4>(Exemplo) Neocórtex ↔ Hipocampo</h4>
           <p>Vias, hipóteses e leituras selecionadas.</p>
           <div><span class="tag">Mapa</span></div>
         </article>
       </div>
+
       <div class="section-divider"></div>
     </section>
 
@@ -117,7 +134,7 @@
         <aside class="item col-4">
           <h4>Como usar</h4>
           <ul>
-            <li><strong>Filtro (parte inferior):</strong> use os filtros para mostrar/esconder classes e tipos de conexão.</li>
+            <li><strong>Filtro (parte inferior):</strong> use para mostrar/esconder classes e tipos de conexão.</li>
             <li><strong>Clique nas arestas:</strong> detalhes/justificativas/fontes aparecem no painel lateral.</li>
             <li><strong>Zoom & pan:</strong> role para aproximar/afastar e arraste para navegar.</li>
             <li><strong>Buscar:</strong> procure nós por nome (ex.: “PFC”, “tálamo anterior”).</li>
@@ -125,7 +142,7 @@
         </aside>
       </div>
 
-      <!-- Preview embutido (opcional). Se não quiser, basta remover o bloco abaixo. -->
+      <!-- Preview embutido (opcional) -->
       <details class="item col-12" style="margin-top:16px">
         <summary>Ver preview interativo (iframe)</summary>
         <div class="frame" style="border:1px solid var(--stroke); border-radius:16px; overflow:hidden; height:65vh; background:var(--panel); margin-top:12px">
@@ -145,7 +162,7 @@
       <h3>Projeto Final</h3>
       <p class="lead">Em construção. Em breve, resumo do problema, metodologia e protótipos.</p>
       <div class="grid">
-        <article class="item col-12" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap">
+        <article class="item col-12 status-row">
           <div>
             <h4>Status</h4>
             <p>Ainda não está pronto. Esta seção apresentará um infográfico do pipeline (dados → análise → intervenção) e links para o repositório.</p>
@@ -166,7 +183,32 @@
   </footer>
 
   <script>
+    // ano no rodapé
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // hamburger menu
+    const btn = document.querySelector('.hamburger');
+    const nav = document.getElementById('navmenu');
+    const overlay = document.querySelector('.nav-overlay');
+
+    function closeMenu(){
+      btn.setAttribute('aria-expanded','false');
+      nav.classList.remove('open');
+      overlay.hidden = true;
+      document.body.classList.remove('no-scroll');
+    }
+    function openMenu(){
+      btn.setAttribute('aria-expanded','true');
+      nav.classList.add('open');
+      overlay.hidden = false;
+      document.body.classList.add('no-scroll');
+    }
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      expanded ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', closeMenu);
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   </script>
 </body>
 </html>
