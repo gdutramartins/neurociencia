@@ -1,18 +1,19 @@
 :root{
-  --bg: #0c0f16;            /* fundo geral (escuro elegante) */
-  --bg-accent: radial-gradient(1200px 600px at 85% -10%, rgba(124,195,255,.12), transparent 45%),
-               radial-gradient(900px 500px at 15% -10%, rgba(139,255,209,.10), transparent 40%),
-               linear-gradient(180deg, #0c0f16, #0c0f16);
-  --panel: #121826;         /* cartões e painéis */
-  --panel-2:#0f1420;        /* cabeçalho fixo */
-  --muted:#9aa3b2;          /* texto secundário */
-  --text:#e8eef8;           /* texto principal */
+  --bg: #090c12; /* fundo ainda mais escuro para contraste */
+  --bg-accent:
+    radial-gradient(1200px 600px at 85% -10%, rgba(124,195,255,.14), transparent 45%),
+    radial-gradient(900px 500px at 15% -10%, rgba(139,255,209,.12), transparent 40%),
+    linear-gradient(180deg, #090c12, #0b0f16);
+  --panel: #101625;         /* cartões e painéis */
+  --panel-2:#0c1220;        /* cabeçalho fixo e drawer */
+  --muted:#a7b1c2;          /* texto secundário */
+  --text:#eef3fb;           /* texto principal mais “quente” */
   --brand:#7cc3ff;          /* cor 1 da marca */
   --brand-2:#8bffd1;        /* cor 2 da marca */
-  --stroke: rgba(255,255,255,.08);
-  --shadow: 0 20px 50px rgba(0,0,0,.45);
+  --stroke: rgba(255,255,255,.09);
+  --shadow: 0 24px 60px rgba(0,0,0,.55);
   --radius: 16px;
-  --radius-lg: 24px;
+  --radius-lg: 26px;
   --maxw: 1180px;
   --space-1: 8px;  --space-2: 12px; --space-3: 16px; --space-4: 24px; --space-5: 32px; --space-6: 48px; --space-7: 64px;
 }
@@ -31,7 +32,7 @@ html,body{
   margin:0; color:var(--text);
   background:var(--bg-accent);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size:16px; line-height:1.65;
+  font-size:16px; line-height:1.7;
 }
 a{color:inherit;text-decoration:none}
 .container{max-width:var(--maxw); margin:0 auto; padding:0 var(--space-4)}
@@ -48,14 +49,17 @@ header{
 .brand .dot{
   width:14px; height:14px; border-radius:50%;
   background:linear-gradient(135deg, var(--brand), var(--brand-2));
-  box-shadow:0 0 0 6px color-mix(in oklab, var(--brand) 16%, transparent)
+  box-shadow:0 0 0 6px color-mix(in oklab, var(--brand) 14%, transparent)
 }
 .brand h1{font-size:18px; margin:0; letter-spacing:.2px; font-weight:600}
 
 /* Nav (desktop) */
 nav ul{display:flex; gap:6px; margin:0; padding:0; list-style:none}
-nav a{padding:10px 14px; border-radius:12px; border:1px solid transparent}
-nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--panel) 72%, transparent)}
+nav a{
+  padding:10px 14px; border-radius:12px; border:1px solid transparent;
+  transition:border-color .2s ease, background .2s ease;
+}
+nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--panel) 74%, transparent)}
 
 /* Hamburger (mobile) */
 .hamburger{
@@ -78,16 +82,42 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
 
 /* Overlay (mobile) */
 .nav-overlay{
-  position:fixed; inset:0; background:rgba(0,0,0,.4);
+  position:fixed; inset:0; background:rgba(0,0,0,.52);
   z-index:90; backdrop-filter: blur(2px);
 }
 
-/* Hero */
-.hero{display:grid; grid-template-columns: 1fr; gap:var(--space-5); padding:var(--space-6) 0 var(--space-5)}
-@media(min-width:980px){
-  .hero{grid-template-columns: 1.25fr .75fr; align-items:center; padding:var(--space-7) 0 var(--space-6)}
+/* ===== Drawer do menu (agora com fundo legível) ===== */
+@media (max-width: 920px){
+  .hamburger{display:block}
+  #navmenu{
+    position:fixed; top:72px; right:0; bottom:0; width:min(84vw, 380px);
+    background:rgba(12, 18, 32, .96);
+    backdrop-filter: blur(8px) saturate(130%);
+    border-left:1px solid var(--stroke);
+    transform:translateX(100%); transition:transform .28s ease;
+    padding:var(--space-5) var(--space-4); z-index:99; box-shadow:var(--shadow);
+  }
+  #navmenu.open{ transform:translateX(0) }
+  #navmenu ul{display:flex; flex-direction:column; gap:12px}
+  #navmenu a{
+    display:block; padding:12px 14px; border-radius:12px;
+    background:linear-gradient(180deg,
+      color-mix(in oklab, var(--panel) 86%, transparent),
+      color-mix(in oklab, var(--panel) 94%, transparent));
+    border:1px solid var(--stroke);
+  }
 }
-.hero h2{font-size:clamp(30px, 4.4vw, 52px); line-height:1.15; margin:0 0 var(--space-2); letter-spacing:.2px}
+
+/* Hero */
+.hero{display:grid; grid-template-columns: 1fr; gap:var(--space-6); padding:var(--space-7) 0 var(--space-6)}
+@media(min-width:980px){
+  .hero{grid-template-columns: 1.2fr .8fr; align-items:center}
+}
+.grad-title{
+  background: linear-gradient(90deg, #eaf2ff 0%, #b8e7ff 40%, #bfffe4 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(124,195,255,.12));
+}
 .hero p{font-size:clamp(16px, 2.1vw, 18px); color:var(--muted); margin:0 0 var(--space-4)}
 .cta{display:flex; gap:var(--space-3); flex-wrap:wrap}
 .btn{
@@ -96,13 +126,15 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
   background:linear-gradient(180deg,
     color-mix(in oklab, var(--panel) 85%, transparent),
     color-mix(in oklab, var(--panel) 92%, transparent));
-  box-shadow:var(--shadow)
+  box-shadow:var(--shadow);
+  transition: transform .12s ease, box-shadow .12s ease;
 }
+.btn:hover{ transform: translateY(-1px); box-shadow:0 14px 30px rgba(0,0,0,.45) }
 .btn.primary{
-  border-color:color-mix(in oklab, var(--brand) 40%, var(--stroke));
+  border-color:color-mix(in oklab, var(--brand) 42%, var(--stroke));
   background:linear-gradient(180deg,
-    color-mix(in oklab, var(--brand) 22%, var(--panel)),
-    color-mix(in oklab, var(--panel) 95%, var(--brand)));
+    color-mix(in oklab, var(--brand) 24%, var(--panel)),
+    color-mix(in oklab, var(--panel) 94%, var(--brand)));
   font-weight:600
 }
 
@@ -111,9 +143,11 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
 .item{
   padding:var(--space-4); border-radius:var(--radius);
   border:1px solid var(--stroke);
-  background:linear-gradient(180deg,
-    color-mix(in oklab, var(--panel) 88%, transparent),
-    color-mix(in oklab, var(--panel) 96%, transparent))
+  background:
+    radial-gradient(600px 300px at 100% -20%, rgba(124,195,255,.08), transparent 40%),
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--panel) 88%, transparent),
+      color-mix(in oklab, var(--panel) 96%, transparent));
 }
 .item h4{margin:0 0 var(--space-2); font-size:20px}
 .item p{margin:0 0 var(--space-3); color:var(--muted)}
@@ -123,27 +157,35 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
 }
 .status-row{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap}
 
-/* Avatar com suavização e respiro */
+/* ===== Foto do hero com máscara fluida + halo ===== */
 .avatar-wrap{display:flex; justify-content:center; align-items:center; padding:var(--space-4)}
-.avatar{
-  width:min(240px, 78%);
-  aspect-ratio:1/1; object-fit:cover;
-  border-radius:26px;
-  box-shadow:0 16px 40px rgba(0,0,0,.35),
-              inset 0 0 0 1px color-mix(in oklab, white 6%, transparent);
-  -webkit-mask-image: radial-gradient(120% 120% at 50% 50%, black 58%, transparent 95%);
-          mask-image: radial-gradient(120% 120% at 50% 50%, black 58%, transparent 95%);
-  filter: saturate(.96) contrast(.98) brightness(1.02);
+.avatar-shell{
+  position:relative; width:min(260px, 82%); aspect-ratio:1/1;
+  border-radius:28px; overflow:hidden;
+  /* halo externo sutil */
+  box-shadow:0 18px 46px rgba(0,0,0,.42), 0 0 0 1px rgba(255,255,255,.04);
 }
-.avatar-caption{font-size:13px; color:var(--muted); text-align:center; padding:0 0 var(--space-4)}
+.avatar-shell::before{
+  content:""; position:absolute; inset:-8%;
+  background: radial-gradient(60% 60% at 50% 45%, rgba(140,220,255,.35), transparent 72%);
+  filter: blur(20px); opacity:.45; pointer-events:none;
+}
+.avatar{
+  width:100%; height:100%; object-fit:cover;
+  /* máscara mais suave: some gradualmente perto das bordas */
+  -webkit-mask-image: radial-gradient(80% 80% at 50% 50%, black 80%, transparent 100%);
+          mask-image: radial-gradient(80% 80% at 50% 50%, black 80%, transparent 100%);
+  border-radius:28px;
+  filter: saturate(.98) contrast(.96) brightness(1.06);
+}
 
-/* Sections com mais respiro e separadores sutis */
+/* Sections e divisores */
 section{padding:var(--space-6) 0 var(--space-2)}
 section h3{font-size:24px; margin:0 0 var(--space-2); letter-spacing:.2px}
 section p.lead{color:var(--muted); margin:0 0 var(--space-4)}
 .section-divider{height:1px; background:var(--stroke); margin:var(--space-6) 0}
 
-/* Grid responsivo mais espaçado */
+/* Grid */
 .grid{display:grid; gap:var(--space-4)}
 @media(min-width:760px){ .grid{grid-template-columns: repeat(12, 1fr)} }
 .col-4{grid-column: span 12}
@@ -156,35 +198,24 @@ section p.lead{color:var(--muted); margin:0 0 var(--space-4)}
   .col-8{grid-column: span 8}
 }
 
+/* Frame do preview (Kumu) */
+.frame{
+  border:1px solid var(--stroke); border-radius:16px; overflow:hidden;
+  height:65vh; background:var(--panel); margin-top:12px
+}
+
 /* Footer */
 footer{padding:var(--space-6) 0 var(--space-6); color:var(--muted)}
 .foot{display:flex; gap:var(--space-4); justify-content:space-between; align-items:center; flex-wrap:wrap}
 .foot a{opacity:.95}
 .foot a:hover{opacity:1}
 
-/* Pequenos utilitários */
+/* Auxiliares */
 .pill{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:8px 12px; border-radius:999px; border:1px solid var(--stroke)}
 .spacer{height:10px}
-
-/* Links destacados dentro de textos longos */
 .item a, .lead a{
   text-decoration:underline;
   text-decoration-color: color-mix(in oklab, var(--brand) 50%, transparent);
   text-underline-offset:2px
 }
 .item a:hover{ text-decoration-color: var(--brand) }
-
-/* ====== RESPONSIVIDADE DO MENU (hamburger + drawer) ====== */
-@media (max-width: 920px){
-  .hamburger{display:block}
-  /* nav vira drawer lateral direito */
-  #navmenu{
-    position:fixed; top:72px; right:0; bottom:0; width:min(84vw, 360px);
-    background:var(--panel); border-left:1px solid var(--stroke);
-    transform:translateX(100%); transition:transform .28s ease;
-    padding:var(--space-5) var(--space-4); z-index:99; box-shadow:var(--shadow);
-  }
-  #navmenu ul{display:flex; flex-direction:column; gap:12px}
-  #navmenu a{display:block; padding:12px 14px; border-radius:12px}
-  #navmenu.open{ transform:translateX(0) }
-}
