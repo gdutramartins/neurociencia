@@ -8,6 +8,7 @@
   --panel-2: #10131a;
   --stroke: #222837;
   --shadow: 0 10px 30px rgba(0,0,0,.25);
+  --overlay: rgba(8, 10, 16, .55); /* scrim por cima do conteúdo */
 }
 
 /* ===== Reset mínimo ===== */
@@ -19,21 +20,23 @@ body{
   color: var(--text);
   line-height: 1.55;
 }
+a{ color: inherit; }
 
 /* ===== Header ===== */
-header{
-  position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--stroke);
+.site-header{
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 1px solid var(--stroke);
   backdrop-filter: saturate(140%) blur(10px);
   background: color-mix(in oklab, var(--panel-2) 86%, transparent);
 
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* tudo à esquerda */
+  justify-content: flex-start; /* hambúrguer à esquerda */
   gap: 12px;
   padding: .65rem 1rem;
 }
 
-/* Ícone hambúrguer à esquerda */
+/* Hambúrguer (esquerda, só mobile) */
 .menu-toggle{
   cursor: pointer;
   font-size: 1.7rem;
@@ -42,6 +45,7 @@ header{
   border: 0;
   background: transparent;
   color: var(--text);
+  display: none; /* some no desktop */
 }
 
 /* Título + logo */
@@ -53,16 +57,15 @@ header{
   font-size: clamp(1.15rem, 2.4vw, 1.6rem);
   font-weight: 700;
 }
-
 .logo-img{
-  inline-size: 38px;  /* controla o tamanho (redimensiona a imagem grande) */
+  inline-size: 38px;   /* redimensiona a imagem grande via CSS */
   block-size: 38px;
   object-fit: contain;
   flex: 0 0 auto;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
 }
 
-/* Navegação */
+/* Navegação – desktop inline à direita */
 .site-nav{ margin-left: auto; }
 .site-nav ul{
   display: flex; align-items: center; gap: .8rem;
@@ -72,27 +75,49 @@ header{
   display: inline-block;
   padding: .45rem .7rem;
   border-radius: .5rem;
-  color: var(--text);
   text-decoration: none;
+  color: var(--text);
 }
 .site-nav a:hover{ background: color-mix(in oklab, var(--panel-1) 70%, transparent); }
 
-/* Mobile: menu off-canvas simples à esquerda */
-@media (max-width: 820px){
+/* ===== Mobile nav (off-canvas com fundo opaco por cima do conteúdo) ===== */
+@media (max-width: 900px){
+  .menu-toggle{ display: inline-flex; } /* aparece no mobile */
+
   .site-nav{
-    position: fixed; inset: 56px auto 0 0; /* abaixo do header, preso na esquerda */
-    width: min(80vw, 320px);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: min(82vw, 340px);
+    padding: 72px 1rem 1rem; /* espaço pro header */
     transform: translateX(-100%);
     transition: transform .25s ease;
-    background: color-mix(in oklab, var(--panel-1) 92%, transparent);
+    /* FUNDO OPAQUE/LEGÍVEL e acima de tudo */
+    background: rgba(14, 18, 28, .96);
+    backdrop-filter: saturate(140%) blur(8px);
     border-right: 1px solid var(--stroke);
     box-shadow: var(--shadow);
-    padding: 1rem;
+    z-index: 1000; /* fica por cima do fundo */
   }
   .site-nav.open{ transform: translateX(0); }
-  .site-nav ul{ flex-direction: column; align-items: flex-start; gap: .4rem; }
-  .site-nav a{ width: 100%; }
+
+  .site-nav ul{
+    flex-direction: column; align-items: flex-start; gap: .2rem;
+  }
+  .site-nav a{
+    width: 100%;
+    padding: .7rem .8rem;
+    border-radius: .6rem;
+  }
 }
+
+/* Scrim (camada translúcida atrás do menu) */
+.nav-scrim{
+  position: fixed; inset: 0;
+  background: var(--overlay);
+  z-index: 900;
+}
+[hidden]{ display: none !important; }
+.no-scroll{ overflow: hidden; }
 
 /* ===== Hero ===== */
 .hero{
@@ -122,24 +147,14 @@ header{
 }
 .btn.ghost{
   background: transparent; color: var(--text);
-  border-color: var(--stroke);
-}
-
-/* Autor */
-.author{
-  display: flex; align-items: center; gap: .8rem;
-  margin-top: 1.2rem;
-}
-.author img{
-  width: 72px; height: 72px; border-radius: 50%;
-  object-fit: cover; border: 2px solid var(--stroke);
+  border: 1px solid var(--stroke);
 }
 
 /* ===== Seções ===== */
 .section{ padding: 2rem 1rem; max-width: 1024px; margin: 0 auto; }
 .section > h3{ margin: 0 0 1rem 0; font-size: 1.25rem; }
 
-/* Cards e itens */
+/* Cards e itens (mantidos) */
 .card, .item{
   background: color-mix(in oklab, var(--panel-1) 80%, transparent);
   border: 1px solid var(--stroke);
@@ -148,7 +163,8 @@ header{
   box-shadow: var(--shadow);
 }
 .card + .card, .item + .item{ margin-top: .9rem; }
-.card.muted{ opacity: .8; }
+.card.muted{ opacity: .85; }
+.card h4, .item h4{ margin: 0 0 .4rem 0; }
 
 .link{
   color: var(--brand); text-decoration: none; font-weight: 600;
@@ -165,6 +181,15 @@ header{
 }
 .footer a{ color: var(--brand); text-decoration: none; }
 .footer a:hover{ text-decoration: underline; }
+
+/* ===== Acessibilidade e preferências ===== */
+:focus-visible{
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; animation: none !important; }
+}
 
 /* ===== Ajustes finos ===== */
 @media (max-width: 420px){
