@@ -16,6 +16,7 @@
   --radius-lg: 26px;
   --maxw: 1180px;
   --space-1: 8px;  --space-2: 12px; --space-3: 16px; --space-4: 24px; --space-5: 32px; --space-6: 48px; --space-7: 64px;
+   --header-h: 72px;
 }
 @media (prefers-color-scheme: light){
   :root{
@@ -37,6 +38,12 @@ html,body{
 a{color:inherit;text-decoration:none}
 .container{max-width:var(--maxw); margin:0 auto; padding:0 var(--space-4)}
 .no-scroll{overflow:hidden}
+
+.nav-overlay{
+  position:fixed; inset:0; background:rgba(0,0,0,.56);
+  z-index: 900; backdrop-filter: blur(2px);
+}
+
 
 /* Header */
 header{
@@ -88,26 +95,52 @@ nav a:hover{border-color:var(--stroke); background:color-mix(in oklab, var(--pan
 
 /* ===== Drawer do menu — FUNDO SÓLIDO ===== */
 @media (max-width: 920px){
-  .hamburger{display:block}
-  #navmenu{
-    position:fixed; top:72px; right:0; bottom:0; width:min(84vw, 380px);
-    background:rgba(12, 18, 32, .96);               /* FUNDO OPACO/LEGÍVEL */
-    backdrop-filter: blur(10px) saturate(130%);
-    border-left:1px solid var(--stroke);
-    transform:translateX(100%); transition:transform .28s ease;
-    padding:var(--space-5) var(--space-4); z-index:99; box-shadow:var(--shadow);
-  }
-  #navmenu.open{ transform:translateX(0) }
-  #navmenu ul{display:flex; flex-direction:column; gap:12px}
-  #navmenu a{
-    display:block; padding:12px 14px; border-radius:12px;
-    background:linear-gradient(180deg,
-      color-mix(in oklab, var(--panel) 86%, transparent),
-      color-mix(in oklab, var(--panel) 94%, transparent));
-    border:1px solid var(--stroke);
-  }
-}
+  .no-scroll{height:100vh; overflow:hidden}
 
+  .hamburger{display:block}
+
+  /* NAV como drawer à direita cobrindo a tela inteira em altura */
+  #navmenu{
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(86vw, 380px);
+    /* fundo sólido e escuro — nada de branco translúcido */
+    background: rgba(12, 18, 32, 0.98);  /* var(--panel-2) + opacidade */
+    color: var(--text);
+    backdrop-filter: blur(10px) saturate(130%);
+    border-left: 1px solid var(--stroke);
+    box-shadow: var(--shadow);
+    z-index: 1000;
+
+    /* começa fora da tela e entra com animação */
+    transform: translateX(100%);
+    transition: transform .28s ease;
+
+    /* espaço para não “bater” no header */
+    padding: calc(var(--header-h) + 12px) var(--space-4) var(--space-5);
+  }
+  #navmenu.open{ transform: translateX(0) }
+
+  /* lista vertical, limpa e legível */
+  #navmenu ul{
+    display: flex; flex-direction: column;
+    gap: 14px; margin: 0; padding: 0; list-style: none;
+  }
+  #navmenu a{
+    display: block;
+    padding: 14px 16px;
+    border-radius: 12px;
+    color: var(--text);
+    border: 1px solid var(--stroke);
+    /* fundo escuro discreto (nada de pílula branca) */
+    background: linear-gradient(180deg,
+      color-mix(in oklab, var(--panel) 86%, transparent),
+      color-mix(in oklab, var(--panel) 94%, transparent)
+    );
+    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  }
+  #navmenu a:active{ transform: translateY(1px) }
+}
 /* ===== HERO ===== */
 .hero{display:grid; grid-template-columns: 1fr; gap:var(--space-6); padding:var(--space-7) 0 var(--space-6)}
 @media(min-width:980px){

@@ -207,6 +207,22 @@
     });
     overlay.addEventListener('click', closeMenu);
     nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  </script>
+	
+	 // fecha o menu ao sair do mobile
+  const CLOSE_BP = 920;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > CLOSE_BP) {
+      const btn = document.querySelector('.hamburger');
+      const nav = document.getElementById('navmenu');
+      const overlay = document.querySelector('.nav-overlay');
+      if (btn && nav && overlay) {
+        btn.setAttribute('aria-expanded','false');
+        nav.classList.remove('open');
+        overlay.hidden = true;
+        document.body.classList.remove('no-scroll');
+      }
+    }
+  });
+</script>
 </body>
 </html>
