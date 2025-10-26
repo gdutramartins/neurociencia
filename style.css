@@ -1,278 +1,76 @@
-/* ---------- Reset/Setup ---------- */
-* { box-sizing: border-box; }
-html, body { height: 100%; scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
-  color: #e6e6e6;
-  background: #0b0b0b;
-  --page-bg: #0b0b0b;
-  --accent: #6ef2c1;       /* tom esverdeado sutil para o “glow” */
-  --muted: #b7b7b7;
-  --container: 1140px;
+:root{
+  --bg: #0b0d12;
+  --panel: #121620;
+  --muted:#9aa3b2;
+  --text:#e9eef7;
+  --brand:#7cc3ff;
+  --brand-2:#8bffd1;
+  --stroke: rgba(255,255,255,.08);
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 16px;
+  --radius-lg: 24px;
+  --maxw: 1200px;
+}
+@media (prefers-color-scheme: light){
+  :root{ 
+    --bg:#f6f8fb; 
+    --panel:#ffffff; 
+    --muted:#5b6472; 
+    --text:#111827; 
+    --stroke:rgba(0,0,0,.08); 
+    --shadow:0 10px 30px rgba(0,0,0,.07);
+  } 
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  background:radial-gradient(1200px 600px at 80% -10%, rgba(124,195,255,.18), transparent 40%),
+             linear-gradient(180deg, var(--bg), var(--bg));
+  color:var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+
+/* Header */
+header{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter:saturate(140%) blur(8px);
+  background:color-mix(in oklab, var(--panel) 86%, transparent);
+  border-bottom:1px solid var(--stroke);
+}
+.nav{display:flex; align-items:center; justify-content:space-between; height:64px}
+.brand{display:flex; gap:12px; align-items:center}
+.brand .dot{
+  width:12px; height:12px; border-radius:50%;
+  background:linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow:0 0 0 4px color-mix(in oklab, var(--brand) 15%, transparent)
+}
+.brand h1{font-size:16px; margin:0; letter-spacing:.3px}
+nav ul{display:flex; gap:10px; margin:0; padding:0; list-style:none}
+nav a{padding:10px 12px; border-radius:10px; border:1px solid transparent}
+nav a:hover{
+  border-color:var(--stroke);
+  background:color-mix(in oklab, var(--panel) 70%, transparent)
 }
 
-img { max-width: 100%; display: block; }
-
-/* Links suaves */
-a { color: #d8d8d8; text-decoration: none; transition: opacity .2s ease, color .2s ease, background .2s ease, border-color .2s ease; }
-a:hover { color: #fff; text-decoration: underline; text-underline-offset: 2px; }
-
-/* ---------- Helpers ---------- */
-.container {
-  width: 100%;
-  max-width: var(--container);
-  margin-inline: auto;
-  padding-inline: 24px;
+/* Hero */
+.hero{
+  display:grid; grid-template-columns: 1fr; gap:28px;
+  padding:36px 0 28px
 }
-
-/* ---------- Header / Navegação ---------- */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 30;
-  background: linear-gradient(180deg, rgba(11,11,11,.9) 0%, rgba(11,11,11,.6) 100%);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,.06);
+@media(min-width:900px){
+  .hero{grid-template-columns: 1.25fr .75fr; align-items:center; padding:56px 0 40px}
 }
-
-.nav-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 64px;
-  gap: 16px;
+.hero h2{
+  font-size:clamp(28px, 4vw, 44px);
+  line-height:1.1; margin:0 0 10px
 }
-
-.brand {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  letter-spacing: .2px;
-  font-size: 20px;
+.hero p{
+  font-size:clamp(16px, 2.2vw, 18px);
+  color:var(--muted); margin:0 0 18px
 }
-.brand span { color: var(--accent); }
-
-/* Menu principal */
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.nav-link {
-  color: #d8d8d8;
-  font-size: 16px;
-  line-height: 1.2;
-  padding: 8px 4px;
-  border-radius: 6px;
-}
-.nav-link:hover { color: #fff; }
-
-/* Toggle (hambúrguer) — visível só no mobile */
-.nav-toggle {
-  display: none;
-  background: transparent;
-  border: 0;
-  padding: 10px;
-  cursor: pointer;
-}
-.nav-toggle .nav-toggle-bar {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: #fff;
-  margin: 5px 0;
-  border-radius: 2px;
-}
-
-/* ---------- Hero ---------- */
-.hero {
-  position: relative;
-  padding: clamp(32px, 6vw, 72px) 0 110px; /* espaço extra para a pill inferior */
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: .9fr 1.1fr;  /* foto à esquerda */
-  align-items: center;
-  gap: clamp(24px, 5vw, 64px);
-}
-
-.hero-title {
-  margin: 0 0 10px;
-  font-size: clamp(28px, 4.2vw, 56px);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-
-.hero-subtitle {
-  margin: 0 0 24px;
-  color: var(--muted);
-  font-size: clamp(16px, 2vw, 18px);
-  max-width: 52ch;
-}
-
-.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-
-/* Botão único — LinkedIn (estilo “pílula” com glow sutil) */
-.btn-linkedin {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 18px 12px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.18);
-  color: #fff;
-  background: rgba(255,255,255,.04);
-  font-weight: 700;
-  letter-spacing: .2px;
-  position: relative;
-  overflow: hidden;
-}
-.btn-linkedin::after{
-  content:"";
-  position:absolute; inset:-2px;
-  border-radius: inherit;
-  background: radial-gradient(120px 120px at 85% 50%, color-mix(in oklab, var(--accent) 70%, transparent), transparent 60%);
-  opacity:.7; pointer-events:none;
-}
-.btn-linkedin:hover {
-  border-color: rgba(255,255,255,.3);
-  background: rgba(255,255,255,.07);
-}
-.btn-linkedin .icon { width: 18px; height: 18px; fill: currentColor; display: inline-block; }
-
-/* ---------- Foto do Hero (sem borda; sem máscaras) ---------- */
-.hero-photo-wrap {
-  position: relative;
-  overflow: hidden; /* evita qualquer bleed parecer borda */
-  border: 0;
-  box-shadow: none;
-}
-.hero-photo {
-  display: block;
-  width: min(440px, 100%);
-  height: auto;
-  border: 0 !important;
-  outline: none !important;
-  box-shadow: none !important;
-  background: transparent;
-  /* nenhuma máscara/fade aqui — o efeito vem EMBUTIDO na imagem */
-}
-
-/* ---------- Pill inferior (menu secundário arredondado) ---------- */
-.section-pill {
-  position: absolute;
-  left: 50%;
-  bottom: -36px; /* sobrepõe discretamente a próxima seção */
-  transform: translateX(-50%);
-  z-index: 25;
-  width: min(96%, 1040px);
-}
-.pill-list {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin: 0;
-  padding: 12px 18px;
-  list-style: none;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 999px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
-}
-.pill-link {
-  color: #cfeee6;                 /* links mais suaves */
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-size: 13px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  white-space: nowrap;
-  transition: background .2s ease, color .2s ease;
-}
-.pill-link:hover { color: #fff; background: rgba(255,255,255,.06); }
-.pill-link.active { color: #0e1b16; background: var(--accent); }
-
-.pill-ext::after { /* seta discreta a la “expert →” */
-  content: " ↗";
-  font-weight: 700;
-}
-
-.divider {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  background: rgba(255,255,255,.12);
-}
-
-/* ---------- Seções ---------- */
-.section {
-  padding: clamp(56px, 9vw, 120px) 0;
-  border-top: 1px solid rgba(255,255,255,.06);
-}
-.section h2 {
-  margin: 0 0 10px;
-  font-size: clamp(22px, 3.6vw, 34px);
-}
-
-/* ---------- Rodapé ---------- */
-.site-footer {
-  border-top: 1px solid rgba(255,255,255,.06);
-  padding: 24px 0 40px;
-  color: var(--muted);
-}
-
-/* ---------- Responsividade ---------- */
-
-/* <= 980px: grid vira 1 coluna; foto acima do texto */
-@media (max-width: 980px) {
-  .hero-grid { grid-template-columns: 1fr; }
-  .hero-photo-wrap { order: 0; }
-  .hero-copy { order: 1; }
-}
-
-/* <= 720px: ativa o nav mobile e ajusta tipografia do menu */
-@media (max-width: 720px) {
-  .nav-toggle { display: inline-block; }
-  .nav {
-    position: fixed;
-    inset: 64px 0 auto 0; /* abaixo do header */
-    background: rgba(11,11,11,.98);
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    display: none;
-    flex-direction: column;
-    gap: 0;
-    padding: 8px 16px 16px;
-    z-index: 40;
-  }
-  .nav.open { display: flex; }
-
-  .nav-link {
-    font-size: 14px;
-    padding: 12px 8px;
-    font-weight: 500;
-    letter-spacing: 0;
-  }
-
-  body.nav-open { overflow: hidden; }
-
-  /* Pill: compacta e permite wrap */
-  .pill-list {
-    flex-wrap: wrap;
-    row-gap: 6px;
-    justify-content: center;
-  }
-  .pill-link { font-size: 12px; padding: 8px 10px; }
-  .divider { display: none; }
-}
-
-/* <= 420px: ajustes finais */
-@media (max-width: 420px) {
-  .brand { font-size: 18px; }
-  .hero-title { font-size: clamp(26px, 8vw, 36px); }
-  .nav-link { font-size: 13.5px; }
-}
+.cta{display:flex; gap:12px; flex-wrap:wrap}
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:12px 16px

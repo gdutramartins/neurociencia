@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mapa Mental — Grafo de Aferências e Eferências</title>
+  <link rel="stylesheet" href="style.css" />
+  <style> main{max-width:var(--maxw); margin:0 auto; padding:20px} .hero h2{margin-top:12px} .frame{border:1px solid var(--stroke); border-radius:16px; overflow:hidden; height:65vh; background:var(--panel)} figure{margin:0} figcaption{color:var(--muted); font-size:13px; margin-top:8px} .tips{display:grid; gap:10px; margin-top:10px} .tips .item{background:linear-gradient(180deg, color-mix(in oklab, var(--panel) 92%, transparent), color-mix(in oklab, var(--panel) 98%, transparent))}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="dot"></span><h1>Neurociência na Prática</h1></div>
+      <nav><ul>
+        <li><a href="index.html#inicio">Início</a></li>
+        <li><a href="index.html#trabalhos">Trabalhos</a></li>
+        <li><a href="index.html#estudos">Meus Estudos</a></li>
+        <li><a href="index.html#mapa-mental">Mapa Mental</a></li>
+      </ul></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="pill">Grafo Kumu — Aferências & Eferências</div>
+        <h2>Como ler o mapa mental</h2>
+        <p>Este grafo foi criado para <strong>explicar as principais conexões</strong> entre neocórtex, hipocampo, amígdala, tálamo, núcleos da base, cerebelo e tronco, destacando <em>aferências</em> (entradas) e <em>eferências</em> (saídas). Ele serve como guia visual para discussões sobre processamento em níveis e modulação top‑down/bottom‑up.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://kumu.io/gdms/snc#integracao-aferencias-e-eferencias/aferencias-eferencias" target="_blank" rel="noopener">Abrir no Kumu</a>
+          <a class="btn" href="index.html#mapa-mental">Voltar</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>Preview interativo</h3>
+      <p class="lead">Abaixo um quadro com o grafo incorporado para navegação rápida (melhor experiência no link acima).</p>
+      <div class="frame">
+        <iframe title="Kumu — Aferências & Eferências" src="https://kumu.io/gdms/snc#integracao-aferencias-e-eferencias/aferencias-eferencias" width="100%" height="100%" frameborder="0" loading="lazy" referrerpolicy="no-referrer"></iframe>
+      </div>
+    </section>
+
+    <section>
+      <h3>Como funciona</h3>
+      <div class="grid">
+        <article class="item col-8">
+          <h4>Controles</h4>
+          <ul>
+            <li><strong>Filtro (parte inferior):</strong> use o painel de filtros para mostrar/esconder classes de nós e tipos de conexões.</li>
+            <li><strong>Clique nas arestas:</strong> ao clicar em uma conexão, aparecem <em>detalhes</em> (notas/justificativas/fontes) no painel lateral.</li>
+            <li><strong>Zoom e pan:</strong> role para aproximar/afastar e arraste para navegar pelo grafo.</li>
+            <li><strong>Buscar:</strong> use a busca do Kumu para encontrar nós específicos (ex.: "PFC", "tálamo anterior").</li>
+          </ul>
+        </article>
+        <aside class="item col-4">
+          <h4>Legenda rápida</h4>
+          <ul>
+            <li><strong>Cores:</strong> classes anatômicas (córtex, tálamo, tronco, cerebelo, límbico…).</li>
+            <li><strong>Espessura da aresta:</strong> intensidade/certeza da conexão.</li>
+            <li><strong>Ícones/tags:</strong> função predominante (atenção, afeto, memória, controle motor, etc.).</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <h3>Exemplo visual</h3>
+      <div class="grid">
+        <figure class="item col-12">
+          <img src="imagens/mapa-exemplo.png" alt="Exemplo de subgrafo destacando neocórtex → tálamo → tronco" style="width:100%; border-radius:16px; border:1px solid var(--stroke)"/>
+          <figcaption>Exemplo: subgrafo destacando uma cadeia neocórtex → tálamo → tronco; apenas ilustrativo.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>© <span id="year"></span> Gustavo Dutra Martins</div>
+      <div><a href="index.html#inicio">Voltar ao início</a></div>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
