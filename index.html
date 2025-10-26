@@ -1,166 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Neurociência — Gustavo Dutra Martins</title>
-    <meta name="description" content="Materiais e estudos em Neurociência." />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- Header / Navegação -->
-    <header class="site-header">
-      <div class="container nav-row">
-        <a class="brand" href="/">Gustavo<span>Neuro</span></a>
-
-        <!-- Botão mobile -->
-        <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-          <span class="nav-toggle-bar"></span>
-        </button>
-
-        <!-- Menu -->
-        <nav class="nav" id="siteNav" aria-label="principal">
-          <a class="nav-link" href="#inicio">Início</a>
-          <a class="nav-link" href="#sobre">Sobre mim</a>
-          <a class="nav-link" href="#projetos">Projetos</a>
-          <a class="nav-link" href="#artigos">Artigos</a>
-          <a class="nav-link" href="#contato">Contato</a>
-        </nav>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meus Estudos Sobre Neurociência — Gustavo Dutra Martins</title>
+  <meta name="description" content="Estudos de neurociência aplicada a empresas: trabalhos, anotações, mapas mentais e projeto final." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand" aria-label="Neurociência na Prática">
+        <span class="dot" aria-hidden="true"></span>
+        <h1>Neurociência na Prática</h1>
       </div>
-    </header>
+      <nav aria-label="Seções do site">
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+		  <li><a href="#trabalhos">Trabalhos</a></li>
+          <li><a href="#estudos">Meus Estudos</a></li>
+          <li><a href="#mapa-mental">Mapa Mental</a></li>
+          <li><a href="#projeto-final">Projeto Final</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Hero -->
-    <main id="inicio">
-      <section class="hero">
-        <div class="container hero-grid">
-          <!-- Foto à esquerda (o fade está EMBUTIDO no arquivo) -->
-          <div class="hero-photo-wrap">
-            <img
-              src="imagens/gustavo.png"
-              alt="Retrato de Gustavo"
-              class="hero-photo"
-              decoding="async"
-              loading="eager"
-            />
-          </div>
-
-          <div class="hero-copy">
-            <h1 class="hero-title">Neurociência na prática</h1>
-            <p class="hero-subtitle">
-              Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.
-            </p>
-
-            <!-- Botão único LinkedIn -->
-            <div class="hero-cta">
-              <a class="btn-linkedin" href="https://www.linkedin.com/in/SEU-USUARIO" target="_blank" rel="noopener">
-                <span class="btn-text">Me contacte no LinkedIn</span>
-                <span class="btn-icon">
-                  <!-- Ícone LinkedIn -->
-                  <svg viewBox="0 0 24 24" aria-hidden="true" class="icon">
-                    <path d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8h4v15h-4V8zm7.5 0h3.84v2.08h.05c.53-1.02 1.83-2.13 3.77-2.13 4.07 0 4.84 2.68 4.84 6.18V23h-4v-6.98c0-1.66-.03-3.79-2.38-3.79-2.38 0-2.75 1.77-2.75 3.68V23h-4V8z"/>
-                  </svg>
-                </span>
-              </a>
-            </div>
-          </div>
+  <main id="inicio" class="container">
+    <section class="hero">
+      <div>
+        <div class="pill">Neurociência aplicada as organizações</div>
+        <h2>Da observação ao impacto: estudos, mapas e materiais que conectam cérebro e decisões.</h2>
+        <p>Neste espaço reúno os <strong>trabalhos da pós</strong>, meus <strong>estudos autorais</strong>, um <strong>mapa mental em grafo</strong> das principais aferências/eferências e atualizações do <strong>projeto final</strong>.</p>
+        <div class="cta">
+          <a class="btn primary" href="#trabalhos">Ver trabalhos</a>
+          <a class="btn" href="#estudos">Explorar estudos</a>
         </div>
-
-        <!-- Barra inferior arredondada (menu secundário) -->
-        <nav class="section-pill" aria-label="atalhos">
-          <ul class="pill-list">
-            <li><a href="#inicio" class="pill-link active">Home</a></li>
-            <li><span class="divider" aria-hidden="true"></span></li>
-            <li><a href="#sobre" class="pill-link">About me</a></li>
-            <li><span class="divider" aria-hidden="true"></span></li>
-            <li><a href="#projetos" class="pill-link">Work</a></li>
-            <li><span class="divider" aria-hidden="true"></span></li>
-            <li><a href="#artigos" class="pill-link">Services</a></li>
-            <li><span class="divider" aria-hidden="true"></span></li>
-            <li><a href="#contato" class="pill-link pill-ext">Webflow Expert</a></li>
-          </ul>
-        </nav>
-      </section>
-
-      <!-- Seções -->
-      <section id="sobre" class="section">
-        <div class="container">
-          <h2>Sobre mim</h2>
-          <p>Breve apresentação e objetivos do projeto.</p>
-        </div>
-      </section>
-
-      <section id="projetos" class="section">
-        <div class="container">
-          <h2>Projetos</h2>
-          <p>Seleção de trabalhos e explorações visuais.</p>
-        </div>
-      </section>
-
-      <section id="artigos" class="section">
-        <div class="container">
-          <h2>Trabalhos</h2>
-          <p><li class="work-item">
-  <a class="work-link" href="trabalhos/trabalho-neocortex.html">Trabalho Neocórtex</a>
-</li></p>
-        </div>
-      </section>
-
-      <section id="contato" class="section">
-        <div class="container">
-          <h2>Contato</h2>
-          <p>Fale comigo sobre colaborações e apresentações.</p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container">
-        <small>© <span id="year"></span> Gustavo Dutra Martins</small>
       </div>
-    </footer>
+      <aside class="card">
+        <div class="avatar-wrap">
+          <img src="imagens/gustavo.png" alt="Foto de Gustavo Dutra Martins" class="avatar" />
+        </div>
+        <div class="avatar-caption">Foto suavizada via CSS (feathering) e tamanho ajustado — sem alterar o arquivo original.</div>
+      </aside>
+    </section>
 
-    <script>
-      // Ano automático no rodapé
-      document.getElementById('year').textContent = new Date().getFullYear();
+    <!-- Trabalhos -->
+    <section id="trabalhos">
+      <h3>Trabalhos</h3>
+      <p class="lead">Entregas e projetos desenvolvidos nas disciplinas da pós-graduação.</p>
+      <div class="grid">
+        <article class="item col-6">
+          <h4>Trabalho: Neocortex — Da Perceção a Ação</h4>
+          <p>Síntese do processamento em níveis, aferências/eferências e principais disfunções, com referências.</p>
+          <div>
+            <a class="btn" href="trabalhos/neocortex.html">Abrir página</a>
+          </div>
+        </article>
+        <article class="item col-6">
+          <h4>Trabalho: (Exemplo)</h4>
+          <p>Resumo curto (2–3 linhas) explicando objetivo, método e principais achados.</p>
+          <div>
+            <span class="tag">PDF</span><span class="tag">Apresentação</span>
+          </div>
+        </article>
+      </div>
+    </section>
 
-      // Toggle do menu mobile
-      const navToggle = document.getElementById('navToggle');
-      const siteNav = document.getElementById('siteNav');
+    <!-- Meus Estudos -->
+    <section id="estudos">
+      <h3>Meus Estudos</h3>
+      <p class="lead">Tópicos que explorei por conta própria e que estou publicando como material de referência.</p>
+      <div class="grid">
+        <article class="item col-4">
+          <h4>(Exemplo) Lobo Límbico — síntese</h4>
+          <p>Notas comentadas, Papez e interfaces com PFC e tálamo.</p>
+          <div><span class="tag">Notas</span><span class="tag">Referências</span></div>
+        </article>
+        <article class="item col-4">
+          <h4>(Exemplo) Níveis corticais</h4>
+          <p>Primário → secundário → terciário com casos práticos.</p>
+          <div><span class="tag">Artigo curto</span></div>
+        </article>
+        <article class="item col-4">
+          <h4>(Exemplo) Neocórtex ↔ Hipocampo</h4>
+          <p>Vias, hipóteses e leituras selecionadas.</p>
+          <div><span class="tag">Mapa</span></div>
+        </article>
+      </div>
+    </section>
 
-      navToggle.addEventListener('click', () => {
-        const open = siteNav.classList.toggle('open');
-        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.body.classList.toggle('nav-open', open);
-      });
+    <!-- Mapa Mental (Kumu) -->
+    <section id="mapa-mental">
+      <h3>Mapa Mental (Grafo Kumu)</h3>
+      <p class="lead">Visualização das principais aferências e eferências. A página dedicada explica o racional do grafo, como usar os filtros e traz um preview do grafo.</p>
+      <div class="grid">
+        <article class="item col-8">
+          <h4>Sobre o grafo</h4>
+          <p>O grafo organiza núcleos, vias e moduladores em camadas. Cada aresta possui notas com justificativas e fontes. Na página dedicada você encontra instruções de leitura e um quadro-resumo.</p>
+          <p><a class="btn" href="mapa-mental.html">Abrir página do Mapa Mental</a></p>
+        </article>
+        <aside class="item col-4">
+          <h4>Como ler</h4>
+          <p>Cores = classes (córtex, tálamo, tronco etc.). Espessura = força/certeza da conexão. Tags = função (atenção, afeto, memória…).</p>
+        </aside>
+      </div>
+    </section>
 
-      // Fechar menu ao clicar em um link (mobile)
-      siteNav.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          siteNav.classList.remove('open');
-          document.body.classList.remove('nav-open');
-          navToggle.setAttribute('aria-expanded', 'false');
-        });
-      });
+    <!-- Projeto Final -->
+    <section id="projeto-final">
+      <h3>Projeto Final</h3>
+      <p class="lead">Em construção. Em breve, resumo do problema, metodologia e protótipos.</p>
+      <div class="grid">
+        <article class="item col-12" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap">
+          <div>
+            <h4>Status</h4>
+            <p>Ainda não está pronto. Esta seção apresentará um infográfico do pipeline (dados → análise → intervenção) e links para o repositório.</p>
+          </div>
+          <div class="pill">⏳ Em andamento</div>
+        </article>
+      </div>
+    </section>
 
-      // Destacar item ativo da pill conforme rolagem (opcional simples)
-      const pillLinks = document.querySelectorAll('.pill-link');
-      const sections = [...pillLinks].map(l => document.querySelector(l.getAttribute('href')));
-      const onScroll = () => {
-        const y = window.scrollY + 120;
-        sections.forEach((sec, i) => {
-          if (!sec) return;
-          const top = sec.offsetTop;
-          const bottom = top + sec.offsetHeight;
-          const link = pillLinks[i];
-          link.classList.toggle('active', y >= top && y < bottom);
-        });
-      };
-      onScroll();
-      window.addEventListener('scroll', onScroll);
-    </script>
-  </body>
+    <div class="spacer"></div>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>© <span id="year"></span> Gustavo Dutra Martins</div>
+      <div>
+        <a href="https://github.com/gdutramartins/neurociencia" target="_blank" rel="noopener">Repositório no GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
 </html>
