@@ -63,17 +63,33 @@ body {
 }
 .nav {
   display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-3);
   padding-block: .65rem;
 }
 .brand {
   font-weight: 700; text-decoration: none; color: var(--text);
   letter-spacing: .2px;
 }
-.links { display: flex; gap: var(--space-3); align-items: center; }
+/* bloco de logo + texto */
+.brand-wrap {
+  display: inline-flex; align-items: center; gap: .6rem;
+  text-decoration: none;
+}
+.brand-logo {
+  height: 26px; width: auto; object-fit: contain; /* 3) logo grande redimensionado para pequeno */
+}
+.brand { font-weight: 700; text-decoration: none; color: var(--text); letter-spacing: .2px; }
+/* empurra os links para a direita */
+.links { margin-left: auto; display: flex; gap: var(--space-3); align-items: center; }
 .links a { color: var(--muted); text-decoration: none; padding: .35rem .5rem; border-radius: 10px; }
 .links a:hover { color: var(--text); background: color-mix(in oklab, var(--panel-alt), transparent 40%); }
 
-.nav-toggle { display: none; background: transparent; border: 0; padding: .4rem; }
+
+/* hamburger visível no desktop tb (fica à esquerda) */
+.nav-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 0; padding: .4rem; margin-right: .25rem;
+}
 .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; }
 
 /* Hero */
@@ -85,10 +101,11 @@ body {
 .hero-figure { margin: 0; justify-self: end; }
 .hero-figure img {
   display: block; width: min(320px, 38vw);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-  background: var(--panel);
+  /* 2) remover borda, fundo e sombra (imagem transparente) */
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0; /* se quiser manter cantos retos */
 }
 
 /* Cards */
