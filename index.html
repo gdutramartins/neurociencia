@@ -4,163 +4,202 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Neurociência na Prática — Gustavo Dutra Martins</title>
-  <meta name="description" content="Neurociência aplicada a empresas: estudos, materiais, grafo Kumu e projeto final." />
-  <link rel="stylesheet" href="./style.css" />
+  <meta name="description" content="Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.">
+  <meta property="og:title" content="Neurociência na Prática — Gustavo Dutra Martins">
+  <meta property="og:description" content="Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gdutramartins.github.io/neurociencia/">
+  <meta property="og:image" content="imagens/og-cover.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="imagens/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="imagens/favicon-16.png">
+  <link rel="apple-touch-icon" href="imagens/apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <meta name="color-scheme" content="light dark">
 </head>
 <body>
-  <!-- Header -->
+  <!-- Header / Navbar -->
   <header class="site-header">
-    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-controls="site-nav" aria-expanded="false">☰</button>
-
-    <h1 class="site-title">
-      <img src="./imagens/logo.png" alt="" class="logo-img" />
-      <span>Neurociência na Prática</span>
-    </h1>
-
-    <nav id="site-nav" class="site-nav" aria-label="Principal">
-      <ul>
-        <li><a href="#inicio">Início</a></li>
-        <li><a href="#trabalhos">Trabalhos</a></li>
-        <li><a href="#estudos">Meus Estudos</a></li>
-        <li><a href="#kumu">Mapa Mental</a></li>
-        <li><a href="#projeto">Projeto Final</a></li>
-      </ul>
-    </nav>
+    <div class="container nav">
+      <a class="brand" href="#inicio">Gustavo Neuro</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="siteNav" class="links">
+        <a href="#inicio">Início</a>
+        <a href="#trabalhos">Trabalhos</a>
+        <a href="#estudos">Meus Estudos</a>
+        <a href="#kumu">Mapa Mental</a>
+        <a href="#projeto">Projeto Final</a>
+        <a class="btn btn-outline" href="https://www.linkedin.com/in/gdutramartins/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- Overlay (mobile) -->
-  <div class="nav-scrim" id="nav-scrim" hidden></div>
-
-  <main id="inicio">
-    <!-- Hero -->
-    <section class="hero">
-      <p class="kicker">Neurociência aplicada a empresas</p>
-      <h2 class="headline">Da observação ao impacto: estudos, mapas e materiais que conectam cérebro e decisões.</h2>
-      <p class="lede">
-        Reúno aqui os trabalhos da pós, meus estudos autorais, um mapa mental (Kumu) das principais conexões
-        e as atualizações do projeto final.
-      </p>
-      <div class="actions">
-        <a class="btn" href="#trabalhos">Ver trabalhos</a>
-        <a class="btn ghost" href="#kumu">Mapa mental</a>
-      </div>
-    </section>
-
-    <!-- Trabalhos -->
-    <section id="trabalhos" class="section">
-      <h3>Trabalhos</h3>
-
-      <article class="card">
-        <h4>Neocórtex — Da Percepção à Decisão</h4>
-        <p>Síntese do processamento em níveis, aferências/eferências e principais disfunções, com referências.</p>
-        <a class="link" href="#">Abrir página</a>
-      </article>
-
-      <article class="card">
-        <h4>Comunicações: Neocórtex ↔ Hipocampo</h4>
-        <p>Vias diretas e indiretas, hipóteses de busca de memórias e modulação pela amígdala.</p>
-        <a class="link" href="#">Abrir página</a>
-      </article>
-
-      <article class="card muted">
-        <h4>(Em breve) Disfunções Corticais</h4>
-        <p>Panorama de déficits por nível (primário/secundário/terciário) e hipótese de compensação.</p>
-      </article>
-    </section>
-
-    <!-- Meus Estudos -->
-    <section id="estudos" class="section">
-      <h3>Meus Estudos</h3>
-
-      <article class="item">
-        <h4>Lobo Límbico — síntese</h4>
-        <p>Notas comentadas, circuito de Papez e interfaces com PFC e tálamo.</p>
-        <div class="small-links">
-          <a href="#">Notas</a>
-          <a href="#">Referências</a>
+  <!-- Hero -->
+  <main id="inicio" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <h1>Neurociência na prática</h1>
+        <p class="lead">Da observação ao impacto: estudos, mapas e materiais que conectam cérebro e decisões.</p>
+        <div class="cta">
+          <a class="btn" href="#trabalhos">Ver trabalhos</a>
+          <a class="btn btn-ghost" href="#kumu">Abrir mapa mental</a>
         </div>
-      </article>
-
-      <article class="item">
-        <h4>Níveis corticais</h4>
-        <p>Do primário ao terciário com exemplos práticos e ligações inter-hemisféricas.</p>
-        <a class="link" href="#">Artigo</a>
-      </article>
-
-      <article class="item">
-        <h4>Neocórtex ↔ Amígdala</h4>
-        <p>Modulação top-down e relevância emocional.</p>
-        <a class="link" href="#">Mapa</a>
-      </article>
-    </section>
-
-    <!-- Kumu -->
-    <section id="kumu" class="section">
-      <h3>Mapa Mental (Kumu)</h3>
-      <p>
-        Visualização das principais aferências (entradas) e eferências (saídas) entre neocórtex, hipocampo, amígdala,
-        tálamo, núcleos da base, cerebelo e tronco.
-      </p>
-      <details>
-        <summary>Como usar</summary>
-        <ul>
-          <li>Use o filtro para mostrar/esconder classes e tipos de conexão.</li>
-          <li>Clique nas arestas para ver notas e fontes.</li>
-          <li>Busque nós por nome (ex.: “PFC”, “tálamo anterior”).</li>
-        </ul>
-      </details>
-      <div class="actions">
-        <a class="btn" href="https://kumu.io" target="_blank" rel="noopener">Abrir no Kumu</a>
-        <a class="btn ghost" href="#">Ver preview (iframe)</a>
       </div>
-    </section>
-
-    <!-- Projeto Final -->
-    <section id="projeto" class="section">
-      <h3>Projeto Final</h3>
-      <article class="card muted">
-        <h4>Status</h4>
-        <p>Resumo do problema, metodologia e protótipos — em construção.</p>
-        <p>⏳ Em andamento</p>
-      </article>
-    </section>
+      <figure class="hero-figure" aria-label="Retrato de Gustavo">
+        <img src="imagens/gustavo.jpg" alt="Foto de Gustavo Dutra Martins" loading="lazy">
+      </figure>
+    </div>
   </main>
 
-  <footer class="footer">
-    <p>© <span id="year"></span> Gustavo Dutra Martins</p>
-    <p><a href="https://github.com/gdutramartins/neurociencia" target="_blank" rel="noopener">Repositório no GitHub</a></p>
+  <!-- Trabalhos -->
+  <section id="trabalhos" class="section">
+    <div class="container">
+      <h2 class="section-title">Trabalhos</h2>
+      <p class="section-subtitle">Entregas e projetos desenvolvidos nas disciplinas da pós-graduação.</p>
+
+      <div class="grid cards">
+        <article class="card">
+          <header>
+            <h3>Neocórtex — Da Percepção à Ação</h3>
+            <span class="tag">Resumo + Referências</span>
+          </header>
+          <p>Síntese do processamento em níveis, aferências/eferências e principais disfunções, com referências.</p>
+          <div class="card-actions">
+            <a class="btn btn-sm" href="trabalhos/neocortex.html">Abrir página</a>
+          </div>
+        </article>
+
+        <!-- Exemplo de placeholder (fácil de duplicar) -->
+        <article class="card is-muted">
+          <header>
+            <h3>(Exemplo) Trabalho — Título</h3>
+            <span class="tag tag-alt">PDF</span>
+          </header>
+          <p>Resumo curto (2–3 linhas) explicando objetivo, método e principais achados.</p>
+          <div class="card-actions">
+            <a class="btn btn-sm btn-ghost" href="#">PDF apresentação</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meus Estudos -->
+  <section id="estudos" class="section alt">
+    <div class="container">
+      <h2 class="section-title">Meus Estudos</h2>
+      <p class="section-subtitle">Tópicos que estou publicando como material de referência.</p>
+
+      <div class="grid cards">
+        <article class="card">
+          <header>
+            <h3>(Exemplo) Lobo Límbico — síntese</h3>
+            <span class="tag">Notas</span>
+          </header>
+          <p>Notas comentadas, circuito de Papez e interfaces com PFC e tálamo.</p>
+          <div class="card-actions">
+            <a class="btn btn-sm btn-ghost" href="#">Notas</a>
+            <a class="btn btn-sm btn-outline" href="#">Referências</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <header>
+            <h3>(Exemplo) Níveis corticais</h3>
+            <span class="tag tag-alt">Artigo curto</span>
+          </header>
+          <p>Primário → secundário → terciário com casos práticos.</p>
+          <div class="card-actions">
+            <a class="btn btn-sm btn-ghost" href="#">Abrir</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <header>
+            <h3>(Exemplo) Neocórtex ↔ Hipocampo</h3>
+            <span class="tag">Mapa</span>
+          </header>
+          <p>Vias, hipóteses e leituras selecionadas.</p>
+          <div class="card-actions">
+            <a class="btn btn-sm btn-ghost" href="#">Abrir</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kumu -->
+  <section id="kumu" class="section">
+    <div class="container">
+      <h2 class="section-title">Mapa Mental (Grafo Kumu)</h2>
+      <p class="section-subtitle">
+        Visualização das principais aferências (entradas) e eferências (saídas) entre neocórtex, hipocampo, amígdala, tálamo, núcleos da base, cerebelo e tronco.
+      </p>
+
+      <div class="kumu-actions">
+        <a class="btn" href="https://kumu.io/" target="_blank" rel="noopener">Abrir no Kumu</a>
+        <a class="btn btn-ghost" href="#kumu-preview">Ver preview interativo</a>
+      </div>
+
+      <details id="kumu-preview" class="kumu-frame">
+        <summary>Mostrar/ocultar preview</summary>
+        <!-- Substitua o src pelo seu link de view do Kumu quando quiser embutir -->
+        <iframe title="Mapa Kumu" loading="lazy"
+          src="about:blank"
+          width="100%" height="520" referrerpolicy="no-referrer"></iframe>
+        <p class="hint">Dica: use os filtros, busque nós por nome e clique nas arestas para ver notas e fontes.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Projeto Final -->
+  <section id="projeto" class="section alt">
+    <div class="container">
+      <h2 class="section-title">Projeto Final</h2>
+      <div class="project-status">
+        <span class="badge">⏳ Em andamento</span>
+        <p>Em breve: resumo do problema, metodologia e protótipos (pipeline: dados → análise → intervenção) e links para o repositório.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <strong>Gustavo Dutra Martins</strong>
+        <p class="muted">© <span id="year"></span> — Neurociência aplicada a empresas.</p>
+      </div>
+      <nav class="footer-links">
+        <a href="#inicio">Início</a>
+        <a href="#trabalhos">Trabalhos</a>
+        <a href="#estudos">Estudos</a>
+        <a href="#kumu">Mapa</a>
+        <a href="#projeto">Projeto</a>
+      </nav>
+    </div>
   </footer>
 
   <script>
-    // Ano dinâmico
+    // ano automático no rodapé
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Menu mobile
-    const toggle = document.getElementById('menu-toggle');
-    const nav = document.getElementById('site-nav');
-    const scrim = document.getElementById('nav-scrim');
-
-    function closeNav(){
-      nav.classList.remove('open');
-      scrim.setAttribute('hidden', '');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('no-scroll');
-    }
-    function openNav(){
-      nav.classList.add('open');
-      scrim.removeAttribute('hidden');
-      toggle.setAttribute('aria-expanded', 'true');
-      document.body.classList.add('no-scroll');
-    }
-
+    // menu mobile
+    const nav = document.getElementById('siteNav');
+    const toggle = document.getElementById('navToggle');
     toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.contains('open');
-      isOpen ? closeNav() : openNav();
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      nav.classList.toggle('open');
     });
 
-    scrim.addEventListener('click', closeNav);
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') closeNav();
+    // fechar ao clicar num link (mobile)
+    nav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
     });
   </script>
 </body>
