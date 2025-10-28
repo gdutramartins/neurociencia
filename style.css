@@ -255,10 +255,14 @@ a:focus-visible, button:focus-visible {
 .doc-content h3 { margin-top: var(--space-4); margin-bottom: .25rem; }
 .doc-content p { margin: 0 0 1em; }
 .doc-content ul, .doc-content ol { padding-left: 1.2rem; margin: 0 0 1em; }
-.doc-content img { display: block; max-width: 100%; height: auto; margin: var(--space-4) auto; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); background: var(--panel); }
+.doc-content img { display: block; max-width: 500px; height: auto; margin: var(--space-4) auto; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); background: var(--panel); }
 .doc-content table { width: 100%; border-collapse: collapse; margin: var(--space-4) 0; background: var(--panel); }
 .doc-content th, .doc-content td { border: 1px solid var(--border); padding: .5rem .6rem; vertical-align: top; }
 
 /* Utilidades de layout específicas de páginas internas */
 .container.narrow { max-width: 860px; }
 .page-title { margin: 0 0 12px; font-size: clamp(28px, 4.2vw, 42px); letter-spacing: -.01em; }
+
+.img-media {
+    max-width: ;
+}
