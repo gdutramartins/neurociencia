@@ -268,3 +268,15 @@ a:focus-visible, button:focus-visible {
   background:linear-gradient(135deg, var(--brand), var(--brand-2));
   box-shadow:0 0 0 6px color-mix(in oklab, var(--brand) 16%, transparent)
 }
+
+.margin-top-lg {
+  margin-top: var(--space-6);
+}
+
+.margin-top-md {
+  margin-top: var(--space-4);
+}
+
+.margin-top-sm {
+  margin-top: var(--space-2);
+}
