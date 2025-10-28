@@ -1,24 +1,24 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
    <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>Trabalho Neocórtex — Grupo: Gustavo, Rafaella e Marlus</title>
       <meta name="description" content="Trabalho Neocórtex — publicação a partir do Google Docs." />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="../style.css" />
+      <meta name="color-scheme" content="light dark">
    </head>
    <body>
       <header class="site-header">
-         <div class="container nav-row">
-            <a class="brand" href="/">Gustavo<span>Neuro</span></a>
+         <div class="container nav">
+            <a class="brand-wrap" href="../index.html#inicio">
+            <img class="brand-logo" src="../imagens/cerebro-estudando.png" alt="Logo Gustavo Neuro" />
+            <span class="brand">Gustavo Neuro</span>
+            </a>
             <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
-            <span class="nav-toggle-bar"></span>
+            <span></span><span></span><span></span>
             </button>
-            <nav class="nav" id="siteNav" aria-label="principal">
+            <nav id="siteNav" class="links">
                <a class="nav-link" href="/">Início</a>
                <a class="nav-link" href="/#sobre">Sobre mim</a>
                <a class="nav-link" href="/#projetos">Projetos</a>
@@ -29,10 +29,8 @@
       </header>
       <main>
          <section class="section">
-            <div class="container" style="max-width: 860px;">
-               <h1 style="margin:0 0 12px; font-size:clamp(28px,4.2vw,42px); letter-spacing:-.01em;">
-                  Disciplina Agindo no Mundo - Comportamentos
-               </h1>
+            <div class="container narrow">
+               <h1 class="page-title">Disciplina Agindo no Mundo - Comportamentos</h1>
                <h2>
                   Trabalho Neocórtex
                </h2>
@@ -40,15 +38,15 @@
 				Componentes: Rafaella, Gustavo e Marlus
 			   </h3>
 			
-				<p style="color:#b7b7b7; margin:0 0 28px;">
+				<p class="meta">
 					<ul>
 						<li><a target="_blank" href="https://drive.google.com/file/d/10HLyQvJayEhxl4oxwlWiMdjQGyaiOS3y/view?usp=sharing">Vídeo da Apresentação </a></li>
 						<li><a target="_blank" href="https://docs.google.com/presentation/d/1XomECAKFt2CM-cMd7uLhYjpWX6hUTksG/edit?usp=sharing&ouid=114707927617195313722&rtpof=true&sd=true">Apresentação (Powerpoint)</a></li>
 						<li><a target="_blank" href="https://kumu.io/gdms/snc#integracao-aferencias-e-eferencias/aferencias-eferencias">Grafo de Eferências/Aferências </a></li>
 					</ul>
 				</p>
-               <article class="doc-content" style="display:block; line-height:1.7; font-size:18px;">
-                  <body class="c20 doc-content">
+               <article class="doc-content">
+                  <div class="c20 doc-content">
                      <p><span></span></p>
                      <h2><span>Introdução </span></h2>
                      <p><span>        O córtex cerebral é uma camada de massa cinzenta localizada dentro da caixa craniana, envolvendo os hemisférios cerebrais (superfície do telencéfalo). Enquanto a medula espinhal está na parte interior da coluna, o córtex forma a superfície dos hemisférios cerebrais. Constituído de massa cinzenta agrupada em camadas de sulcos e giros, é o centro do processamento, onde ocorrem as associações, o local onde percebemos os elementos ao nosso redor, acompanhamos o seu dinamismo e planejamos nossas ações. Mesmo quando decidimos observar e não agir, nossa percepção e posterior inação é, no fundo, uma ação.</span></p>
@@ -64,12 +62,12 @@
 					 
 					 <p><span></span></p>
                      
-					 <h2 style="margin-top:35 px"><span>Partes Constituintes</span></h2>
+					 <h2 ><span>Partes Constituintes</span></h2>
                      <p><span><img alt="" src="../imagens/trabalho-neocortex/image3.png" title=""/></span></p>
                      <p><span></span></p>
                      <p><span></span></p>
                      
-					 <h2 style="margin-top:35 px"><span>O Processamento</span></h2>
+					 <h2 ><span>O Processamento</span></h2>
 					 
 					 <img alt="" src="../imagens/trabalho-neocortex/areas-associacao.jpg" title=""/>
                      <p><span>O poder de processamento do cérebro está nas associações que gradualmente incorporam informações de diversas fontes sensoriais, até chegar nos centros responsáveis por tomar decisões. Primeiramente, ocorre a integração de informações dentro de uma mesma modalidade sensorial (unimodal), e posteriormente conectamos a outras fontes de dados, enriquecendo a análise, criando a percepção e o simbolismo, permitindo que as zonas de processamento de nível superior tomem decisões com a maior contexto possível.</span></p>
@@ -83,7 +81,7 @@
                      <p><span></span></p>
                      <p><span></span></p>
                      
-					 <h2 style="margin-top:15 px"> <span>Áreas primárias - o ponto de partida</span></h2>
+					 <h2 > <span>Áreas primárias - o ponto de partida</span></h2>
                      <p><span><img alt="" src="../imagens/trabalho-neocortex/areas-primarias.png" title=""/></span></p>
                      <ul>
                         <li><span>Função: registro direto de estímulos sensoriais (no caso das áreas sensoriais) ou emissão direta de comandos motores (nas áreas motoras).</span></li>
@@ -100,7 +98,7 @@
                      <p><span></span></p>
                      <p><span></span></p>
                      
-					 <h2 style="margin-top:15 px"><span>Áreas secundárias - início da integração intra-modal</span></h2>
+					 <h2 ><span>Áreas secundárias - início da integração intra-modal</span></h2>
                      <p><span><img alt="" src="../imagens/trabalho-neocortex/areas-secundarias.png" title=""/></span></p>
                      <ul>
                         <li><span>Recebem a informação das zonas primárias e fazem uma análise mais complexa dentro da mesma modalidade sensorial ou motora.</span></li>
@@ -553,32 +551,43 @@
                         <li><span>Lesões </span><span>terciárias</span><span> → déficits cognitivos e simbólicos, </span><span>maior potencial de reorganização</span></li>
                      </ul>
                      <p><span></span></p>
-   </body>
+   </div>
    </article>
    </div>
    </section>
    </main>
-   <footer class="site-footer">
-      <div class="container">
-         <small>© <span id="year"></span> Gustavo Dutra Martins</small>
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <strong>Gustavo Dutra Martins</strong>
+          <p class="muted">© <span id="year"></span> — Neurociência aplicada a empresas.</p>
+        </div>
+        <nav class="footer-links">
+          <a href="../index.html#inicio">Início</a>
+          <a href="../index.html#trabalhos">Trabalhos</a>
+          <a href="../index.html#estudos">Estudos</a>
+          <a href="../index.html#kumu">Mapa</a>
+          <a href="../index.html#projeto">Projeto</a>
+        </nav>
       </div>
-   </footer>
-   <script>
+    </footer>
+    <script>
+      // ano automático no rodapé
       document.getElementById('year').textContent = new Date().getFullYear();
-      const navToggle = document.getElementById('navToggle');
-      const siteNav = document.getElementById('siteNav');
-      navToggle?.addEventListener('click', () => {
-        const open = siteNav.classList.toggle('open');
-        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.body.classList.toggle('nav-open', open);
+      // menu mobile (mesmo comportamento da index)
+      const nav = document.getElementById('siteNav');
+      const toggle = document.getElementById('navToggle');
+      toggle?.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        nav?.classList.toggle('open');
       });
-      siteNav?.querySelectorAll('a').forEach(a => {
+      nav?.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => {
-          siteNav.classList.remove('open');
-          document.body.classList.remove('nav-open');
-          navToggle.setAttribute('aria-expanded', 'false');
+          nav.classList.remove('open');
+          toggle?.setAttribute('aria-expanded', 'false');
         });
       });
-   </script>
+    </script>
    </body>
 </html>
