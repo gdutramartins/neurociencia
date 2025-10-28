@@ -9,24 +9,30 @@
       <meta name="color-scheme" content="light dark">
    </head>
    <body>
-      <header class="site-header">
-         <div class="container nav">
-            <a class="brand-wrap" href="../index.html#inicio">
-            <img class="brand-logo" src="../imagens/cerebro-estudando.png" alt="Logo Gustavo Neuro" />
+      <!-- Header / Navbar -->
+    <header class="site-header">
+	  <div class="container nav">
+		<!-- 1) HAMBURGER À ESQUERDA -->
+		<button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Abrir menu">
+		  <span></span><span></span><span></span>
+		</button>
+
+		<!-- 3) LOGO À ESQUERDA DO TEXTO "Gustavo Neuro" -->
+		<a class="brand-wrap" href="#inicio">
+            <span class="dot" aria-hidden="true"></span>
             <span class="brand">Meus Estudos Sobre Neurociência</span>
-            </a>
-            <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" id="navToggle">
-            <span></span><span></span><span></span>
-            </button>
-            <nav id="siteNav" class="links">
-               <a class="nav-link" href="/">Início</a>
-               <a class="nav-link" href="/#sobre">Sobre mim</a>
-               <a class="nav-link" href="/#projetos">Projetos</a>
-               <a class="nav-link" href="/#artigos">Artigos</a>
-               <a class="nav-link" href="/#contato">Contato</a>
-            </nav>
-         </div>
-      </header>
+		</a>
+
+		<nav id="siteNav" class="links">
+		  <a href="#inicio">Início</a>
+		  <a href="#trabalhos">Trabalhos</a>
+		  <a href="#estudos">Meus Estudos</a>
+		  <a href="#kumu">Mapa Mental</a>
+		  <a href="#projeto">Projeto Final</a>
+		  <a class="btn btn-outline" href="https://www.linkedin.com/in/gdutramartins/" target="_blank" rel="noopener">LinkedIn</a>
+		</nav>
+	  </div>
+	</header>
       <main>
          <section class="section">
             <div class="container narrow">
