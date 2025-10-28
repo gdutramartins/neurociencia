@@ -263,6 +263,8 @@ a:focus-visible, button:focus-visible {
 .container.narrow { max-width: 860px; }
 .page-title { margin: 0 0 12px; font-size: clamp(28px, 4.2vw, 42px); letter-spacing: -.01em; }
 
-.img-media {
-    max-width: ;
+.dot{
+  width:14px; height:14px; border-radius:50%;
+  background:linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow:0 0 0 6px color-mix(in oklab, var(--brand) 16%, transparent)
 }
