@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+  <meta name="description" content="Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.">
+  <meta property="og:title" content="Neurociência na Prática — Gustavo Dutra Martins">
+  <meta property="og:description" content="Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gdutramartins.github.io/neurociencia/">
+  <meta property="og:image" content="imagens/og-cover.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="imagens/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="imagens/favicon-16.png">
+  <link rel="apple-touch-icon" href="imagens/apple-touch-icon.png">
+  <link rel="stylesheet" href="{{ site.baseurl }}/style.css">
+  <meta name="color-scheme" content="light dark">
+</head>
+
+<body>
+  {% include header.html %}
+  
+    {{ content }}
+  
+  {% include footer.html %}
+</body>
+</html>

@@ -1,46 +1,7 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Neurociência nas Organizações</title>
-  <meta name="description" content="Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.">
-  <meta property="og:title" content="Neurociência na Prática — Gustavo Dutra Martins">
-  <meta property="og:description" content="Estudos, mapas e materiais sobre processamento cortical, memória e tomada de decisão.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://gdutramartins.github.io/neurociencia/">
-  <meta property="og:image" content="imagens/og-cover.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="imagens/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="imagens/favicon-16.png">
-  <link rel="apple-touch-icon" href="imagens/apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css">
-  <meta name="color-scheme" content="light dark">
-</head>
-<body>
-  <!-- Header / Navbar -->
-  <header class="site-header">
-	  <div class="container nav">
-		<!-- 1) HAMBURGER À ESQUERDA -->
-		<button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Abrir menu">
-		  <span></span><span></span><span></span>
-		</button>
-
-		<!-- 3) LOGO À ESQUERDA DO TEXTO "Gustavo Neuro" -->
-		<a class="brand-wrap" href="#inicio">
-            <span class="dot" aria-hidden="true"></span>
-            <span class="brand">Meus Estudos Sobre Neurociência</span>
-		</a>
-
-		<nav id="siteNav" class="links">
-		  <a href="#inicio">Início</a>
-		  <a href="#trabalhos">Trabalhos</a>
-		  <a href="#estudos">Meus Estudos</a>
-		  <a href="#kumu">Mapa Mental</a>
-		  <a href="#projeto">Projeto Final</a>
-		  <a class="btn btn-outline" href="https://www.linkedin.com/in/gdutramartins/" target="_blank" rel="noopener">LinkedIn</a>
-		</nav>
-	  </div>
-	</header>
+---
+layout: default
+title: Início
+---
 
 
   <!-- Hero -->
@@ -175,43 +136,3 @@
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <strong>Gustavo Dutra Martins</strong>
-        <p class="muted">© <span id="year"></span> — Neurociência aplicada a empresas.</p>
-      </div>
-      <nav class="footer-links">
-        <a href="#inicio">Início</a>
-        <a href="#trabalhos">Trabalhos</a>
-        <a href="#estudos">Estudos</a>
-        <a href="#kumu">Mapa</a>
-        <a href="#projeto">Projeto</a>
-      </nav>
-    </div>
-  </footer>
-
-  <script>
-    // ano automático no rodapé
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // menu mobile
-    const nav = document.getElementById('siteNav');
-    const toggle = document.getElementById('navToggle');
-    toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!expanded));
-      nav.classList.toggle('open');
-    });
-
-    // fechar ao clicar num link (mobile)
-    nav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  </script>
-</body>
-</html>
