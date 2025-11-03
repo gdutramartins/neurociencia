@@ -531,38 +531,3 @@ title: Trabalho Neocórtex
 </div>
 </section>
 </main>
-<footer class="site-footer">
-    <div class="container footer-grid">
-    <div>
-        <strong>Gustavo Dutra Martins</strong>
-        <p class="muted">© <span id="year"></span> — Neurociência aplicada a empresas.</p>
-    </div>
-    <nav class="footer-links">
-        <a href="../index.html#inicio">Início</a>
-        <a href="../index.html#trabalhos">Trabalhos</a>
-        <a href="../index.html#estudos">Estudos</a>
-        <a href="../index.html#kumu">Mapa</a>
-        <a href="../index.html#projeto">Projeto</a>
-    </nav>
-    </div>
-</footer>
-<script>
-    // ano automático no rodapé
-    document.getElementById('year').textContent = new Date().getFullYear();
-    // menu mobile (mesmo comportamento da index)
-    const nav = document.getElementById('siteNav');
-    const toggle = document.getElementById('navToggle');
-    toggle?.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', String(!expanded));
-    nav?.classList.toggle('open');
-    });
-    nav?.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-        nav.classList.remove('open');
-        toggle?.setAttribute('aria-expanded', 'false');
-    });
-    });
-</script>
-</body>
-</html>
