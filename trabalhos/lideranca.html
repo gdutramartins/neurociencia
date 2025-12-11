@@ -9,36 +9,71 @@ title: Trabalho Desenvolvimento de Líderes
             <h1 class="">Disciplina Liderança e a Construção das Relações Sustentáveis</h1>
             <h2>Trabalho Sobre Desenvolvimento de Líderes</h2>
 
-            <card>
-                <h3>Autoconsciência emocional</h3>
-                <p>
-                    Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e ajustar-se
-                    quando necessário. É a base da inteligência emocional: um líder que não se percebe não consegue se regular.
-                </p>
-                <img src="../imagens/trabalho-lideranca/01-autoconsciencia-emocional.png" alt="Imagem sobre Autoconsciência emocional" />
-            </card>
-            <card>
-                <h3>Autorregulação</h3>
-                <p>
-                    
-                </p>
-                <img src="../imagens/trabalho-lideranca/02-autorregulacao.png" alt="" />
-            </card>
-            <card>
-                <h3>Clareza de propósito e visão futura</h3>
-                <p>
-                    
-                </p>
-                <img src="../imagens/trabalho-lideranca/03-clareza-proposito-visao-futura.png" alt="" />
-            </card>
+            <div class="cards-grid">
+                <card tabindex="0" class="flip-card" data-card-id="card-01" role="button" aria-pressed="false">
+                    <div class="card-inner">
+                        <div class="card-face card-front">
+                            <!-- imagem: use <img> ou <picture> se quiser responsividade por srcset -->
+                            <img src="../imagens/trabalho-lideranca/01-autoconsciencia-emocional.png" alt="Autoconsciência emocional — imagem ilustrativa" />
+                            <div class="card-title">Autoconsciência emocional</div>
+                            <div class="card-excerpt">Capacidade de reconhecer seus próprios estados emocionais...</div>
+                        </div>
 
-            <article class="doc-content">
-                <div class="doc-content">
-                    <p><span></span></p>
-                    <h2>Introdução</h2>
-                    <p></p>
-                </div>
-            </article>
+                        <div class="card-face card-back">
+                            <h3>Autoconsciência emocional</h3>
+                            <p>
+                                Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e
+                                ajustar-se quando necessário. É a base da inteligência emocional...
+                            </p>
+                            <!-- opcional: link para página inteira sobre o tema -->
+                            <p><a href="/trabalhos/autoconsciencia.html">Ler mais</a></p>
+                        </div>
+                    </div>
+                </card>
+
+                <!-- Repita para os outros 13 cards -->
+            </div>
         </div>
     </section>
 </main>
+
+<script>
+  (function () {
+    // encontra todos os card tags
+    const cards = Array.from(document.querySelectorAll('card.flip-card, card'));
+
+    function toggleFlip(card, turnOn) {
+      const isOn = card.classList.toggle ? card.classList.contains('is-flipped') : false;
+      if (typeof turnOn === 'boolean') {
+        if (turnOn) card.classList.add('is-flipped');
+        else card.classList.remove('is-flipped');
+      } else {
+        card.classList.toggle('is-flipped');
+      }
+      // aria attribute para acessibilidade
+      const pressed = card.classList.contains('is-flipped');
+      card.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    }
+
+    cards.forEach(card => {
+      // clique/tap
+      card.addEventListener('click', function (e) {
+        // evitar flip ao clicar em links internos dentro do card
+        if (e.target.closest('a')) return;
+        toggleFlip(card);
+      });
+
+      // teclado: Enter ou Space ativam flip; Esc desfaz
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleFlip(card);
+        } else if (e.key === 'Escape') {
+          card.classList.remove('is-flipped');
+          card.setAttribute('aria-pressed', 'false');
+        }
+      });
+    });
+  })();
+</script>
+
