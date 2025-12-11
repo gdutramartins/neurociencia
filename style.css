@@ -529,53 +529,58 @@ button:focus-visible {
     margin-top: var(--space-2);
 }
 
-/* ======= Grid e card básico (mantém responsividade) ======= */
+/* Grid responsivo — centra e limita largura dos cards */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
+  justify-content: center; /* centraliza a grade quando há poucos itens na linha */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  align-items: start;
+  padding: 0;
+  margin: 0;
 }
 
-/* tag custom */
+/* Tag custom - limita largura máxima do card (evita ficar "esticado") */
 card {
   display: block;
   perspective: 1100px;
   cursor: pointer;
   outline: none;
-  border-radius: 12px;
+  border-radius: 10px;
+  max-width: 240px;       /* largura máxima do card - ajuste conforme desejar */
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* inner geral do card (conteúdo não-media) */
+/* Inner mantém estilo e sombra */
 .card-inner {
-  border-radius: 12px;
+  border-radius: inherit;
   overflow: hidden;
   background: #fff;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
 }
 
-/* ======= ÁREA DE MÍDIA (imagem <-> texto) ======= */
-/* wrapper que faz o flip apenas da zona da imagem */
+/* ===== Área de mídia (imagem front / texto back) ===== */
+/* Usamos aspect-ratio para garantir proporção retrato (altura > largura) */
+/* Você pode sobrescrever por-card com inline style: style="aspect-ratio: 2/3;" */
 .card-media {
   width: 100%;
-  height: 200px;              /* ajuste a altura como precisar */
-  perspective: 1000px;        /* perspectiva local para melhor efeito */
+  aspect-ratio: 2 / 3;        /* proporção padrão (portrait). Ajuste conforme suas figuras */
   position: relative;
-  flex: 0 0 auto;
+  perspective: 1000px;
+  background: #fafafa;
 }
 
-/* inner que realiza o rotateY(180deg) */
+/* inner que gira apenas a mídia */
 .card-media-inner {
   position: relative;
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.65s cubic-bezier(.2,.9,.3,1);
+  transition: transform 0.6s cubic-bezier(.2,.9,.3,1);
 }
 
-/* quando o card (pai) tiver a classe is-flipped, giramos apenas a mídia */
+/* quando o card tiver a classe is-flipped, giramos a mídia */
 card.is-flipped .card-media-inner {
   transform: rotateY(180deg);
 }
@@ -589,59 +594,45 @@ card.is-flipped .card-media-inner {
   justify-content: center;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  border-bottom: 1px solid rgba(0,0,0,0.04);
   box-sizing: border-box;
   padding: 0.5rem;
-  background: #f8f9fb;
 }
 
-/* front: imagem */
+/* imagem encaixada sem corte */
 .card-media-front img {
   width: auto;
   height: 100%;
   max-width: 100%;
-  object-fit: contain;      /* <--- change: encaixa imagem sem cortar */
+  object-fit: contain;    /* encaixa sem cortar */
   display: block;
   margin: 0 auto;
-  background: #f3f4f6;      /* cor neutra atrás da imagem */
+  background: transparent;
 }
 
-/* back: texto que ocupa o mesmo espaço */
+/* face traseira ocupa o mesmo espaço e mostra o texto */
 .card-media-back {
-  transform: rotateY(180deg); /* face traseira posicionada corretamente */
-  text-align: center;
+  transform: rotateY(180deg);
+  text-align: left;
   padding: 1rem;
+  color: #111;
   font-size: 0.95rem;
-  color: #222;
   line-height: 1.4;
   overflow: auto;
-  background: #ffffff;
+  background: #fff;
 }
 
-/* ===== resto do card (título / excerpt / back detalhado) ===== */
-.card-body {
-  padding: 0.75rem 0.9rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  flex: 1 1 auto;
+/* tira hover flip (não queremos flip por hover) */
+/* removido intencionalmente */
+
+/* Foco acessível (teclado) */
+card:focus {
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+  border-radius: inherit;
 }
 
-.card-title {
-  font-weight: 600;
-  font-size: 1.03rem;
-}
-
-.card-excerpt {
-  color: #4b5563;
-  font-size: 0.95rem;
-}
-
-/* se quiser que o hover também vire (desktop) */
-card:hover .card-media-inner { transform: rotateY(180deg); }
-
-/* mobile: reduzir altura da mídia */
-@media (max-width:420px) {
-  .card-media { height: 160px; }
+/* Mobile: reduz proporção se necessário */
+@media (max-width: 420px) {
+  card { max-width: 180px; }
+  .card-media { aspect-ratio: 3 / 4; } /* mais alto em telas pequenas */
   .card-media-back { font-size: 0.92rem; padding: 0.6rem; }
 }
