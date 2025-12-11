@@ -10,70 +10,68 @@ title: Trabalho Desenvolvimento de Líderes
             <h2>Trabalho Sobre Desenvolvimento de Líderes</h2>
 
             <div class="cards-grid">
-                <card tabindex="0" class="flip-card" data-card-id="card-01" role="button" aria-pressed="false">
+                <card tabindex="0" class="flip-card" role="button" aria-pressed="false">
                     <div class="card-inner">
-                        <div class="card-face card-front">
-                            <!-- imagem: use <img> ou <picture> se quiser responsividade por srcset -->
-                            <img src="../imagens/trabalho-lideranca/01-autoconsciencia-emocional.png" alt="Autoconsciência emocional — imagem ilustrativa" />
-                            <div class="card-title">Autoconsciência emocional</div>
-                            <div class="card-excerpt">Capacidade de reconhecer seus próprios estados emocionais...</div>
+                        <!-- ===== media area (imagem front / texto back) ===== -->
+                        <div class="card-media">
+                            <div class="card-media-inner">
+                                <!-- front: imagem encaixada -->
+                                <div class="card-media-face card-media-front">
+                                    <img src="../imagens/trabalho-lideranca/01-autoconsciencia-emocional.png" alt="Descrição da imagem" />
+                                </div>
+
+                                <!-- back: texto no lugar da imagem -->
+                                <div class="card-media-face card-media-back">
+                                    <div>
+                                        <strong>Resumo curto</strong>
+                                        <p>Texto que aparece exatamente no lugar da imagem quando o card gira. Pode ser 1-3 linhas.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="card-face card-back">
-                            <h3>Autoconsciência emocional</h3>
-                            <p>
-                                Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e
-                                ajustar-se quando necessário. É a base da inteligência emocional...
-                            </p>
-                            <!-- opcional: link para página inteira sobre o tema -->
-                            <p><a href="/trabalhos/autoconsciencia.html">Ler mais</a></p>
+                        <!-- ===== corpo do card (título/excerpt e talvez link) ===== -->
+                        <div class="card-body">
+                            <div class="card-title">Título do Card</div>
+                            <div class="card-excerpt">Pequeno resumo que fica visível na face principal (embaixo da imagem).</div>
+                            <!-- se quiser botão/links, insira aqui -->
                         </div>
                     </div>
                 </card>
 
-                <!-- Repita para os outros 13 cards -->
+                <!-- Repita para os demais cards... -->
             </div>
         </div>
     </section>
 </main>
 
 <script>
-  (function () {
-    // encontra todos os card tags
-    const cards = Array.from(document.querySelectorAll('card.flip-card, card'));
+    (function () {
+        const cards = Array.from(document.querySelectorAll("card.flip-card, card"));
 
-    function toggleFlip(card, turnOn) {
-      const isOn = card.classList.toggle ? card.classList.contains('is-flipped') : false;
-      if (typeof turnOn === 'boolean') {
-        if (turnOn) card.classList.add('is-flipped');
-        else card.classList.remove('is-flipped');
-      } else {
-        card.classList.toggle('is-flipped');
-      }
-      // aria attribute para acessibilidade
-      const pressed = card.classList.contains('is-flipped');
-      card.setAttribute('aria-pressed', pressed ? 'true' : 'false');
-    }
-
-    cards.forEach(card => {
-      // clique/tap
-      card.addEventListener('click', function (e) {
-        // evitar flip ao clicar em links internos dentro do card
-        if (e.target.closest('a')) return;
-        toggleFlip(card);
-      });
-
-      // teclado: Enter ou Space ativam flip; Esc desfaz
-      card.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleFlip(card);
-        } else if (e.key === 'Escape') {
-          card.classList.remove('is-flipped');
-          card.setAttribute('aria-pressed', 'false');
+        function toggleFlip(card) {
+            card.classList.toggle("is-flipped");
+            const pressed = card.classList.contains("is-flipped");
+            card.setAttribute("aria-pressed", pressed ? "true" : "false");
         }
-      });
-    });
-  })();
-</script>
 
+        cards.forEach((card) => {
+            // evita flip ao clicar em links dentro do card
+            card.addEventListener("click", function (e) {
+                if (e.target.closest("a")) return;
+                toggleFlip(card);
+            });
+
+            // teclado: Enter / Space -> flip; Esc -> desfaz
+            card.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    toggleFlip(card);
+                } else if (e.key === "Escape") {
+                    card.classList.remove("is-flipped");
+                    card.setAttribute("aria-pressed", "false");
+                }
+            });
+        });
+    })();
+</script>

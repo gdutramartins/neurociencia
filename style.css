@@ -529,124 +529,119 @@ button:focus-visible {
     margin-top: var(--space-2);
 }
 
-/* ------ Container geral dos cards ------ */
+/* ======= Grid e card básico (mantém responsividade) ======= */
 .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    align-items: stretch;
-    padding: 0;
-    margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
 }
 
-/* Ajuste no tag custom <card> - tornar semanticamente similar a um card */
+/* tag custom */
 card {
-    display: block;
-    perspective: 1200px; /* necessário para o 3D flip */
-    cursor: pointer;
-    outline: none;
-    border-radius: 12px;
+  display: block;
+  perspective: 1100px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 12px;
 }
 
-/* Inner wrapper para o flip (front/back) */
+/* inner geral do card (conteúdo não-media) */
 .card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1);
-    min-height: 280px; /* altura mínima; ajuste se quiser mais compacto */
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    border-radius: 12px;
-    background: white;
-    overflow: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
 }
 
-/* quando a classe is-flipped é adicionada, vira */
-card.is-flipped .card-inner,
-card:focus-within .card-inner {
-    transform: rotateY(180deg);
+/* ======= ÁREA DE MÍDIA (imagem <-> texto) ======= */
+/* wrapper que faz o flip apenas da zona da imagem */
+.card-media {
+  width: 100%;
+  height: 200px;              /* ajuste a altura como precisar */
+  perspective: 1000px;        /* perspectiva local para melhor efeito */
+  position: relative;
+  flex: 0 0 auto;
 }
 
-/* Face front/back */
-.card-face {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    border-radius: inherit;
+/* inner que realiza o rotateY(180deg) */
+.card-media-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(.2,.9,.3,1);
 }
 
-/* front */
-.card-front {
-    z-index: 2;
+/* quando o card (pai) tiver a classe is-flipped, giramos apenas a mídia */
+card.is-flipped .card-media-inner {
+  transform: rotateY(180deg);
 }
 
-/* back (conteúdo que aparece depois do flip) */
-.card-back {
-    transform: rotateY(180deg);
-    padding: 1rem;
-    box-sizing: border-box;
-    overflow-y: auto;
+/* faces front/back da mídia */
+.card-media-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  box-sizing: border-box;
+  padding: 0.5rem;
+  background: #f8f9fb;
 }
 
-/* imagem do card - proporcional e responsiva */
-.card-front img,
-.card-front picture,
-.card-front .card-image {
-    width: 100%;
-    height: 180px; /* controla altura visível */
-    max-height: 38vh; /* limita em telas grandes */
-    object-fit: cover; /* mantém proporção e recorta central */
-    display: block;
+/* front: imagem */
+.card-media-front img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;      /* <--- change: encaixa imagem sem cortar */
+  display: block;
+  margin: 0 auto;
+  background: #f3f4f6;      /* cor neutra atrás da imagem */
 }
 
-/* título e resumo na frente */
+/* back: texto que ocupa o mesmo espaço */
+.card-media-back {
+  transform: rotateY(180deg); /* face traseira posicionada corretamente */
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: #222;
+  line-height: 1.4;
+  overflow: auto;
+  background: #ffffff;
+}
+
+/* ===== resto do card (título / excerpt / back detalhado) ===== */
+.card-body {
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1 1 auto;
+}
+
 .card-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    padding: 0.6rem 0.8rem;
-    line-height: 1.2;
+  font-weight: 600;
+  font-size: 1.03rem;
 }
 
-/* Texto de resumo (aparece na frente se desejar) */
 .card-excerpt {
-    padding: 0 0.8rem 1rem 0.8rem;
-    color: #444;
-    font-size: 0.95rem;
+  color: #4b5563;
+  font-size: 0.95rem;
 }
 
-/* aparência do back (texto detalhado) */
-.card-back p {
-    margin: 0 0 0.75rem 0;
-    color: #222;
-    font-size: 0.95rem;
-    line-height: 1.45;
-}
+/* se quiser que o hover também vire (desktop) */
+card:hover .card-media-inner { transform: rotateY(180deg); }
 
-/* Acessibilidade: foco visível */
-card:focus {
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-    border-radius: 12px;
-}
-
-/* Fallback para telas pequenas - reduz altura da imagem */
-@media (max-width: 420px) {
-    .card-front img {
-        height: 140px;
-    }
-}
-
-/* opção para usar flip por hover também (útil em desktops) */
-card:hover .card-inner {
-    transform: rotateY(180deg);
-}
-
-/* pequenos ajustes estéticos */
-.card-inner {
-    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1);
+/* mobile: reduzir altura da mídia */
+@media (max-width:420px) {
+  .card-media { height: 160px; }
+  .card-media-back { font-size: 0.92rem; padding: 0.6rem; }
 }
