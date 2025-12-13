@@ -309,8 +309,7 @@ title: Formulário Goals Errors Train
 <script>
     async function carregarFormularioPorId(id) {
         mostrarLoading();
-        document.getElementById("formulario_id").value = registros[0].formulario_id;
-
+    
         try {
             const response = await fetch(`${SCRIPT_URL}?id=${id}`);
             const registros = await response.json();
@@ -320,6 +319,7 @@ title: Formulário Goals Errors Train
                 return;
             }
 
+            document.getElementById("formulario_id").value = registros[0].formulario_id;
             const payload = JSON.parse(registros[0].payload);
 
             Object.entries(payload).forEach(([k, v]) => {
