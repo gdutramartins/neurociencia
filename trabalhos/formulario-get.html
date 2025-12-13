@@ -1,0 +1,196 @@
+---
+layout: default
+title: Formulário Goals Errors Train
+---
+
+<div class="neuro-form">
+    <!-- ===== ABAS ===== -->
+    <div class="neuro-tabs">
+        <div class="neuro-tab active" onclick="openTab('intencoes')">Formulário 1 – Intenções</div>
+        <div class="neuro-tab" onclick="openTab('modelo')">Formulário 2 – Modelo</div>
+        <div class="neuro-tab" onclick="openTab('erros')">Formulário 3 – Erros</div>
+        <div class="neuro-tab" onclick="openTab('treino')">Formulário 4 – Treino</div>
+    </div>
+
+    <form>
+        <!-- =========================
+     CONTEXTO COMUM
+     ========================= -->
+        <div class="neuro-form__section">
+            <h3>Contexto da entrevista</h3>
+            <div class="neuro-row">
+                <div class="neuro-col">
+                    <input class="neuro-input" name="entrevistador" placeholder="Entrevistador" />
+                </div>
+                <div class="neuro-col">
+                    <input class="neuro-input" name="entrevistado" placeholder="Entrevistado" />
+                </div>
+            </div>
+
+            <input class="neuro-input" name="tema_mudanca" placeholder="Tema da mudança" />
+        </div>
+
+        <!-- =========================
+     FORMULÁRIO 1 – INTENÇÕES
+     ========================= -->
+        <div class="neuro-tab-content active" id="intencoes">
+            <div class="neuro-form__section">
+                <h3>Intenção genuína</h3>
+                <p>Também chamada de “intenção manifesta”. Onde está a minha/nossa dopamina?</p>
+                <textarea class="neuro-textarea neuro-textarea--large" name="intencao_genuina"></textarea>
+            </div>
+
+            <div class="neuro-form__section">
+                <h3>Intenção desejada</h3>
+                <p>É necessário ajustar a intenção genuína? Se sim, qual a nova intenção?</p>
+                <textarea class="neuro-textarea neuro-textarea--large" name="intencao_desejada"></textarea>
+            </div>
+
+            <div class="neuro-form__section">
+                <h3>Intenções concorrentes</h3>
+                <p>Quais intenções (vetores de força) antagonizam a intenção genuína?</p>
+                <textarea class="neuro-textarea" name="intencoes_concorrentes_1"></textarea>
+                <textarea class="neuro-textarea" name="intencoes_concorrentes_2"></textarea>
+            </div>
+        </div>
+
+        <!-- =========================
+     FORMULÁRIO 2 – MODELO
+     ========================= -->
+        <div class="neuro-tab-content" id="modelo">
+            <div class="neuro-form__section">
+                <h3>Quem é o seu modelo?</h3>
+                <input class="neuro-input" name="modelo" />
+            </div>
+
+            <div class="neuro-form__section">
+                <h3>Comportamentos do modelo</h3>
+                <textarea class="neuro-textarea" name="modelo_comportamento_1"></textarea>
+                <textarea class="neuro-textarea" name="modelo_comportamento_2"></textarea>
+                <textarea class="neuro-textarea" name="modelo_comportamento_3"></textarea>
+            </div>
+        </div>
+
+        <!-- =========================
+     FORMULÁRIO 3 – ERROS
+     ========================= -->
+        <div class="neuro-tab-content" id="erros">
+            <div class="neuro-form__section">
+                <h3>Pilar 2 – Erros</h3>
+
+                <table class="neuro-table">
+                    <tr>
+                        <th>Comportamento</th>
+                        <th>Nomear erro</th>
+                        <th>Reconhecer</th>
+                        <th>Aceitar</th>
+                    </tr>
+
+                    <tr>
+                        <td>Comportamento 1</td>
+                        <td><input class="neuro-input" name="erro_nome_1" /></td>
+                        <td><input type="checkbox" name="erro_reconhecer_1" /></td>
+                        <td><input type="checkbox" name="erro_aceitar_1" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Comportamento 2</td>
+                        <td><input class="neuro-input" name="erro_nome_2" /></td>
+                        <td><input type="checkbox" name="erro_reconhecer_2" /></td>
+                        <td><input type="checkbox" name="erro_aceitar_2" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Comportamento 3</td>
+                        <td><input class="neuro-input" name="erro_nome_3" /></td>
+                        <td><input type="checkbox" name="erro_reconhecer_3" /></td>
+                        <td><input type="checkbox" name="erro_aceitar_3" /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- =========================
+     FORMULÁRIO 4 – TREINO
+     ========================= -->
+        <div class="neuro-tab-content" id="treino">
+            <div class="neuro-form__section">
+                <h3>Detalhamento do erro</h3>
+
+                <select class="neuro-input" onchange="mostrarErro(this.value)">
+                    <option value="">Selecione o comportamento</option>
+                    <option value="1">Comportamento 1</option>
+                    <option value="2">Comportamento 2</option>
+                    <option value="3">Comportamento 3</option>
+                </select>
+            </div>
+
+            <div id="erro-1" class="erro-detalhe" style="display: none">
+                <p>Quando este erro ocorre?</p>
+                <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
+
+                <p>Por que ele ocorre?</p>
+                <textarea class="neuro-textarea" name="erro_porque_2"></textarea>
+
+                <p>Estímulos emocionais / sinais de alerta</p>
+                <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
+
+                <p>Quão próximo estou/estamos de atingir o comportamento?</p>
+                <input type="range" min="0" max="100" step="25" name="erro_proximidade_2" />
+            </div>
+
+            <div id="erro-2" class="erro-detalhe" style="display: none">
+                <p>Quando este erro ocorre?</p>
+                <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
+
+                <p>Por que ele ocorre?</p>
+                <textarea class="neuro-textarea" name="erro_porque_2"></textarea>
+
+                <p>Estímulos emocionais / sinais de alerta</p>
+                <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
+
+                <p>Quão próximo estou/estamos de atingir o comportamento?</p>
+                <input type="range" min="0" max="100" step="25" name="erro_proximidade_2" />
+            </div>
+
+            <div id="erro-3" class="erro-detalhe" style="display: none">
+                <p>Quando este erro ocorre?</p>
+                <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
+
+                <p>Por que ele ocorre?</p>
+                <textarea class="neuro-textarea" name="erro_porque_2"></textarea>
+
+                <p>Estímulos emocionais / sinais de alerta</p>
+                <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
+
+                <p>Quão próximo estou/estamos de atingir o comportamento?</p>
+                <input type="range" min="0" max="100" step="25" name="erro_proximidade_2" />
+            </div>
+        </div>
+
+        <button class="neuro-button" type="submit">Salvar todos os formulários</button>
+    </form>
+</div>
+
+<script>
+    function openTab(id) {
+        document.querySelectorAll(".tab, .tab-content").forEach((e) => e.classList.remove("active"));
+
+        document.getElementById(id).classList.add("active");
+        document.getElementById("tab-" + id).classList.add("active");
+    }
+
+    function mostrarErro(valor) {
+        // esconde todos os blocos de erro
+        document.querySelectorAll(".erro-detalhe").forEach((div) => (div.style.display = "none"));
+
+        // se nada foi selecionado, não mostra nada
+        if (!valor) return;
+
+        // mostra o bloco correspondente
+        const alvo = document.getElementById("erro-" + valor);
+        if (alvo) {
+            alvo.style.display = "block";
+        }
+    }
+</script>
