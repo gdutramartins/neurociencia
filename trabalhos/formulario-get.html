@@ -6,10 +6,10 @@ title: Formulário Goals Errors Train
 <div class="neuro-form">
     <!-- ===== ABAS ===== -->
     <div class="neuro-tabs">
-        <div class="neuro-tab active" onclick="openTab('intencoes')">Intençâo</div>
-        <div class="neuro-tab" onclick="openTab('modelo')">Modelo</div>
-        <div class="neuro-tab" onclick="openTab('erros')">Erros</div>
-        <div class="neuro-tab" onclick="openTab('treino')">Treino</div>
+        <div class="neuro-tab active" onclick="openTab('this, intencoes')">Intençâo</div>
+        <div class="neuro-tab" onclick="openTab(this, 'modelo')">Modelo</div>
+        <div class="neuro-tab" onclick="openTab(this, 'erros')">Erros</div>
+        <div class="neuro-tab" onclick="openTab(this, 'treino')">Treino</div>
     </div>
 
     <form>
@@ -192,10 +192,18 @@ title: Formulário Goals Errors Train
 </div>
 
 <script>
-    function openTab(id) {
-        document.querySelectorAll(".neuro-tab, .neuro-tab-content").forEach((e) => e.classList.remove("active"));
+    function openTab(tabElement, contentId) {
+        // remove active de todas as abas
+        document.querySelectorAll(".neuro-tab").forEach((t) => t.classList.remove("active"));
 
-        document.getElementById(id).classList.add("active");
+        // remove active de todos os conteúdos
+        document.querySelectorAll(".neuro-tab-content").forEach((c) => c.classList.remove("active"));
+
+        // ativa a aba clicada
+        tabElement.classList.add("active");
+
+        // ativa o conteúdo correspondente
+        document.getElementById(contentId).classList.add("active");
     }
 
     function mostrarErro(valor) {
