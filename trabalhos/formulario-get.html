@@ -89,21 +89,21 @@ title: Formulário Goals Errors Train
 
                     <tr>
                         <td>Comportamento 1</td>
-                        <td><input class="neuro-input" name="erro_nome_1" /></td>
+                        <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_1"></textarea></td>
                         <td><input type="checkbox" name="erro_reconhecer_1" /></td>
                         <td><input type="checkbox" name="erro_aceitar_1" /></td>
                     </tr>
 
                     <tr>
                         <td>Comportamento 2</td>
-                        <td><input class="neuro-input" name="erro_nome_2" /></td>
+                        <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_2"></textarea></td>
                         <td><input type="checkbox" name="erro_reconhecer_2" /></td>
                         <td><input type="checkbox" name="erro_aceitar_2" /></td>
                     </tr>
 
                     <tr>
                         <td>Comportamento 3</td>
-                        <td><input class="neuro-input" name="erro_nome_3" /></td>
+                        <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_3"></textarea></td>
                         <td><input type="checkbox" name="erro_reconhecer_3" /></td>
                         <td><input type="checkbox" name="erro_aceitar_3" /></td>
                     </tr>
@@ -128,16 +128,22 @@ title: Formulário Goals Errors Train
 
             <div id="erro-1" class="erro-detalhe" style="display: none">
                 <p>Quando este erro ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
+                <textarea class="neuro-textarea" name="erro_quando_1"></textarea>
 
                 <p>Por que ele ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_porque_2"></textarea>
+                <textarea class="neuro-textarea" name="erro_porque_1"></textarea>
 
                 <p>Estímulos emocionais / sinais de alerta</p>
-                <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
+                <textarea class="neuro-textarea" name="erro_estimulos_1"></textarea>
 
                 <p>Quão próximo estou/estamos de atingir o comportamento?</p>
-                <input type="range" min="0" max="100" step="25" name="erro_proximidade_2" />
+                <div class="neuro-proximidade">
+                    <label><input type="radio" name="erro_proximidade_1" value="0" /> 0%</label>
+                    <label><input type="radio" name="erro_proximidade_1" value="25" /> 25%</label>
+                    <label><input type="radio" name="erro_proximidade_1" value="50" /> 50%</label>
+                    <label><input type="radio" name="erro_proximidade_1" value="75" /> 75%</label>
+                    <label><input type="radio" name="erro_proximidade_1" value="100" /> 100%</label>
+                </div>
             </div>
 
             <div id="erro-2" class="erro-detalhe" style="display: none">
@@ -151,21 +157,33 @@ title: Formulário Goals Errors Train
                 <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
 
                 <p>Quão próximo estou/estamos de atingir o comportamento?</p>
-                <input type="range" min="0" max="100" step="25" name="erro_proximidade_2" />
+                <div class="neuro-proximidade">
+                    <label><input type="radio" name="erro_proximidade_2" value="0" /> 0%</label>
+                    <label><input type="radio" name="erro_proximidade_2" value="25" /> 25%</label>
+                    <label><input type="radio" name="erro_proximidade_2" value="50" /> 50%</label>
+                    <label><input type="radio" name="erro_proximidade_2" value="75" /> 75%</label>
+                    <label><input type="radio" name="erro_proximidade_2" value="100" /> 100%</label>
+                </div>
             </div>
 
             <div id="erro-3" class="erro-detalhe" style="display: none">
                 <p>Quando este erro ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
+                <textarea class="neuro-textarea" name="erro_quando_3"></textarea>
 
                 <p>Por que ele ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_porque_2"></textarea>
+                <textarea class="neuro-textarea" name="erro_porque_3"></textarea>
 
                 <p>Estímulos emocionais / sinais de alerta</p>
-                <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
+                <textarea class="neuro-textarea" name="erro_estimulos_3"></textarea>
 
                 <p>Quão próximo estou/estamos de atingir o comportamento?</p>
-                <input type="range" min="0" max="100" step="25" name="erro_proximidade_2" />
+                <div class="neuro-proximidade">
+                    <label><input type="radio" name="erro_proximidade_3" value="0" /> 0%</label>
+                    <label><input type="radio" name="erro_proximidade_3" value="25" /> 25%</label>
+                    <label><input type="radio" name="erro_proximidade_3" value="50" /> 50%</label>
+                    <label><input type="radio" name="erro_proximidade_3" value="75" /> 75%</label>
+                    <label><input type="radio" name="erro_proximidade_3" value="100" /> 100%</label>
+                </div>
             </div>
         </div>
 
