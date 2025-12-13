@@ -90,8 +90,8 @@ title: Formulário Goals Errors Train
                     <tr>
                         <td>Comportamento 1</td>
                         <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_1"></textarea></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_reconhecer_1" class="neuro-checkbox"/></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_aceitar_1" class="neuro-checkbox"/></td>
+                        <td class="checkbox-cell"><input type="checkbox" name="erro_reconhecer_1" class="neuro-checkbox" /></td>
+                        <td class="checkbox-cell"><input type="checkbox" name="erro_aceitar_1" class="neuro-checkbox" /></td>
                     </tr>
 
                     <tr>
@@ -104,7 +104,7 @@ title: Formulário Goals Errors Train
                     <tr>
                         <td>Comportamento 3</td>
                         <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_3"></textarea></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_reconhecer_3" class="neuro-checkbox"/></td>
+                        <td class="checkbox-cell"><input type="checkbox" name="erro_reconhecer_3" class="neuro-checkbox" /></td>
                         <td class="checkbox-cell"><input type="checkbox" name="erro_aceitar_3" class="neuro-checkbox" /></td>
                     </tr>
                 </table>
@@ -187,7 +187,9 @@ title: Formulário Goals Errors Train
             </div>
         </div>
 
-        <button class="neuro-button" type="submit">Salvar todos os formulários</button>
+        <button type="button" class="neuro-button" onclick="salvarFormulario()">Salvar formulário</button>
+
+        <button type="button" class="neuro-button" onclick="carregarFormulario()">Carregar formulário</button>
     </form>
 </div>
 
@@ -218,5 +220,79 @@ title: Formulário Goals Errors Train
         if (alvo) {
             alvo.style.display = "block";
         }
+    }
+</script>
+
+<script>
+    // codigo implantacao AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u/exec";
+</script>
+
+<script>
+    function coletarFormulario() {
+        const dados = {};
+
+        document.querySelectorAll("[name]").forEach((el) => {
+            if (el.type === "checkbox") {
+                dados[el.name] = el.checked;
+            } else if (el.type === "radio") {
+                if (el.checked) dados[el.name] = el.value;
+            } else {
+                dados[el.name] = el.value;
+            }
+        });
+
+        return dados;
+    }
+</script>
+
+<script>
+    async function salvarFormulario() {
+        const dados = coletarFormulario();
+
+        const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(dados),
+        });
+
+        const json = await response.json();
+
+        alert("Formulário salvo com ID " + json.formulario_id);
+    }
+</script>
+
+<script>
+    async function carregarFormulario() {
+        const entrevistador = document.querySelector("[name=entrevistador]").value;
+        const entrevistado = document.querySelector("[name=entrevistado]").value;
+        const tema = document.querySelector("[name=tema_mudanca]").value;
+
+        const url =
+            SCRIPT_URL +
+            "?entrevistador=" +
+            encodeURIComponent(entrevistador) +
+            "&entrevistado=" +
+            encodeURIComponent(entrevistado) +
+            "&tema_mudanca=" +
+            encodeURIComponent(tema);
+
+        const response = await fetch(url);
+        const registros = await response.json();
+
+        if (!registros.length) {
+            alert("Nenhum formulário encontrado");
+            return;
+        }
+
+        const payload = JSON.parse(registros[0].payload);
+
+        Object.entries(payload).forEach(([k, v]) => {
+            const el = document.querySelector(`[name="${k}"]`);
+            if (!el) return;
+
+            if (el.type === "checkbox") el.checked = v;
+            else if (el.type === "radio") el.checked = el.value === v;
+            else el.value = v;
+        });
     }
 </script>
