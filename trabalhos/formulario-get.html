@@ -13,6 +13,7 @@ title: Formulário Goals Errors Train
     </div>
 
     <form>
+        <input type="hidden" name="formulario_id" id="formulario_id" />
         <!-- =========================
      CONTEXTO COMUM
      ========================= -->
@@ -254,20 +255,21 @@ title: Formulário Goals Errors Train
 
         try {
             const dados = coletarFormulario();
+            const id = document.getElementById("formulario_id").value;
 
-            const response = await fetch(SCRIPT_URL, {
-                method: "POST",
+            const method = id ? "PUT" : "POST";
+            const url = id ? `${SCRIPT_URL}?id=${id}` : SCRIPT_URL;
+
+            const response = await fetch(url, {
+                method,
                 body: JSON.stringify(dados),
             });
 
             const json = await response.json();
 
-            if (json.status === "ok") {
-                alert("Formulário salvo com ID " + json.formulario_id);
-                limparFormulario();
-            } else {
-                alert("Erro ao salvar");
-            }
+            alert(id ? "Formulário atualizado" : "Formulário salvo");
+
+            if (!id) limparFormulario();
         } finally {
             esconderLoading();
         }
@@ -283,6 +285,10 @@ title: Formulário Goals Errors Train
                 el.value = "";
             }
         });
+
+        // garante limpeza explícita do ID
+        const hiddenId = document.getElementById("formulario_id");
+        if (hiddenId) hiddenId.value = "";
 
         // opcional: voltar para a primeira aba
         document.querySelectorAll(".neuro-tab").forEach((t) => t.classList.remove("active"));
@@ -303,6 +309,7 @@ title: Formulário Goals Errors Train
 <script>
     async function carregarFormularioPorId(id) {
         mostrarLoading();
+        document.getElementById("formulario_id").value = registros[0].formulario_id;
 
         try {
             const response = await fetch(`${SCRIPT_URL}?id=${id}`);
@@ -316,12 +323,18 @@ title: Formulário Goals Errors Train
             const payload = JSON.parse(registros[0].payload);
 
             Object.entries(payload).forEach(([k, v]) => {
-                const el = document.querySelector(`[name="${k}"]`);
-                if (!el) return;
+                const elements = document.querySelectorAll(`[name="${k}"]`);
+                if (!elements.length) return;
 
-                if (el.type === "checkbox") el.checked = v;
-                else if (el.type === "radio") el.checked = String(el.value) === String(v);
-                else el.value = v;
+                elements.forEach((el) => {
+                    if (el.type === "checkbox") {
+                        el.checked = Boolean(v);
+                    } else if (el.type === "radio") {
+                        el.checked = String(el.value) === String(v);
+                    } else {
+                        el.value = v;
+                    }
+                });
             });
         } finally {
             esconderLoading();
