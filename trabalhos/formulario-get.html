@@ -195,8 +195,7 @@ title: Formulário Goals Errors Train
     function openTab(id) {
         document.querySelectorAll(".neuro-tab, .neuro-tab-content").forEach((e) => e.classList.remove("active"));
 
-        document.getElementById("tab-" + id).classList.add("active");
-        document.getElementById("tab-" + id).classList.add("active");
+        document.getElementById(id).classList.add("active");
     }
 
     function mostrarErro(valor) {
