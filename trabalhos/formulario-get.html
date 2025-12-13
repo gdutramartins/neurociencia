@@ -188,8 +188,11 @@ title: Formulário Goals Errors Train
         </div>
 
         <button type="button" class="neuro-button" onclick="salvarFormulario()">Salvar formulário</button>
-
     </form>
+</div>
+
+<div id="loading-overlay" style="display: none">
+    <div class="spinner"></div>
 </div>
 
 <script>
@@ -247,20 +250,26 @@ title: Formulário Goals Errors Train
 
 <script>
     async function salvarFormulario() {
-        const dados = coletarFormulario();
+        mostrarLoading();
 
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify(dados),
-        });
+        try {
+            const dados = coletarFormulario();
 
-        const json = await response.json();
+            const response = await fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify(dados),
+            });
 
-        if (json.status === "ok") {
-            alert("Formulário salvo com ID " + json.formulario_id);
-            limparFormulario();
-        } else {
-            alert("Erro ao salvar");
+            const json = await response.json();
+
+            if (json.status === "ok") {
+                alert("Formulário salvo com ID " + json.formulario_id);
+                limparFormulario();
+            } else {
+                alert("Erro ao salvar");
+            }
+        } finally {
+            esconderLoading();
         }
     }
 </script>
@@ -293,24 +302,30 @@ title: Formulário Goals Errors Train
 
 <script>
     async function carregarFormularioPorId(id) {
-        const response = await fetch(`${SCRIPT_URL}?id=${id}`);
-        const registros = await response.json();
+        mostrarLoading();
 
-        if (!registros.length) {
-            alert("Formulário não encontrado");
-            return;
+        try {
+            const response = await fetch(`${SCRIPT_URL}?id=${id}`);
+            const registros = await response.json();
+
+            if (!registros.length) {
+                alert("Formulário não encontrado");
+                return;
+            }
+
+            const payload = JSON.parse(registros[0].payload);
+
+            Object.entries(payload).forEach(([k, v]) => {
+                const el = document.querySelector(`[name="${k}"]`);
+                if (!el) return;
+
+                if (el.type === "checkbox") el.checked = v;
+                else if (el.type === "radio") el.checked = String(el.value) === String(v);
+                else el.value = v;
+            });
+        } finally {
+            esconderLoading();
         }
-
-        const payload = JSON.parse(registros[0].payload);
-
-        Object.entries(payload).forEach(([k, v]) => {
-            const el = document.querySelector(`[name="${k}"]`);
-            if (!el) return;
-
-            if (el.type === "checkbox") el.checked = v;
-            else if (el.type === "radio") el.checked = el.value === v;
-            else el.value = v;
-        });
     }
 </script>
 
@@ -321,4 +336,14 @@ title: Formulário Goals Errors Train
             carregarFormularioPorId(id);
         }
     });
+</script>
+
+<script>
+    function mostrarLoading() {
+        document.getElementById("loading-overlay").style.display = "flex";
+    }
+
+    function esconderLoading() {
+        document.getElementById("loading-overlay").style.display = "none";
+    }
 </script>
