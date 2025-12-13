@@ -772,3 +772,18 @@ card:focus {
     vertical-align: top;
     min-width: 100%;
 }
+
+.neuro-checkbox {
+  transform: scale(1.6);
+  cursor: pointer;
+}
+
+.neuro-table td.checkbox-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.neuro-table td.checkbox-cell {
+  text-align: center;
+  vertical-align: middle;
+}
