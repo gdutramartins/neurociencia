@@ -7,7 +7,7 @@ title: Formulário Goals Errors Train
     <!-- ===== ABAS ===== -->
     <div class="neuro-tabs">
         <div class="neuro-tab active" onclick="openTab('intencoes')">Intençâo</div>
-        <div class="neuro-tab" onclick="openTab('modelo')">– Modelo</div>
+        <div class="neuro-tab" onclick="openTab('modelo')">Modelo</div>
         <div class="neuro-tab" onclick="openTab('erros')">Erros</div>
         <div class="neuro-tab" onclick="openTab('treino')">Treino</div>
     </div>
@@ -177,7 +177,7 @@ title: Formulário Goals Errors Train
     function openTab(id) {
         document.querySelectorAll(".neuro-tab, .neuro-tab-content").forEach((e) => e.classList.remove("active"));
 
-        document.getElementById(id).classList.add("active");
+        document.getElementById("tab-" + id).classList.add("active");
         document.getElementById("tab-" + id).classList.add("active");
     }
 

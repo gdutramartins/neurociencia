@@ -684,6 +684,7 @@ card:focus {
   background: #ffffff;
   border: 2px solid #ccc;
   border-bottom: none;
+  font-weight: bold;
 }
 
 /* Conteúdo */
