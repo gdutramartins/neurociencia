@@ -767,3 +767,8 @@ card:focus {
   background: #e0e0e0;
   padding: 8px 12px;
 }
+
+.neuro-table {
+    vertical-align: top;
+    min-width: 100%;
+}
