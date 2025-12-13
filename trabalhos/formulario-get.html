@@ -6,10 +6,10 @@ title: Formulário Goals Errors Train
 <div class="neuro-form">
     <!-- ===== ABAS ===== -->
     <div class="neuro-tabs">
-        <div class="neuro-tab active" onclick="openTab('intencoes')">Formulário 1 – Intenções</div>
-        <div class="neuro-tab" onclick="openTab('modelo')">Formulário 2 – Modelo</div>
-        <div class="neuro-tab" onclick="openTab('erros')">Formulário 3 – Erros</div>
-        <div class="neuro-tab" onclick="openTab('treino')">Formulário 4 – Treino</div>
+        <div class="neuro-tab active" onclick="openTab('intencoes')">Intençâo</div>
+        <div class="neuro-tab" onclick="openTab('modelo')">– Modelo</div>
+        <div class="neuro-tab" onclick="openTab('erros')">Erros</div>
+        <div class="neuro-tab" onclick="openTab('treino')">Treino</div>
     </div>
 
     <form>
@@ -51,6 +51,7 @@ title: Formulário Goals Errors Train
                 <p>Quais intenções (vetores de força) antagonizam a intenção genuína?</p>
                 <textarea class="neuro-textarea" name="intencoes_concorrentes_1"></textarea>
                 <textarea class="neuro-textarea" name="intencoes_concorrentes_2"></textarea>
+                <textarea class="neuro-textarea" name="intencoes_concorrentes_3"></textarea>
             </div>
         </div>
 
@@ -174,7 +175,7 @@ title: Formulário Goals Errors Train
 
 <script>
     function openTab(id) {
-        document.querySelectorAll(".tab, .tab-content").forEach((e) => e.classList.remove("active"));
+        document.querySelectorAll(".neuro-tab, .neuro-tab-content").forEach((e) => e.classList.remove("active"));
 
         document.getElementById(id).classList.add("active");
         document.getElementById("tab-" + id).classList.add("active");
