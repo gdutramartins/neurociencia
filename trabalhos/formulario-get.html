@@ -271,6 +271,7 @@ title: Formulário Goals Errors Train
 
             const json = await response.json();
 
+            console.log(json);
             alert(json.status === "updated" ? "Formulário atualizado" : "Formulário salvo");
 
             if (json.status === "created") {
