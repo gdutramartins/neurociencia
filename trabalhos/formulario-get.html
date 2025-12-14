@@ -267,16 +267,16 @@ title: Formulário Goals Errors Train
             const response = await fetch(SCRIPT_URL, {
                 method: "POST",
                 body: JSON.stringify(dados),
-            }); 
+            });
 
             const json = await response.json();
-
-            console.log(json);
+            if (json.status === "error") {
+                alert("Erro ao salvar o formulário: " + json.message);
+                return;
+            }
             alert(json.status === "updated" ? "Formulário atualizado" : "Formulário salvo");
 
-            if (json.status === "created") {
-                limparFormulario();
-            }
+            limparFormulario();
         } finally {
             esconderLoading();
         }
