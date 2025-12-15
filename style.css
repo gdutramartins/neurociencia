@@ -813,3 +813,20 @@ card:focus {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+
+.hint-icon {
+  cursor: help;
+  font-size: 18px;
+  user-select: none;
+  color: #004aad;
+}
+
+.tema-hint-box {
+  margin-top: 8px;
+  padding: 12px;
+  background: #f5f7fb;
+  border-left: 4px solid #004aad;
+  font-size: 14px;
+}
+
