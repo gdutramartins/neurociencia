@@ -235,7 +235,7 @@ title: Formulário Goals Errors Train
                 </select>
             </div>
 
-            <div id="erro-1" class="erro-detalhe" style="display: none">
+            <div id="treino-1" class="treino-detalhe" style="display: none">
                 <p>Quando este erro ocorre?</p>
                 <textarea class="neuro-textarea" name="erro_quando_1"></textarea>
 
@@ -255,7 +255,7 @@ title: Formulário Goals Errors Train
                 </div>
             </div>
 
-            <div id="erro-2" class="erro-detalhe" style="display: none">
+            <div id="treino-2" class="treino-detalhe" style="display: none">
                 <p>Quando este erro ocorre?</p>
                 <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
 
@@ -275,7 +275,7 @@ title: Formulário Goals Errors Train
                 </div>
             </div>
 
-            <div id="erro-3" class="erro-detalhe" style="display: none">
+            <div id="treino-3" class="treino-detalhe" style="display: none">
                 <p>Quando este erro ocorre?</p>
                 <textarea class="neuro-textarea" name="erro_quando_3"></textarea>
 
@@ -543,6 +543,22 @@ title: Formulário Goals Errors Train
             } else {
                 option.text = `Comportamento ${i}`;
             }
+        }
+    }
+</script>
+
+<script>
+    function mostrarTreino(valor) {
+        // esconde todos os blocos de treino
+        document.querySelectorAll(".treino-detalhe").forEach((div) => (div.style.display = "none"));
+
+        // se nada foi selecionado, não mostra nada
+        if (!valor) return;
+
+        // mostra o bloco correspondente
+        const alvo = document.getElementById("treino-" + valor);
+        if (alvo) {
+            alvo.style.display = "block";
         }
     }
 </script>
