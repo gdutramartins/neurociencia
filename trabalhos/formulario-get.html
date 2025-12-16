@@ -44,8 +44,8 @@ title: Formulário Goals Errors Train
                     <option value="">Selecione uma entrevista</option>
                 </select>
 
-                <button class="neuro-btn" onclick="carregarSelecionada()">Carregar</button>
-                <button class="neuro-btn" onclick="novoFormulario()">Novo</button>
+                <button class="neuro-btn" type="button" onclick="carregarSelecionada()">Carregar</button>
+                <button class="neuro-btn" type="button" onclick="novoFormulario()">Novo</button>
             </div>
 
             <div class="neuro-row">
@@ -469,7 +469,6 @@ title: Formulário Goals Errors Train
         try {
             const url =
                 `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(auth.entrevistador)}` + `&_senha=${encodeURIComponent(auth.senha)}`;
-            console.log("Carregando formulário de URL:", url);
             const response = await fetch(url);
             const registros = await response.json();
 
