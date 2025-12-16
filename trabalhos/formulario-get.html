@@ -494,7 +494,6 @@ title: Formulário Goals Errors Train
 
             console.log(registros);
 
-            document.getElementById("formulario_id").value = registros[0].formulario_id;
             const payload = JSON.parse(registros[0].payload);
 
             Object.entries(payload).forEach(([k, v]) => {
@@ -511,6 +510,8 @@ title: Formulário Goals Errors Train
                     }
                 });
             });
+
+            document.getElementById("formulario_id").value = registros[0].formulario_id;
 
             atualizarLabelsComportamentos();
         } finally {
