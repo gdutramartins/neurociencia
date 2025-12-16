@@ -4,343 +4,416 @@ title: Formulário Goals Errors Train
 ---
 
 <div
-    id="loginOverlay"
-    style="position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; align-items: center; justify-content: center"
+  id="loginOverlay"
+  style="
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
 >
-    <div style="width: 320px">
-        <h3>Acesso</h3>
+  <div style="width: 320px">
+    <h3>Acesso</h3>
 
-        <select class="neuro-input" id="login_entrevistador">
-            <option value="0">Escolha o entrevistador</option>
-            <option value="1">Gustavo</option>
-        </select>
+    <select class="neuro-input" id="login_entrevistador">
+      <option value="0">Escolha o entrevistador</option>
+      <option value="1">Gustavo</option>
+    </select>
 
-        <input type="password" class="neuro-input" id="login_senha" placeholder="Senha" />
+    <input
+      type="password"
+      class="neuro-input"
+      id="login_senha"
+      placeholder="Senha"
+    />
 
-        <button class="neuro-btn neuro-btn-primary" onclick="login()">Entrar</button>
-    </div>
+    <button class="neuro-btn neuro-btn-primary" onclick="login()">
+      Entrar
+    </button>
+  </div>
 </div>
 
 <div class="neuro-form">
-    <!-- ===== ABAS ===== -->
-    <div class="neuro-tabs">
-        <div class="neuro-tab active" onclick="openTab(this, 'intencoes')">Intençâo</div>
-        <div class="neuro-tab" onclick="openTab(this, 'modelo')">Modelo</div>
-        <div class="neuro-tab" onclick="openTab(this, 'erros')">Erros</div>
-        <div class="neuro-tab" onclick="openTab(this, 'treino')">Treino</div>
+  <!-- ===== ABAS ===== -->
+  <div class="neuro-tabs">
+    <div class="neuro-tab active" onclick="openTab(this, 'intencoes')">
+      Intençâo
     </div>
+    <div class="neuro-tab" onclick="openTab(this, 'modelo')">Modelo</div>
+    <div class="neuro-tab" onclick="openTab(this, 'erros')">Erros</div>
+    <div class="neuro-tab" onclick="openTab(this, 'treino')">Treino</div>
+  </div>
 
-    <form>
-        <input type="hidden" name="formulario_id" id="formulario_id" />
-        <input type="hidden" id="auth_entrevistador" name="entrevistador" />
-        <input type="hidden" id="auth_senha" name="_senha" />
-        <!-- =========================
+  <form>
+    <input type="hidden" name="formulario_id" id="formulario_id" />
+    <input type="hidden" id="auth_entrevistador" name="entrevistador" />
+    <input type="hidden" id="auth_senha" name="_senha" />
+    <!-- =========================
      CONTEXTO COMUM
      ========================= -->
-        <div class="neuro-form__section">
-            <h3>Contexto da entrevista</h3>
-            
-            <div class="neuro-row">
-                <div class="neuro-col">
-                    <select class="neuro-input" id="entrevistador_select" disabled>
-                        <option value="0">Escolha o entrevistador</option>
-                        <option value="1">Gustavo</option>
-                    </select>
-                </div>
-                <div class="neuro-col">
-                    <input class="neuro-input" name="entrevistado" placeholder="Entrevistado" />
-                </div>
-            </div>
+    <div class="neuro-form__section">
+      <h3>Contexto da entrevista</h3>
 
-            <div class="neuro-row">
-                <div class="neuro-toolbar">
-                    <div class="neuro-toolbar-left">
-                        <label class="neuro-toolbar-label">📂 Entrevistas</label>
+      <div class="neuro-row">
+        <div class="neuro-col">
+          <select class="neuro-input" id="entrevistador_select" disabled>
+            <option value="0">Escolha o entrevistador</option>
+            <option value="1">Gustavo</option>
+          </select>
+        </div>
+        <div class="neuro-col">
+          <input
+            class="neuro-input"
+            name="entrevistado"
+            placeholder="Entrevistado"
+          />
+        </div>
+      </div>
 
-                        <select class="neuro-input" id="listaEntrevistas">
-                            <option value="">Selecione uma entrevista</option>
-                        </select>
-                    </div>
+      <div class="neuro-row">
+        <div class="neuro-col">
+          <div class="neuro-toolbar-left">
+            <select class="neuro-input" id="listaEntrevistas">
+              <option value="">Selecione uma entrevista</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-                    <div class="neuro-toolbar-actions">
-                        <button type="button" class="neuro-btn" onclick="carregarSelecionada()">Carregar</button>
+      <div class="neuro-row" style="align-items: center; gap: 10px">
+        <div class="neuro-col">
+          <select class="neuro-input" name="tema_mudanca" id="tema_mudanca">
+            <option value="">Selecione o tema da mudança</option>
 
-                        <button type="button" class="neuro-btn neuro-btn-secondary" onclick="novoFormulario()">Novo</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="neuro-row" style="align-items: center; gap: 10px">
-                <div class="neuro-col">
-                    <select class="neuro-input" name="tema_mudanca" id="tema_mudanca">
-                        <option value="">Selecione o tema da mudança</option>
-
-                        <option
-                            value="autoconsciencia"
-                            data-hint="Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e ajustar-se quando necessário. É a base da inteligência emocional: um líder que não se percebe não consegue se regular."
-                        >
-                            Autoconsciência emocional
-                        </option>
-
-                        <option
-                            value="autorregulacao"
-                            data-hint="Controlar impulsos, frustrações e reações automáticas. Líderes que regulam bem seus estados internos mantêm a estabilidade do time, especialmente em ambientes de pressão."
-                        >
-                            Autorregulação
-                        </option>
-
-                        <option
-                            value="visao"
-                            data-hint="Saber traduzir o “para onde estamos indo” em objetivos concretos, compreensíveis e motivadores. Visão sem clareza vira confusão; clareza sem visão vira operacional pesado."
-                        >
-                            Clareza de propósito e visão
-                        </option>
-
-                        <option
-                            value="comunicacao"
-                            data-hint="Comunicar com precisão, adaptar a mensagem ao perfil do time, ouvir ativamente, checar entendimento, evitar ruídos e subjetividade excessiva. A mensagem é do líder; o entendimento é do ouvinte."
-                        >
-                            Comunicação efetiva
-                        </option>
-
-                        <option
-                            value="desenvolver_pessoas"
-                            data-hint="Identificar talentos, entender gaps e ajudar cada pessoa a melhorar. Inclui delegação inteligente, feedback contínuo e ambiente seguro para aprender."
-                        >
-                            Capacidade de formar e desenvolver pessoas
-                        </option>
-
-                        <option
-                            value="confianca"
-                            data-hint="Confiança vem de consistência entre discurso, ação e caráter. Sem confiança, não há autonomia, criatividade ou velocidade na equipe."
-                        >
-                            Habilidade de criar confiança
-                        </option>
-
-                        <option
-                            value="tomar_decisoes"
-                            data-hint="Tomar decisões considerando dados, riscos, consequências, valores e timing. Maus líderes adiam; líderes excelentes resolvem com clareza."
-                        >
-                            Tomada de decisão
-                        </option>
-
-                        <option
-                            value="resolucao_problemas"
-                            data-hint="Avaliar opções com objetividade, separar fatos de opiniões, evitar vieses e encontrar soluções estruturadas."
-                        >
-                            Pensamento crítico e resolução de problemas
-                        </option>
-
-                        <option value="prioridades" data-hint="Saber dizer não, delegar, definir o que é urgente, importante e ruído.">
-                            Gestão de tempo e prioridades
-                        </option>
-
-                        <option value="adaptabilidade" data-hint="Ambientes, tecnologias e pessoas mudam. O líder que não adapta vira gargalo.">
-                            Adaptabilidade
-                        </option>
-
-                        <option
-                            value="motivacao"
-                            data-hint="Criar significado no trabalho, reconhecer esforços e incentivar desafios. Líderes inspiradores ativam sistemas dopaminérgicos de forma saudável."
-                        >
-                            Motivação e inspiração
-                        </option>
-
-                        <option value="12" data-hint="Relacionamento, cooperação, ética, respeito e leitura do clima emocional da equipe.">
-                            Competência social
-                        </option>
-
-                        <option
-                            value="conflitos"
-                            data-hint="Medir, intervir, mediar e resolver divergências antes que cresçam. Conflito é inevitável; caos é opcional."
-                        >
-                            Gestão de conflitos
-                        </option>
-
-                        <option
-                            value="crescimento"
-                            data-hint="Aprender rápido, encarar erros como informação e não fracasso. Guia equipes mais inovadoras e resilientes."
-                        >
-                            Mentalidade de crescimento
-                        </option>
-                    </select>
-                </div>
-
-                <div class="hint-icon" id="temaHint">ⓘ</div>
-            </div>
-
-            <div id="temaHintBox" class="tema-hint-box" style="display: none"></div>
+            aqui
+          </select>
         </div>
 
-        <!-- =========================
+        <div class="hint-icon" id="temaHint">ⓘ</div>
+      </div>
+
+      <div id="temaHintBox" class="tema-hint-box" style="display: none"></div>
+    </div>
+
+    <!-- =========================
      FORMULÁRIO 1 – INTENÇÕES
      ========================= -->
-        <div class="neuro-tab-content active" id="intencoes">
-            <div class="neuro-form__section">
-                <h3>Intenção genuína</h3>
-                <p>Também chamada de “intenção manifesta”. Onde está a minha/nossa dopamina?</p>
-                <textarea class="neuro-textarea neuro-textarea--large" name="intencao_genuina"></textarea>
-            </div>
+    <div class="neuro-tab-content active" id="intencoes">
+      <div class="neuro-form__section">
+        <h3>Intenção genuína</h3>
+        <p>
+          Também chamada de “intenção manifesta”. Onde está a minha/nossa
+          dopamina?
+        </p>
+        <textarea
+          class="neuro-textarea neuro-textarea--large"
+          name="intencao_genuina"
+        ></textarea>
+      </div>
 
-            <div class="neuro-form__section">
-                <h3>Intenção desejada</h3>
-                <p>É necessário ajustar a intenção genuína? Se sim, qual a nova intenção?</p>
-                <textarea class="neuro-textarea neuro-textarea--large" name="intencao_desejada"></textarea>
-            </div>
+      <div class="neuro-form__section">
+        <h3>Intenção desejada</h3>
+        <p>
+          É necessário ajustar a intenção genuína? Se sim, qual a nova intenção?
+        </p>
+        <textarea
+          class="neuro-textarea neuro-textarea--large"
+          name="intencao_desejada"
+        ></textarea>
+      </div>
 
-            <div class="neuro-form__section">
-                <h3>Intenções concorrentes</h3>
-                <p>Quais intenções (vetores de força) antagonizam a intenção genuína?</p>
-                <textarea class="neuro-textarea" name="intencoes_concorrentes_1"></textarea>
-                <textarea class="neuro-textarea" name="intencoes_concorrentes_2"></textarea>
-                <textarea class="neuro-textarea" name="intencoes_concorrentes_3"></textarea>
-            </div>
-        </div>
+      <div class="neuro-form__section">
+        <h3>Intenções concorrentes</h3>
+        <p>
+          Quais intenções (vetores de força) antagonizam a intenção genuína?
+        </p>
+        <textarea
+          class="neuro-textarea"
+          name="intencoes_concorrentes_1"
+        ></textarea>
+        <textarea
+          class="neuro-textarea"
+          name="intencoes_concorrentes_2"
+        ></textarea>
+        <textarea
+          class="neuro-textarea"
+          name="intencoes_concorrentes_3"
+        ></textarea>
+      </div>
+    </div>
 
-        <!-- =========================
+    <!-- =========================
      FORMULÁRIO 2 – MODELO
      ========================= -->
-        <div class="neuro-tab-content" id="modelo">
-            <div class="neuro-form__section">
-                <h3>Quem é o seu modelo?</h3>
-                <input class="neuro-input" name="modelo" />
-            </div>
+    <div class="neuro-tab-content" id="modelo">
+      <div class="neuro-form__section">
+        <h3>Quem é o seu modelo?</h3>
+        <input class="neuro-input" name="modelo" />
+      </div>
 
-            <div class="neuro-form__section">
-                <h3>Comportamentos do modelo</h3>
-                <input class="neuro-input" type="text" name="modelo_comportamento_1" placeholder="Comportamento 1" />
-                <input class="neuro-input" type="text" name="modelo_comportamento_2" placeholder="Comportamento 2" />
-                <input class="neuro-input" type="text" name="modelo_comportamento_3" placeholder="Comportamento 3" />
-            </div>
-        </div>
+      <div class="neuro-form__section">
+        <h3>Comportamentos do modelo</h3>
+        <input
+          class="neuro-input"
+          type="text"
+          name="modelo_comportamento_1"
+          placeholder="Comportamento 1"
+        />
+        <input
+          class="neuro-input"
+          type="text"
+          name="modelo_comportamento_2"
+          placeholder="Comportamento 2"
+        />
+        <input
+          class="neuro-input"
+          type="text"
+          name="modelo_comportamento_3"
+          placeholder="Comportamento 3"
+        />
+      </div>
+    </div>
 
-        <!-- =========================
+    <!-- =========================
      FORMULÁRIO 3 – ERROS
      ========================= -->
-        <div class="neuro-tab-content" id="erros">
-            <div class="neuro-form__section">
-                <h3>Pilar 2 – Erros</h3>
+    <div class="neuro-tab-content" id="erros">
+      <div class="neuro-form__section">
+        <h3>Pilar 2 – Erros</h3>
 
-                <table class="neuro-table">
-                    <tr>
-                        <th>Comportamento</th>
-                        <th>Nomear erro</th>
-                        <th>Reconhecer</th>
-                        <th>Aceitar</th>
-                    </tr>
+        <table class="neuro-table">
+          <tr>
+            <th>Comportamento</th>
+            <th>Nomear erro</th>
+            <th>Reconhecer</th>
+            <th>Aceitar</th>
+          </tr>
 
-                    <tr>
-                        <td>
-                            <strong id="label_erro_1">Comportamento 1</strong>
-                        </td>
-                        <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_1"></textarea></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_reconhecer_1" class="neuro-checkbox" /></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_aceitar_1" class="neuro-checkbox" /></td>
-                    </tr>
+          <tr>
+            <td>
+              <strong id="label_erro_1">Comportamento 1</strong>
+            </td>
+            <td>
+              <textarea
+                class="neuro-textarea neuro-textarea--wide"
+                name="erro_nome_1"
+              ></textarea>
+            </td>
+            <td class="checkbox-cell">
+              <input
+                type="checkbox"
+                name="erro_reconhecer_1"
+                class="neuro-checkbox"
+              />
+            </td>
+            <td class="checkbox-cell">
+              <input
+                type="checkbox"
+                name="erro_aceitar_1"
+                class="neuro-checkbox"
+              />
+            </td>
+          </tr>
 
-                    <tr>
-                        <td>
-                            <strong id="label_erro_2">Comportamento 2</strong>
-                        </td>
-                        <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_2"></textarea></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_reconhecer_2" class="neuro-checkbox" /></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_aceitar_2" class="neuro-checkbox" /></td>
-                    </tr>
+          <tr>
+            <td>
+              <strong id="label_erro_2">Comportamento 2</strong>
+            </td>
+            <td>
+              <textarea
+                class="neuro-textarea neuro-textarea--wide"
+                name="erro_nome_2"
+              ></textarea>
+            </td>
+            <td class="checkbox-cell">
+              <input
+                type="checkbox"
+                name="erro_reconhecer_2"
+                class="neuro-checkbox"
+              />
+            </td>
+            <td class="checkbox-cell">
+              <input
+                type="checkbox"
+                name="erro_aceitar_2"
+                class="neuro-checkbox"
+              />
+            </td>
+          </tr>
 
-                    <tr>
-                        <td>
-                            <strong id="label_erro_3">Comportamento 3</strong>
-                        </td>
-                        <td><textarea class="neuro-textarea neuro-textarea--wide" name="erro_nome_3"></textarea></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_reconhecer_3" class="neuro-checkbox" /></td>
-                        <td class="checkbox-cell"><input type="checkbox" name="erro_aceitar_3" class="neuro-checkbox" /></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+          <tr>
+            <td>
+              <strong id="label_erro_3">Comportamento 3</strong>
+            </td>
+            <td>
+              <textarea
+                class="neuro-textarea neuro-textarea--wide"
+                name="erro_nome_3"
+              ></textarea>
+            </td>
+            <td class="checkbox-cell">
+              <input
+                type="checkbox"
+                name="erro_reconhecer_3"
+                class="neuro-checkbox"
+              />
+            </td>
+            <td class="checkbox-cell">
+              <input
+                type="checkbox"
+                name="erro_aceitar_3"
+                class="neuro-checkbox"
+              />
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
-        <!-- =========================
+    <!-- =========================
      FORMULÁRIO 4 – TREINO
      ========================= -->
-        <div class="neuro-tab-content" id="treino">
-            <div class="neuro-form__section">
-                <h3>Detalhamento do erro</h3>
+    <div class="neuro-tab-content" id="treino">
+      <div class="neuro-form__section">
+        <h3>Detalhamento do erro</h3>
 
-                <select class="neuro-input" id="treino_comportamento" name="treino_comportamento" onchange="mostrarTreino(this.value)">
-                    <option value="">Selecione o comportamento</option>
-                    <option value="1">Comportamento 1</option>
-                    <option value="2">Comportamento 2</option>
-                    <option value="3">Comportamento 3</option>
-                </select>
-            </div>
+        <select
+          class="neuro-input"
+          id="treino_comportamento"
+          name="treino_comportamento"
+          onchange="mostrarTreino(this.value)"
+        >
+          <option value="">Selecione o comportamento</option>
+          <option value="1">Comportamento 1</option>
+          <option value="2">Comportamento 2</option>
+          <option value="3">Comportamento 3</option>
+        </select>
+      </div>
 
-            <div id="treino-1" class="treino-detalhe" style="display: none">
-                <p>Quando este erro ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_quando_1"></textarea>
+      <div id="treino-1" class="treino-detalhe" style="display: none">
+        <p>Quando este erro ocorre?</p>
+        <textarea class="neuro-textarea" name="erro_quando_1"></textarea>
 
-                <p>Por que ele ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_porque_1"></textarea>
+        <p>Por que ele ocorre?</p>
+        <textarea class="neuro-textarea" name="erro_porque_1"></textarea>
 
-                <p>Estímulos emocionais / sinais de alerta</p>
-                <textarea class="neuro-textarea" name="erro_estimulos_1"></textarea>
+        <p>Estímulos emocionais / sinais de alerta</p>
+        <textarea class="neuro-textarea" name="erro_estimulos_1"></textarea>
 
-                <p>Quão próximo estou/estamos de atingir o comportamento?</p>
-                <div class="neuro-proximidade">
-                    <label><input type="radio" name="erro_proximidade_1" value="0" /> 0%</label>
-                    <label><input type="radio" name="erro_proximidade_1" value="25" /> 25%</label>
-                    <label><input type="radio" name="erro_proximidade_1" value="50" /> 50%</label>
-                    <label><input type="radio" name="erro_proximidade_1" value="75" /> 75%</label>
-                    <label><input type="radio" name="erro_proximidade_1" value="100" /> 100%</label>
-                </div>
-            </div>
-
-            <div id="treino-2" class="treino-detalhe" style="display: none">
-                <p>Quando este erro ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
-
-                <p>Por que ele ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_porque_2"></textarea>
-
-                <p>Estímulos emocionais / sinais de alerta</p>
-                <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
-
-                <p>Quão próximo estou/estamos de atingir o comportamento?</p>
-                <div class="neuro-proximidade">
-                    <label><input type="radio" name="erro_proximidade_2" value="0" /> 0%</label>
-                    <label><input type="radio" name="erro_proximidade_2" value="25" /> 25%</label>
-                    <label><input type="radio" name="erro_proximidade_2" value="50" /> 50%</label>
-                    <label><input type="radio" name="erro_proximidade_2" value="75" /> 75%</label>
-                    <label><input type="radio" name="erro_proximidade_2" value="100" /> 100%</label>
-                </div>
-            </div>
-
-            <div id="treino-3" class="treino-detalhe" style="display: none">
-                <p>Quando este erro ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_quando_3"></textarea>
-
-                <p>Por que ele ocorre?</p>
-                <textarea class="neuro-textarea" name="erro_porque_3"></textarea>
-
-                <p>Estímulos emocionais / sinais de alerta</p>
-                <textarea class="neuro-textarea" name="erro_estimulos_3"></textarea>
-
-                <p>Quão próximo estou/estamos de atingir o comportamento?</p>
-                <div class="neuro-proximidade">
-                    <label><input type="radio" name="erro_proximidade_3" value="0" /> 0%</label>
-                    <label><input type="radio" name="erro_proximidade_3" value="25" /> 25%</label>
-                    <label><input type="radio" name="erro_proximidade_3" value="50" /> 50%</label>
-                    <label><input type="radio" name="erro_proximidade_3" value="75" /> 75%</label>
-                    <label><input type="radio" name="erro_proximidade_3" value="100" /> 100%</label>
-                </div>
-            </div>
+        <p>Quão próximo estou/estamos de atingir o comportamento?</p>
+        <div class="neuro-proximidade">
+          <label
+            ><input type="radio" name="erro_proximidade_1" value="0" />
+            0%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_1" value="25" />
+            25%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_1" value="50" />
+            50%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_1" value="75" />
+            75%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_1" value="100" />
+            100%</label
+          >
         </div>
+      </div>
 
-        <button type="button" class="neuro-button" onclick="salvarFormulario()">Salvar formulário</button>
-    </form>
+      <div id="treino-2" class="treino-detalhe" style="display: none">
+        <p>Quando este erro ocorre?</p>
+        <textarea class="neuro-textarea" name="erro_quando_2"></textarea>
+
+        <p>Por que ele ocorre?</p>
+        <textarea class="neuro-textarea" name="erro_porque_2"></textarea>
+
+        <p>Estímulos emocionais / sinais de alerta</p>
+        <textarea class="neuro-textarea" name="erro_estimulos_2"></textarea>
+
+        <p>Quão próximo estou/estamos de atingir o comportamento?</p>
+        <div class="neuro-proximidade">
+          <label
+            ><input type="radio" name="erro_proximidade_2" value="0" />
+            0%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_2" value="25" />
+            25%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_2" value="50" />
+            50%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_2" value="75" />
+            75%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_2" value="100" />
+            100%</label
+          >
+        </div>
+      </div>
+
+      <div id="treino-3" class="treino-detalhe" style="display: none">
+        <p>Quando este erro ocorre?</p>
+        <textarea class="neuro-textarea" name="erro_quando_3"></textarea>
+
+        <p>Por que ele ocorre?</p>
+        <textarea class="neuro-textarea" name="erro_porque_3"></textarea>
+
+        <p>Estímulos emocionais / sinais de alerta</p>
+        <textarea class="neuro-textarea" name="erro_estimulos_3"></textarea>
+
+        <p>Quão próximo estou/estamos de atingir o comportamento?</p>
+        <div class="neuro-proximidade">
+          <label
+            ><input type="radio" name="erro_proximidade_3" value="0" />
+            0%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_3" value="25" />
+            25%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_3" value="50" />
+            50%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_3" value="75" />
+            75%</label
+          >
+          <label
+            ><input type="radio" name="erro_proximidade_3" value="100" />
+            100%</label
+          >
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="neuro-button" onclick="salvarFormulario()">
+      Salvar formulário
+    </button>
+    <button
+      type="button"
+      class="neuro-btn neuro-btn-secondary"
+      onclick="novoFormulario()"
+    >
+      Novo
+    </button>
+  </form>
 </div>
 
 <div id="loading-overlay" style="display: none">
-    <div class="spinner"></div>
+  <div class="spinner"></div>
 </div>
 
 <!-- ===========================================================================================
@@ -348,372 +421,487 @@ title: Formulário Goals Errors Train
      ===========================================================================================   
 -->
 <script>
-    // codigo implantacao AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6adCIVEgmkZLdljtbeWG_njiIX_RX5DMYO264B3p8Kz2J7p_-XHengGVI7DELjE9p/exec";
+  // codigo implantacao AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u
+  const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbz6adCIVEgmkZLdljtbeWG_njiIX_RX5DMYO264B3p8Kz2J7p_-XHengGVI7DELjE9p/exec";
+
+    const TEMAS = {
+        autoconsciencia: {
+            label: "Autoconsciência emocional",
+            hint="Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e ajustar-se quando necessário. É a base da inteligência emocional: um líder que não se percebe não consegue se regular."
+        },
+       autorregulacao: {
+  	    label: "Autorregulação",
+  	    hint:"Controlar impulsos, frustrações e reações automáticas. Líderes que regulam bem seus estados internos mantêm a estabilidade do time, especialmente em ambientes de pressão."
+       },
+       visao: {
+  	    label: "Clareza de propósito e visão",
+  	    hint: "Saber traduzir o “para onde estamos indo” em objetivos concretos, compreensíveis e motivadores. Visão sem clareza vira confusão; clareza sem visão vira operacional pesado."
+       },
+       comunicacao: {
+  	    label: "Comunicação efetiva",
+  	    hint: "Comunicar com precisão, adaptar a mensagem ao perfil do time, ouvir ativamente, checar entendimento, evitar ruídos e subjetividade excessiva. A mensagem é do líder; o entendimento é do ouvinte."
+       },
+       desenvolver_pessoas: {
+           label: "Capacidade de formar e desenvolver pessoas",
+  	    hint: "Identificar talentos, entender gaps e ajudar cada pessoa a melhorar. Inclui delegação inteligente, feedback contínuo e ambiente seguro para aprender."
+       },
+       confianca: {
+            label: "Habilidade de criar confiança",
+  	    hint: "Confiança vem de consistência entre discurso, ação e caráter. Sem confiança, não há autonomia, criatividade ou velocidade na equipe."
+       },
+       tomar_decisoes: {
+            label: "Tomada de decisão",
+  	    hint: "Tomar decisões considerando dados, riscos, consequências, valores e timing. Maus líderes adiam; líderes excelentes resolvem com clareza."
+       },
+       resolucao_problemas: {
+           label: "Pensamento crítico e resolução de problemas",
+  	    hint: "Avaliar opções com objetividade, separar fatos de opiniões, evitar vieses e encontrar soluções estruturadas."
+       },
+       prioridades: {
+           label: "Gestão de tempo e prioridades",
+  	    hint: "Saber dizer não, delegar, definir o que é urgente, importante e ruído."
+       },
+       adaptabilidade: {
+           label: "Adaptabilidade",
+  	    hint:"Ambientes, tecnologias e pessoas mudam. O líder que não adapta vira gargalo."
+       },
+       motivacao: {
+           label: "Motivação e inspiração",
+  	    hint:"Criar significado no trabalho, reconhecer esforços e incentivar desafios. Líderes inspiradores ativam sistemas dopaminérgicos de forma saudável.",
+       },
+       competencia_social: {
+           label: "Competência social",
+  	    hint:"Relacionamento, cooperação, ética, respeito e leitura do clima emocional da equipe."
+       },
+       conflitos: {
+          label: "Gestão de conflitos",
+          hint:"Medir, intervir, mediar e resolver divergências antes que cresçam. Conflito é inevitável; caos é opcional."
+       },
+       crescimento: {
+           label: "Mentalidade de crescimento",
+      hint:"Aprender rápido, encarar erros como informação e não fracasso. Guia equipes mais inovadoras e resilientes."
+       }
+   }
 </script>
 
 <script>
-    function openTab(tabElement, contentId) {
-        // remove active de todas as abas
-        document.querySelectorAll(".neuro-tab").forEach((t) => t.classList.remove("active"));
+  function openTab(tabElement, contentId) {
+    // remove active de todas as abas
+    document
+      .querySelectorAll(".neuro-tab")
+      .forEach((t) => t.classList.remove("active"));
 
-        // remove active de todos os conteúdos
-        document.querySelectorAll(".neuro-tab-content").forEach((c) => c.classList.remove("active"));
+    // remove active de todos os conteúdos
+    document
+      .querySelectorAll(".neuro-tab-content")
+      .forEach((c) => c.classList.remove("active"));
 
-        // ativa a aba clicada
-        tabElement.classList.add("active");
+    // ativa a aba clicada
+    tabElement.classList.add("active");
 
-        // ativa o conteúdo correspondente
-        document.getElementById(contentId).classList.add("active");
+    // ativa o conteúdo correspondente
+    document.getElementById(contentId).classList.add("active");
+  }
+
+  function mostrarErro(valor) {
+    // esconde todos os blocos de erro
+    document
+      .querySelectorAll(".erro-detalhe")
+      .forEach((div) => (div.style.display = "none"));
+
+    // se nada foi selecionado, não mostra nada
+    if (!valor) return;
+
+    // mostra o bloco correspondente
+    const alvo = document.getElementById("erro-" + valor);
+    if (alvo) {
+      alvo.style.display = "block";
     }
-
-    function mostrarErro(valor) {
-        // esconde todos os blocos de erro
-        document.querySelectorAll(".erro-detalhe").forEach((div) => (div.style.display = "none"));
-
-        // se nada foi selecionado, não mostra nada
-        if (!valor) return;
-
-        // mostra o bloco correspondente
-        const alvo = document.getElementById("erro-" + valor);
-        if (alvo) {
-            alvo.style.display = "block";
-        }
-    }
+  }
 </script>
 
 <script>
-    function coletarFormulario() {
-        const dados = {};
+  function coletarFormulario() {
+    const dados = {};
 
-        document.querySelectorAll("[name]").forEach((el) => {
-            if (el.type === "checkbox") {
-                dados[el.name] = el.checked;
-            } else if (el.type === "radio") {
-                if (el.checked) dados[el.name] = el.value;
-            } else {
-                dados[el.name] = el.value;
-            }
+    document.querySelectorAll("[name]").forEach((el) => {
+      if (el.type === "checkbox") {
+        dados[el.name] = el.checked;
+      } else if (el.type === "radio") {
+        if (el.checked) dados[el.name] = el.value;
+      } else {
+        dados[el.name] = el.value;
+      }
+    });
+
+    return dados;
+  }
+</script>
+
+<script>
+  async function salvarFormulario() {
+    mostrarLoading();
+
+    try {
+      const dados = coletarFormulario();
+      const id = document.getElementById("formulario_id").value;
+
+      if (id) {
+        dados._action = "update";
+        dados._id = id;
+      } else {
+        dados._action = "create";
+      }
+
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(dados),
+      });
+
+      const json = await response.json();
+      if (json.status === "error") {
+        alert("Erro ao salvar o formulário: " + json.message);
+        return;
+      }
+      alert(
+        json.status === "updated" ? "Formulário atualizado" : "Formulário salvo"
+      );
+
+      limparFormulario();
+    } finally {
+      esconderLoading();
+    }
+  }
+</script>
+
+<script>
+  function limparFormulario() {
+    document.querySelectorAll("[name]").forEach((el) => {
+      if (el.name === "entrevistador" || el.name === "_senha") return;
+
+      if (el.type === "checkbox" || el.type === "radio") {
+        el.checked = false;
+      } else {
+        el.value = "";
+      }
+    });
+
+    // garante limpeza explícita do ID
+    const hiddenId = document.getElementById("formulario_id");
+    if (hiddenId) hiddenId.value = "";
+
+    const selectUI = document.getElementById("entrevistador_select");
+    selectUI.value = document.getElementById("auth_entrevistador").value;
+    selectUI.disabled = true;
+
+    // opcional: voltar para a primeira aba
+    document
+      .querySelectorAll(".neuro-tab")
+      .forEach((t) => t.classList.remove("active"));
+    document
+      .querySelectorAll(".neuro-tab-content")
+      .forEach((c) => c.classList.remove("active"));
+
+    document.querySelector(".neuro-tab").classList.add("active");
+    document.querySelector(".neuro-tab-content").classList.add("active");
+  }
+</script>
+
+<script>
+  function getQueryParam(nome) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(nome);
+  }
+</script>
+
+<script>
+  async function carregarFormularioPorId(id) {
+    mostrarLoading();
+
+    const auth = getAuth();
+
+    try {
+      const url =
+        `${SCRIPT_URL}?id=${id}` +
+        `&entrevistador=${encodeURIComponent(auth.entrevistador)}` +
+        `&_senha=${encodeURIComponent(auth.senha)}`;
+      const response = await fetch(url);
+      const registros = await response.json();
+
+      if (registros.status === "error") {
+        alert(registros.message);
+        return;
+      }
+
+      if (!registros.length) {
+        alert("Formulário não encontrado");
+        return;
+      }
+
+      console.log(registros);
+
+      const payload = JSON.parse(registros[0].payload);
+
+      Object.entries(payload).forEach(([k, v]) => {
+        const elements = document.querySelectorAll(`[name="${k}"]`);
+        if (!elements.length) return;
+
+        elements.forEach((el) => {
+          if (el.type === "checkbox") {
+            el.checked = Boolean(v);
+          } else if (el.type === "radio") {
+            el.checked = String(el.value) === String(v);
+          } else {
+            el.value = v;
+          }
         });
+      });
 
-        return dados;
+      document.getElementById("formulario_id").value =
+        registros[0].formulario_id;
+      
+        document.getElementById("tema_mudanca").value = payload.tema_mudanca;
+      atualizarHintTema();
+
+      atualizarLabelsComportamentos();
+    } finally {
+      esconderLoading();
     }
+  }
 </script>
 
 <script>
-    async function salvarFormulario() {
-        mostrarLoading();
-
-        try {
-            const dados = coletarFormulario();
-            const id = document.getElementById("formulario_id").value;
-
-            if (id) {
-                dados._action = "update";
-                dados._id = id;
-            } else {
-                dados._action = "create";
-            }
-
-            const response = await fetch(SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify(dados),
-            });
-
-            const json = await response.json();
-            if (json.status === "error") {
-                alert("Erro ao salvar o formulário: " + json.message);
-                return;
-            }
-            alert(json.status === "updated" ? "Formulário atualizado" : "Formulário salvo");
-
-            limparFormulario();
-        } finally {
-            esconderLoading();
-        }
+  document.addEventListener("DOMContentLoaded", () => {
+    const id = getQueryParam("id");
+    if (id) {
+      carregarFormularioPorId(id);
     }
+  });
 </script>
 
 <script>
-    function limparFormulario() {
-        document.querySelectorAll("[name]").forEach((el) => {
-            if (el.name === "entrevistador" || el.name === "_senha") return;
+  function mostrarLoading() {
+    document.getElementById("loading-overlay").style.display = "flex";
+  }
 
-            if (el.type === "checkbox" || el.type === "radio") {
-                el.checked = false;
-            } else {
-                el.value = "";
-            }
+  function esconderLoading() {
+    document.getElementById("loading-overlay").style.display = "none";
+  }
+</script>
+
+<script>
+  const temaSelect = document.getElementById("tema_mudanca");
+  const hintBox = document.getElementById("temaHintBox");
+  const hintIcon = document.getElementById("temaHint");
+
+  function atualizarHintTema() {
+    if (!temaSelect.value) return;
+
+    if (hint) {
+      hintBox.innerText = TEMAS[temaSelect.value];
+      hintBox.style.display = "block";
+    } else {
+      hintBox.style.display = "none";
+    }
+  }
+
+  temaSelect.addEventListener("change", atualizarHintTema);
+  hintIcon.addEventListener("mouseenter", atualizarHintTema);
+  hintIcon.addEventListener("mouseleave", () => {
+    hintBox.style.display = "none";
+  });
+</script>
+
+<script>
+  function atualizarLabelsComportamentos() {
+    for (let i = 1; i <= 3; i++) {
+      const input = document.querySelector(
+        `[name="modelo_comportamento_${i}"]`
+      );
+      const labelErro = document.getElementById(`label_erro_${i}`);
+
+      if (!labelErro) continue;
+
+      if (input && input.value.trim() !== "") {
+        labelErro.innerText = input.value;
+      } else {
+        labelErro.innerText = `Comportamento ${i}`;
+      }
+    }
+
+    atualizarSelectTreino();
+  }
+</script>
+
+<script>
+  document.querySelectorAll('[name^="modelo_comportamento_"]').forEach((el) => {
+    el.addEventListener("input", atualizarLabelsComportamentos);
+  });
+</script>
+
+<script>
+  function atualizarSelectTreino() {
+    const select = document.getElementById("treino_comportamento");
+    if (!select) return;
+
+    for (let i = 1; i <= 3; i++) {
+      const input = document.querySelector(
+        `[name="modelo_comportamento_${i}"]`
+      );
+      const option = select.querySelector(`option[value="${i}"]`);
+
+      if (!option) continue;
+
+      if (input && input.value.trim() !== "") {
+        option.text = input.value;
+      } else {
+        option.text = `Comportamento ${i}`;
+      }
+    }
+  }
+</script>
+
+<script>
+  function mostrarTreino(valor) {
+    // esconde todos os blocos de treino
+    document
+      .querySelectorAll(".treino-detalhe")
+      .forEach((div) => (div.style.display = "none"));
+
+    // se nada foi selecionado, não mostra nada
+    if (!valor) return;
+
+    // mostra o bloco correspondente
+    const alvo = document.getElementById("treino-" + valor);
+    if (alvo) {
+      alvo.style.display = "block";
+    }
+  }
+</script>
+
+<script>
+  function getAuth() {
+    return {
+      entrevistador: document.getElementById("auth_entrevistador").value,
+      senha: document.getElementById("auth_senha").value,
+    };
+  }
+
+  async function login() {
+    mostrarLoading();
+    try {
+      const entrevistador = document.getElementById(
+        "login_entrevistador"
+      ).value;
+      const senha = document.getElementById("login_senha").value;
+
+      if (!entrevistador || entrevistador === "0" || !senha) {
+        alert("Informe entrevistador e senha");
+        return;
+      }
+
+      // testamos autenticando via backend (sem salvar nada)
+      const res = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          entrevistador,
+          _senha: senha,
+          _action: "auth",
+        }),
+      });
+
+      const json = await res.json();
+
+      if (json.status !== "ok") {
+        alert("Usuário ou senha inválidos");
+        return;
+      }
+
+      // guarda credenciais em memória (hidden)
+      document.getElementById("auth_entrevistador").value = entrevistador;
+      document.getElementById("auth_senha").value = senha;
+
+      // UI
+      const selectUI = document.getElementById("entrevistador_select");
+      selectUI.value = entrevistador;
+      selectUI.disabled = true;
+
+      // fecha login
+      document.getElementById("loginOverlay").style.display = "none";
+
+      // carrega lista de entrevistas
+      carregarListaEntrevistas();
+
+      montarSelectTema();
+    } finally {
+      esconderLoading();
+    }
+  }
+</script>
+
+<script>
+  async function carregarListaEntrevistas() {
+    mostrarLoading();
+
+    try {
+      const auth = getAuth();
+
+      const res = await fetch(
+        `${SCRIPT_URL}?list=1&entrevistador=${
+          auth.entrevistador
+        }&_senha=${encodeURIComponent(auth.senha)}`
+      );
+
+      const lista = await res.json();
+      const select = document.getElementById("listaEntrevistas");
+
+      select.innerHTML = '<option value="">Selecione uma entrevista</option>';
+
+      lista.forEach((item) => {
+        const opt = document.createElement("option");
+        opt.value = item.id;
+        opt.text = item.label + " - " + TEMAS[item.tema_mudancaa].label;
+        select.appendChild(opt);
+      });
+
+      document
+        .getElementById("listaEntrevistas")
+        .addEventListener("change", (e) => {
+          const id = e.target.value;
+          if (!id) return;
+
+          carregarFormularioPorId(id);
         });
-
-        // garante limpeza explícita do ID
-        const hiddenId = document.getElementById("formulario_id");
-        if (hiddenId) hiddenId.value = "";
-
-        const selectUI = document.getElementById("entrevistador_select");
-        selectUI.value = document.getElementById("auth_entrevistador").value;
-        selectUI.disabled = true;
-
-        // opcional: voltar para a primeira aba
-        document.querySelectorAll(".neuro-tab").forEach((t) => t.classList.remove("active"));
-        document.querySelectorAll(".neuro-tab-content").forEach((c) => c.classList.remove("active"));
-
-        document.querySelector(".neuro-tab").classList.add("active");
-        document.querySelector(".neuro-tab-content").classList.add("active");
+    } finally {
+      esconderLoading();
     }
+  }
+
+  function carregarSelecionada() {
+    const id = document.getElementById("listaEntrevistas").value;
+    if (!id) return alert("Selecione uma entrevista");
+
+    carregarFormularioPorId(id);
+  }
+
+  function novoFormulario() {
+    limparFormulario();
+    document.getElementById("listaEntrevistas").value = "";
+  }
 </script>
 
 <script>
-    function getQueryParam(nome) {
-        const params = new URLSearchParams(window.location.search);
-        return params.get(nome);
-    }
-</script>
+  function montarSelectTema() {
+    const select = document.getElementById("tema_mudanca");
+    select.innerHTML = '<option value="">Selecione o tema</option>';
 
-<script>
-    async function carregarFormularioPorId(id) {
-        mostrarLoading();
-
-        const auth = getAuth();
-
-        try {
-            const url =
-                `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(auth.entrevistador)}` + `&_senha=${encodeURIComponent(auth.senha)}`;
-            const response = await fetch(url);
-            const registros = await response.json();
-
-            if (registros.status === "error") {
-                alert(registros.message);
-                return;
-            }
-
-            if (!registros.length) {
-                alert("Formulário não encontrado");
-                return;
-            }
-
-            console.log(registros);
-
-            const payload = JSON.parse(registros[0].payload);
-
-            Object.entries(payload).forEach(([k, v]) => {
-                const elements = document.querySelectorAll(`[name="${k}"]`);
-                if (!elements.length) return;
-
-                elements.forEach((el) => {
-                    if (el.type === "checkbox") {
-                        el.checked = Boolean(v);
-                    } else if (el.type === "radio") {
-                        el.checked = String(el.value) === String(v);
-                    } else {
-                        el.value = v;
-                    }
-                });
-            });
-
-            document.getElementById("formulario_id").value = registros[0].formulario_id;
-
-            atualizarLabelsComportamentos();
-        } finally {
-            esconderLoading();
-        }
-    }
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const id = getQueryParam("id");
-        if (id) {
-            carregarFormularioPorId(id);
-        }
+    Object.entries(TEMAS).forEach(([key, tema]) => {
+      const opt = document.createElement("option");
+      opt.value = key;
+      opt.text = tema.label;
+      opt.dataset.hint = tema.hint;
+      select.appendChild(opt);
     });
-</script>
-
-<script>
-    function mostrarLoading() {
-        document.getElementById("loading-overlay").style.display = "flex";
-    }
-
-    function esconderLoading() {
-        document.getElementById("loading-overlay").style.display = "none";
-    }
-</script>
-
-<script>
-    const temaSelect = document.getElementById("tema_mudanca");
-    const hintBox = document.getElementById("temaHintBox");
-    const hintIcon = document.getElementById("temaHint");
-
-    function atualizarHintTema() {
-        const opt = temaSelect.options[temaSelect.selectedIndex];
-        const hint = opt.getAttribute("data-hint");
-
-        if (hint) {
-            hintBox.innerText = hint;
-            hintBox.style.display = "block";
-        } else {
-            hintBox.style.display = "none";
-        }
-    }
-
-    temaSelect.addEventListener("change", atualizarHintTema);
-    hintIcon.addEventListener("mouseenter", atualizarHintTema);
-    hintIcon.addEventListener("mouseleave", () => {
-        hintBox.style.display = "none";
-    });
-</script>
-
-<script>
-    function atualizarLabelsComportamentos() {
-        for (let i = 1; i <= 3; i++) {
-            const input = document.querySelector(`[name="modelo_comportamento_${i}"]`);
-            const labelErro = document.getElementById(`label_erro_${i}`);
-
-            if (!labelErro) continue;
-
-            if (input && input.value.trim() !== "") {
-                labelErro.innerText = input.value;
-            } else {
-                labelErro.innerText = `Comportamento ${i}`;
-            }
-        }
-
-        atualizarSelectTreino();
-    }
-</script>
-
-<script>
-    document.querySelectorAll('[name^="modelo_comportamento_"]').forEach((el) => {
-        el.addEventListener("input", atualizarLabelsComportamentos);
-    });
-</script>
-
-<script>
-    function atualizarSelectTreino() {
-        const select = document.getElementById("treino_comportamento");
-        if (!select) return;
-
-        for (let i = 1; i <= 3; i++) {
-            const input = document.querySelector(`[name="modelo_comportamento_${i}"]`);
-            const option = select.querySelector(`option[value="${i}"]`);
-
-            if (!option) continue;
-
-            if (input && input.value.trim() !== "") {
-                option.text = input.value;
-            } else {
-                option.text = `Comportamento ${i}`;
-            }
-        }
-    }
-</script>
-
-<script>
-    function mostrarTreino(valor) {
-        // esconde todos os blocos de treino
-        document.querySelectorAll(".treino-detalhe").forEach((div) => (div.style.display = "none"));
-
-        // se nada foi selecionado, não mostra nada
-        if (!valor) return;
-
-        // mostra o bloco correspondente
-        const alvo = document.getElementById("treino-" + valor);
-        if (alvo) {
-            alvo.style.display = "block";
-        }
-    }
-</script>
-
-<script>
-    function getAuth() {
-        return {
-            entrevistador: document.getElementById("auth_entrevistador").value,
-            senha: document.getElementById("auth_senha").value,
-        };
-    }
-
-    async function login() {
-        mostrarLoading();
-        try {
-            const entrevistador = document.getElementById("login_entrevistador").value;
-            const senha = document.getElementById("login_senha").value;
-
-            if (!entrevistador || entrevistador === "0" || !senha) {
-                alert("Informe entrevistador e senha");
-                return;
-            }
-
-            // testamos autenticando via backend (sem salvar nada)
-            const res = await fetch(SCRIPT_URL, {
-                method: "POST",
-                body: JSON.stringify({
-                    entrevistador,
-                    _senha: senha,
-                    _action: "auth",
-                }),
-            });
-
-            const json = await res.json();
-
-            if (json.status !== "ok") {
-                alert("Usuário ou senha inválidos");
-                return;
-            }
-
-            // guarda credenciais em memória (hidden)
-            document.getElementById("auth_entrevistador").value = entrevistador;
-            document.getElementById("auth_senha").value = senha;
-
-            // UI
-            const selectUI = document.getElementById("entrevistador_select");
-            selectUI.value = entrevistador;
-            selectUI.disabled = true;
-
-            // fecha login
-            document.getElementById("loginOverlay").style.display = "none";
-
-            // carrega lista de entrevistas
-            carregarListaEntrevistas();
-        } finally {
-            esconderLoading();
-        }
-    }
-</script>
-
-<script>
-    async function carregarListaEntrevistas() {
-        mostrarLoading();
-
-        try {
-            const auth = getAuth();
-
-            const res = await fetch(`${SCRIPT_URL}?list=1&entrevistador=${auth.entrevistador}&_senha=${encodeURIComponent(auth.senha)}`);
-
-            const lista = await res.json();
-            const select = document.getElementById("listaEntrevistas");
-
-            select.innerHTML = '<option value="">Selecione uma entrevista</option>';
-
-            lista.forEach((item) => {
-                const opt = document.createElement("option");
-                opt.value = item.id;
-                opt.text = item.label;
-                select.appendChild(opt);
-            });
-        } finally {
-            esconderLoading();
-        }
-    }
-
-    function carregarSelecionada() {
-        const id = document.getElementById("listaEntrevistas").value;
-        if (!id) return alert("Selecione uma entrevista");
-
-        carregarFormularioPorId(id);
-    }
-
-    function novoFormulario() {
-        limparFormulario();
-        document.getElementById("listaEntrevistas").value = "";
-    }
+  }
 </script>
