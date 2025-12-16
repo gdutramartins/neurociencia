@@ -441,7 +441,7 @@ title: Formulário Goals Errors Train
         if (hiddenId) hiddenId.value = "";
 
         const selectUI = document.getElementById("entrevistador_select");
-        selectUI.value = document.getElementById("auth_entrevistador").value;;
+        selectUI.value = document.getElementById("auth_entrevistador").value;
         selectUI.disabled = true;
 
         // opcional: voltar para a primeira aba
@@ -467,7 +467,8 @@ title: Formulário Goals Errors Train
         const auth = getAuth();
 
         try {
-            const url = `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(auth.entrevistador)}` + `&_senha=${encodeURIComponent(auth.senha)}`;
+            const url =
+                `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(auth.entrevistador)}` + `&_senha=${encodeURIComponent(auth.senha)}`;
             console.log("Carregando formulário de URL:", url);
             const response = await fetch(url);
             const registros = await response.json();
@@ -620,45 +621,50 @@ title: Formulário Goals Errors Train
     }
 
     async function login() {
-        const entrevistador = document.getElementById("login_entrevistador").value;
-        const senha = document.getElementById("login_senha").value;
+        mostrarLoading();
+        try {
+            const entrevistador = document.getElementById("login_entrevistador").value;
+            const senha = document.getElementById("login_senha").value;
 
-        if (!entrevistador || entrevistador === "0" || !senha) {
-            alert("Informe entrevistador e senha");
-            return;
+            if (!entrevistador || entrevistador === "0" || !senha) {
+                alert("Informe entrevistador e senha");
+                return;
+            }
+
+            // testamos autenticando via backend (sem salvar nada)
+            const res = await fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    entrevistador,
+                    _senha: senha,
+                    _action: "auth",
+                }),
+            });
+
+            const json = await res.json();
+
+            if (json.status !== "ok") {
+                alert("Usuário ou senha inválidos");
+                return;
+            }
+
+            // guarda credenciais em memória (hidden)
+            document.getElementById("auth_entrevistador").value = entrevistador;
+            document.getElementById("auth_senha").value = senha;
+
+            // UI
+            const selectUI = document.getElementById("entrevistador_select");
+            selectUI.value = entrevistador;
+            selectUI.disabled = true;
+
+            // fecha login
+            document.getElementById("loginOverlay").style.display = "none";
+
+            // carrega lista de entrevistas
+            carregarListaEntrevistas();
+        } finally {
+            esconderLoading();
         }
-
-        // testamos autenticando via backend (sem salvar nada)
-        const res = await fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify({
-                entrevistador,
-                _senha: senha,
-                _action: "auth",
-            }),
-        });
-
-        const json = await res.json();
-
-        if (json.status !== "ok") {
-            alert("Usuário ou senha inválidos");
-            return;
-        }
-
-        // guarda credenciais em memória (hidden)
-        document.getElementById("auth_entrevistador").value = entrevistador;
-        document.getElementById("auth_senha").value = senha;
-
-        // UI
-        const selectUI = document.getElementById("entrevistador_select");
-        selectUI.value = entrevistador;
-        selectUI.disabled = true;
-
-        // fecha login
-        document.getElementById("loginOverlay").style.display = "none";
-
-        // carrega lista de entrevistas
-        carregarListaEntrevistas();
     }
 </script>
 
