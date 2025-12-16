@@ -740,7 +740,7 @@ card:focus {
 }
 
 /* Botão */
-.neuro-button {
+.neuro-button,.neuro-btn {
   padding: 15px 30px;
   font-size: 16px;
   border: none;
@@ -852,4 +852,37 @@ card:focus {
 
 .neuro-btn-primary {
   font-weight: 600;
+}
+
+
+.neuro-toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background: #f7f9fc;
+}
+
+.neuro-toolbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.neuro-toolbar-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.neuro-toolbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.neuro-btn-secondary {
+  opacity: .8;
 }
