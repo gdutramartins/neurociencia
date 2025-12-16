@@ -17,7 +17,7 @@ title: Formulário Goals Errors Train
 
         <input type="password" class="neuro-input" id="login_senha" placeholder="Senha" />
 
-        <button class="neuro-btn" onclick="login()">Entrar</button>
+        <button class="neuro-btn neuro-btn-primary" onclick="login()">Entrar</button>
     </div>
 </div>
 
@@ -44,8 +44,8 @@ title: Formulário Goals Errors Train
                     <option value="">Selecione uma entrevista</option>
                 </select>
 
-                <button class="neuro-btn" type="button" onclick="carregarSelecionada()">Carregar</button>
-                <button class="neuro-btn" type="button" onclick="novoFormulario()">Novo</button>
+                <button class="neuro-btn neuro-btn-primary" type="button" onclick="carregarSelecionada()">Carregar</button>
+                <button class="neuro-btn neuro-btn-primary" type="button" onclick="novoFormulario()">Novo</button>
             </div>
 
             <div class="neuro-row">
@@ -669,21 +669,27 @@ title: Formulário Goals Errors Train
 
 <script>
     async function carregarListaEntrevistas() {
-        const auth = getAuth();
+        mostrarLoading();
 
-        const res = await fetch(`${SCRIPT_URL}?list=1&entrevistador=${auth.entrevistador}&_senha=${encodeURIComponent(auth.senha)}`);
+        try {
+            const auth = getAuth();
 
-        const lista = await res.json();
-        const select = document.getElementById("listaEntrevistas");
+            const res = await fetch(`${SCRIPT_URL}?list=1&entrevistador=${auth.entrevistador}&_senha=${encodeURIComponent(auth.senha)}`);
 
-        select.innerHTML = '<option value="">Selecione uma entrevista</option>';
+            const lista = await res.json();
+            const select = document.getElementById("listaEntrevistas");
 
-        lista.forEach((item) => {
-            const opt = document.createElement("option");
-            opt.value = item.id;
-            opt.text = item.label;
-            select.appendChild(opt);
-        });
+            select.innerHTML = '<option value="">Selecione uma entrevista</option>';
+
+            lista.forEach((item) => {
+                const opt = document.createElement("option");
+                opt.value = item.id;
+                opt.text = item.label;
+                select.appendChild(opt);
+            });
+        } finally {
+            esconderLoading();  
+        }
     }
 
     function carregarSelecionada() {
