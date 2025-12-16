@@ -698,7 +698,7 @@ title: Formulário Goals Errors Train
   function atualizarHintTema() {
     if (!temaSelect.value) return;
 
-    if (hint) {
+    if (TEMAS[temaSelect.value]) {
       hintBox.innerText = TEMAS[temaSelect.value];
       hintBox.style.display = "block";
     } else {
@@ -852,11 +852,9 @@ title: Formulário Goals Errors Train
           auth.entrevistador
         }&_senha=${encodeURIComponent(auth.senha)}`
       );
-      console.log(res);
-
+      
       const lista = await res.json();
-      console.log(lista);  
-
+      
       const select = document.getElementById("listaEntrevistas");
 
       select.innerHTML = '<option value="">Selecione uma entrevista</option>';
