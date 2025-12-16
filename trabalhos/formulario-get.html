@@ -423,12 +423,12 @@ title: Formulário Goals Errors Train
 <script>
   // codigo implantacao AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u
   const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbz6adCIVEgmkZLdljtbeWG_njiIX_RX5DMYO264B3p8Kz2J7p_-XHengGVI7DELjE9p/exec";
+    "https://script.google.com/macros/s/AKfycbxk--D6RGZNYIMOivNoHN36LqMZPn4eaVHwlhjKoGo23ydCTFhZC2pjRKToM5AYnOh0/exec";
 
     const TEMAS = {
         autoconsciencia: {
             label: "Autoconsciência emocional",
-            hint="Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e ajustar-se quando necessário. É a base da inteligência emocional: um líder que não se percebe não consegue se regular."
+            hint: "Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e ajustar-se quando necessário. É a base da inteligência emocional: um líder que não se percebe não consegue se regular."
         },
        autorregulacao: {
   	    label: "Autorregulação",
@@ -448,7 +448,7 @@ title: Formulário Goals Errors Train
        },
        confianca: {
             label: "Habilidade de criar confiança",
-  	    hint: "Confiança vem de consistência entre discurso, ação e caráter. Sem confiança, não há autonomia, criatividade ou velocidade na equipe."
+  	        hint: "Confiança vem de consistência entre discurso, ação e caráter. Sem confiança, não há autonomia, criatividade ou velocidade na equipe."
        },
        tomar_decisoes: {
             label: "Tomada de decisão",
@@ -464,15 +464,15 @@ title: Formulário Goals Errors Train
        },
        adaptabilidade: {
            label: "Adaptabilidade",
-  	    hint:"Ambientes, tecnologias e pessoas mudam. O líder que não adapta vira gargalo."
+  	        hint:"Ambientes, tecnologias e pessoas mudam. O líder que não adapta vira gargalo."
        },
        motivacao: {
            label: "Motivação e inspiração",
-  	    hint:"Criar significado no trabalho, reconhecer esforços e incentivar desafios. Líderes inspiradores ativam sistemas dopaminérgicos de forma saudável.",
+  	        hint:"Criar significado no trabalho, reconhecer esforços e incentivar desafios. Líderes inspiradores ativam sistemas dopaminérgicos de forma saudável.",
        },
        competencia_social: {
            label: "Competência social",
-  	    hint:"Relacionamento, cooperação, ética, respeito e leitura do clima emocional da equipe."
+  	        hint:"Relacionamento, cooperação, ética, respeito e leitura do clima emocional da equipe."
        },
        conflitos: {
           label: "Gestão de conflitos",
@@ -480,7 +480,7 @@ title: Formulário Goals Errors Train
        },
        crescimento: {
            label: "Mentalidade de crescimento",
-      hint:"Aprender rápido, encarar erros como informação e não fracasso. Guia equipes mais inovadoras e resilientes."
+        hint:"Aprender rápido, encarar erros como informação e não fracasso. Guia equipes mais inovadoras e resilientes."
        }
    }
 </script>
@@ -660,8 +660,8 @@ title: Formulário Goals Errors Train
 
       document.getElementById("formulario_id").value =
         registros[0].formulario_id;
-      
-        document.getElementById("tema_mudanca").value = payload.tema_mudanca;
+
+      document.getElementById("tema_mudanca").value = payload.tema_mudanca;
       atualizarHintTema();
 
       atualizarLabelsComportamentos();
