@@ -59,12 +59,14 @@ title: Formulário Goals Errors Train
 
       <div class="neuro-row">
         <div class="neuro-col">
+          <label class="neuro-label">Entrevistador</label>
           <select class="neuro-input" id="entrevistador_select" disabled>
             <option value="0">Escolha o entrevistador</option>
             <option value="1">Gustavo</option>
           </select>
         </div>
         <div class="neuro-col">
+          <label class="neuro-label">Entrevistado</label>
           <input
             class="neuro-input"
             name="entrevistado"
@@ -75,6 +77,7 @@ title: Formulário Goals Errors Train
 
       <div class="neuro-row">
         <div class="neuro-col">
+          <label class="neuro-label">Selecion uma entrevista</label>
           <div class="neuro-toolbar-left">
             <select class="neuro-input" id="listaEntrevistas">
               <option value="">Selecione uma entrevista</option>
@@ -85,10 +88,9 @@ title: Formulário Goals Errors Train
 
       <div class="neuro-row" style="align-items: center; gap: 10px">
         <div class="neuro-col">
+          <label class="neuro-label">Competência</label>
           <select class="neuro-input" name="tema_mudanca" id="tema_mudanca">
             <option value="">Selecione o tema da mudança</option>
-
-            aqui
           </select>
         </div>
 
@@ -96,6 +98,15 @@ title: Formulário Goals Errors Train
       </div>
 
       <div id="temaHintBox" class="tema-hint-box" style="display: none"></div>
+      <div style="text-align: right; margin-top: 4px; font-size: 13px">
+        <a
+          href="competencias-lideranca.html"
+          target="_blank"
+          class="neuro-link"
+        >
+          Ver detalhes das competências →
+        </a>
+      </div>
     </div>
 
     <!-- =========================
@@ -425,64 +436,64 @@ title: Formulário Goals Errors Train
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbzltwtMa5xUiXySQewwlFVjVYMUzsUzbRzUw0-_gr0_aDok-LqMxjXYCtVL4-7ahmxF/exec";
 
-    const TEMAS = {
-        autoconsciencia: {
-            label: "Autoconsciência emocional",
-            hint: "Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e ajustar-se quando necessário. É a base da inteligência emocional: um líder que não se percebe não consegue se regular."
-        },
-       autorregulacao: {
-  	    label: "Autorregulação",
-  	    hint:"Controlar impulsos, frustrações e reações automáticas. Líderes que regulam bem seus estados internos mantêm a estabilidade do time, especialmente em ambientes de pressão."
-       },
-       visao: {
-  	    label: "Clareza de propósito e visão",
-  	    hint: "Saber traduzir o “para onde estamos indo” em objetivos concretos, compreensíveis e motivadores. Visão sem clareza vira confusão; clareza sem visão vira operacional pesado."
-       },
-       comunicacao: {
-  	    label: "Comunicação efetiva",
-  	    hint: "Comunicar com precisão, adaptar a mensagem ao perfil do time, ouvir ativamente, checar entendimento, evitar ruídos e subjetividade excessiva. A mensagem é do líder; o entendimento é do ouvinte."
-       },
-       desenvolver_pessoas: {
-           label: "Capacidade de formar e desenvolver pessoas",
-  	    hint: "Identificar talentos, entender gaps e ajudar cada pessoa a melhorar. Inclui delegação inteligente, feedback contínuo e ambiente seguro para aprender."
-       },
-       confianca: {
-            label: "Habilidade de criar confiança",
-  	        hint: "Confiança vem de consistência entre discurso, ação e caráter. Sem confiança, não há autonomia, criatividade ou velocidade na equipe."
-       },
-       tomar_decisoes: {
-            label: "Tomada de decisão",
-  	    hint: "Tomar decisões considerando dados, riscos, consequências, valores e timing. Maus líderes adiam; líderes excelentes resolvem com clareza."
-       },
-       resolucao_problemas: {
-           label: "Pensamento crítico e resolução de problemas",
-  	    hint: "Avaliar opções com objetividade, separar fatos de opiniões, evitar vieses e encontrar soluções estruturadas."
-       },
-       prioridades: {
-           label: "Gestão de tempo e prioridades",
-  	    hint: "Saber dizer não, delegar, definir o que é urgente, importante e ruído."
-       },
-       adaptabilidade: {
-           label: "Adaptabilidade",
-  	        hint:"Ambientes, tecnologias e pessoas mudam. O líder que não adapta vira gargalo."
-       },
-       motivacao: {
-           label: "Motivação e inspiração",
-  	        hint:"Criar significado no trabalho, reconhecer esforços e incentivar desafios. Líderes inspiradores ativam sistemas dopaminérgicos de forma saudável.",
-       },
-       competencia_social: {
-           label: "Competência social",
-  	        hint:"Relacionamento, cooperação, ética, respeito e leitura do clima emocional da equipe."
-       },
-       conflitos: {
-          label: "Gestão de conflitos",
-          hint:"Medir, intervir, mediar e resolver divergências antes que cresçam. Conflito é inevitável; caos é opcional."
-       },
-       crescimento: {
-           label: "Mentalidade de crescimento",
-        hint:"Aprender rápido, encarar erros como informação e não fracasso. Guia equipes mais inovadoras e resilientes."
-       }
-   }
+  const TEMAS = {
+    autoconsciencia: {
+      label: "Autoconsciência emocional",
+      hint: "Capacidade de reconhecer seus próprios estados emocionais, entender como eles influenciam decisões e comportamentos, e ajustar-se quando necessário. É a base da inteligência emocional: um líder que não se percebe não consegue se regular.",
+    },
+    autorregulacao: {
+      label: "Autorregulação",
+      hint: "Controlar impulsos, frustrações e reações automáticas. Líderes que regulam bem seus estados internos mantêm a estabilidade do time, especialmente em ambientes de pressão.",
+    },
+    visao: {
+      label: "Clareza de propósito e visão",
+      hint: "Saber traduzir o “para onde estamos indo” em objetivos concretos, compreensíveis e motivadores. Visão sem clareza vira confusão; clareza sem visão vira operacional pesado.",
+    },
+    comunicacao: {
+      label: "Comunicação efetiva",
+      hint: "Comunicar com precisão, adaptar a mensagem ao perfil do time, ouvir ativamente, checar entendimento, evitar ruídos e subjetividade excessiva. A mensagem é do líder; o entendimento é do ouvinte.",
+    },
+    desenvolver_pessoas: {
+      label: "Capacidade de formar e desenvolver pessoas",
+      hint: "Identificar talentos, entender gaps e ajudar cada pessoa a melhorar. Inclui delegação inteligente, feedback contínuo e ambiente seguro para aprender.",
+    },
+    confianca: {
+      label: "Habilidade de criar confiança",
+      hint: "Confiança vem de consistência entre discurso, ação e caráter. Sem confiança, não há autonomia, criatividade ou velocidade na equipe.",
+    },
+    tomar_decisoes: {
+      label: "Tomada de decisão",
+      hint: "Tomar decisões considerando dados, riscos, consequências, valores e timing. Maus líderes adiam; líderes excelentes resolvem com clareza.",
+    },
+    resolucao_problemas: {
+      label: "Pensamento crítico e resolução de problemas",
+      hint: "Avaliar opções com objetividade, separar fatos de opiniões, evitar vieses e encontrar soluções estruturadas.",
+    },
+    prioridades: {
+      label: "Gestão de tempo e prioridades",
+      hint: "Saber dizer não, delegar, definir o que é urgente, importante e ruído.",
+    },
+    adaptabilidade: {
+      label: "Adaptabilidade",
+      hint: "Ambientes, tecnologias e pessoas mudam. O líder que não adapta vira gargalo.",
+    },
+    motivacao: {
+      label: "Motivação e inspiração",
+      hint: "Criar significado no trabalho, reconhecer esforços e incentivar desafios. Líderes inspiradores ativam sistemas dopaminérgicos de forma saudável.",
+    },
+    competencia_social: {
+      label: "Competência social",
+      hint: "Relacionamento, cooperação, ética, respeito e leitura do clima emocional da equipe.",
+    },
+    conflitos: {
+      label: "Gestão de conflitos",
+      hint: "Medir, intervir, mediar e resolver divergências antes que cresçam. Conflito é inevitável; caos é opcional.",
+    },
+    crescimento: {
+      label: "Mentalidade de crescimento",
+      hint: "Aprender rápido, encarar erros como informação e não fracasso. Guia equipes mais inovadoras e resilientes.",
+    },
+  };
 </script>
 
 <script>
@@ -853,9 +864,9 @@ title: Formulário Goals Errors Train
           auth.entrevistador
         }&_senha=${encodeURIComponent(auth.senha)}`
       );
-      
+
       const lista = await res.json();
-      
+
       const select = document.getElementById("listaEntrevistas");
 
       select.innerHTML = '<option value="">Selecione uma entrevista</option>';
