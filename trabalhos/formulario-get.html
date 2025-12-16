@@ -27,11 +27,14 @@ title: Formulário Goals Errors Train
                     </select>
                 </div>
                 <div class="neuro-col">
-                    <input class="neuro-input" name="entrevistado" placeholder="Entrevistado" />
+                    <input type="password" class="neuro-input" name="_senha" placeholder="Senha do entrevistador" />
                 </div>
             </div>
 
             <div class="neuro-row" style="align-items: center; gap: 10px">
+                <div class="neuro-col">
+                    <input class="neuro-input" name="entrevistado" placeholder="Entrevistado" />
+                </div>
                 <div class="neuro-col">
                     <select class="neuro-input" name="tema_mudanca" id="tema_mudanca">
                         <option value="">Selecione o tema da mudança</option>
@@ -304,6 +307,16 @@ title: Formulário Goals Errors Train
     <div class="spinner"></div>
 </div>
 
+<!-- ===========================================================================================
+                               SCRIPTS
+     ===========================================================================================   
+-->
+<script>
+    // codigo implantacao AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPg_UkIMB_btgfwf1L7PBBICn3DrJFAcuoKGpyJvW9s4B3D0FQYWKy0DBKRtvqcKPq/exec";
+</script>
+
+
 <script>
     function openTab(tabElement, contentId) {
         // remove active de todas as abas
@@ -332,11 +345,6 @@ title: Formulário Goals Errors Train
             alvo.style.display = "block";
         }
     }
-</script>
-
-<script>
-    // codigo implantacao AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFL-1UwCpVdWJPIFqycl9NEq9M7EwdwuyxEsrwUz_zYZQg-a4QM1ryVVoxv8k4FOH1/exec";
 </script>
 
 <script>
@@ -425,9 +433,18 @@ title: Formulário Goals Errors Train
     async function carregarFormularioPorId(id) {
         mostrarLoading();
 
+        const entrevistador = document.querySelector('[name="entrevistador"]').value;
+        const senha = document.querySelector('[name="_senha"]').value;
+
         try {
-            const response = await fetch(`${SCRIPT_URL}?id=${id}`);
+            const url = `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(entrevistador)}` + `&_senha=${encodeURIComponent(senha)}`;
+            const response = await fetch(url);
             const registros = await response.json();
+
+            if (registros.status === "error") {
+                alert(registros.message);
+                return;
+            }
 
             if (!registros.length) {
                 alert("Formulário não encontrado");
