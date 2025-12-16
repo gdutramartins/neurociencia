@@ -3,6 +3,24 @@ layout: default
 title: Formulário Goals Errors Train
 ---
 
+<div
+    id="loginOverlay"
+    style="position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; align-items: center; justify-content: center"
+>
+    <div style="width: 320px">
+        <h3>Acesso</h3>
+
+        <select class="neuro-input" id="login_entrevistador">
+            <option value="0">Escolha o entrevistador</option>
+            <option value="1">Gustavo</option>
+        </select>
+
+        <input type="password" class="neuro-input" id="login_senha" placeholder="Senha" />
+
+        <button class="neuro-btn" onclick="login()">Entrar</button>
+    </div>
+</div>
+
 <div class="neuro-form">
     <!-- ===== ABAS ===== -->
     <div class="neuro-tabs">
@@ -14,27 +32,35 @@ title: Formulário Goals Errors Train
 
     <form>
         <input type="hidden" name="formulario_id" id="formulario_id" />
+        <input type="hidden" id="auth_entrevistador" name="entrevistador" />
+        <input type="hidden" id="auth_senha" name="_senha" />
         <!-- =========================
      CONTEXTO COMUM
      ========================= -->
         <div class="neuro-form__section">
             <h3>Contexto da entrevista</h3>
+            <div class="neuro-row" style="gap: 10px; align-items: center">
+                <select class="neuro-input" id="listaEntrevistas">
+                    <option value="">Selecione uma entrevista</option>
+                </select>
+
+                <button class="neuro-btn" onclick="carregarSelecionada()">Carregar</button>
+                <button class="neuro-btn" onclick="novoFormulario()">Novo</button>
+            </div>
+
             <div class="neuro-row">
                 <div class="neuro-col">
-                    <select class="neuro-input" name="entrevistador">
+                    <select class="neuro-input" id="entrevistador_select" disabled>
                         <option value="0">Escolha o entrevistador</option>
                         <option value="1">Gustavo</option>
                     </select>
                 </div>
                 <div class="neuro-col">
-                    <input type="password" class="neuro-input" name="_senha" placeholder="Senha do entrevistador" />
+                    <input class="neuro-input" name="entrevistado" placeholder="Entrevistado" />
                 </div>
             </div>
 
             <div class="neuro-row" style="align-items: center; gap: 10px">
-                <div class="neuro-col">
-                    <input class="neuro-input" name="entrevistado" placeholder="Entrevistado" />
-                </div>
                 <div class="neuro-col">
                     <select class="neuro-input" name="tema_mudanca" id="tema_mudanca">
                         <option value="">Selecione o tema da mudança</option>
@@ -313,9 +339,8 @@ title: Formulário Goals Errors Train
 -->
 <script>
     // codigo implantacao AKfycbx-Oi_qSeSTX5dkaWwdi_ov945C8cbcCMDe2Toa7kX3Jo52zqjT7JHDpcLDSVnpzk8u
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPg_UkIMB_btgfwf1L7PBBICn3DrJFAcuoKGpyJvW9s4B3D0FQYWKy0DBKRtvqcKPq/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz6adCIVEgmkZLdljtbeWG_njiIX_RX5DMYO264B3p8Kz2J7p_-XHengGVI7DELjE9p/exec";
 </script>
-
 
 <script>
     function openTab(tabElement, contentId) {
@@ -402,6 +427,8 @@ title: Formulário Goals Errors Train
 <script>
     function limparFormulario() {
         document.querySelectorAll("[name]").forEach((el) => {
+            if (el.name === "entrevistador" || el.name === "_senha") return;
+
             if (el.type === "checkbox" || el.type === "radio") {
                 el.checked = false;
             } else {
@@ -412,6 +439,10 @@ title: Formulário Goals Errors Train
         // garante limpeza explícita do ID
         const hiddenId = document.getElementById("formulario_id");
         if (hiddenId) hiddenId.value = "";
+
+        const selectUI = document.getElementById("entrevistador_select");
+        selectUI.value = document.getElementById("auth_entrevistador").value;;
+        selectUI.disabled = true;
 
         // opcional: voltar para a primeira aba
         document.querySelectorAll(".neuro-tab").forEach((t) => t.classList.remove("active"));
@@ -433,11 +464,10 @@ title: Formulário Goals Errors Train
     async function carregarFormularioPorId(id) {
         mostrarLoading();
 
-        const entrevistador = document.querySelector('[name="entrevistador"]').value;
-        const senha = document.querySelector('[name="_senha"]').value;
+        const auth = getAuth();
 
         try {
-            const url = `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(entrevistador)}` + `&_senha=${encodeURIComponent(senha)}`;
+            const url = `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(auth.entrevistador)}` + `&_senha=${encodeURIComponent(auth.senha)}`;
             const response = await fetch(url);
             const registros = await response.json();
 
@@ -577,5 +607,88 @@ title: Formulário Goals Errors Train
         if (alvo) {
             alvo.style.display = "block";
         }
+    }
+</script>
+
+<script>
+    function getAuth() {
+        return {
+            entrevistador: document.getElementById("auth_entrevistador").value,
+            senha: document.getElementById("auth_senha").value,
+        };
+    }
+
+    async function login() {
+        const entrevistador = document.getElementById("login_entrevistador").value;
+        const senha = document.getElementById("login_senha").value;
+
+        if (!entrevistador || entrevistador === "0" || !senha) {
+            alert("Informe entrevistador e senha");
+            return;
+        }
+
+        // testamos autenticando via backend (sem salvar nada)
+        const res = await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify({
+                entrevistador,
+                _senha: senha,
+                _action: "auth",
+            }),
+        });
+
+        const json = await res.json();
+
+        if (json.status !== "ok") {
+            alert("Usuário ou senha inválidos");
+            return;
+        }
+
+        // guarda credenciais em memória (hidden)
+        document.getElementById("auth_entrevistador").value = entrevistador;
+        document.getElementById("auth_senha").value = senha;
+
+        // UI
+        const selectUI = document.getElementById("entrevistador_select");
+        selectUI.value = entrevistador;
+        selectUI.disabled = true;
+
+        // fecha login
+        document.getElementById("loginOverlay").style.display = "none";
+
+        // carrega lista de entrevistas
+        carregarListaEntrevistas();
+    }
+</script>
+
+<script>
+    async function carregarListaEntrevistas() {
+        const auth = getAuth();
+
+        const res = await fetch(`${SCRIPT_URL}?list=1&entrevistador=${auth.entrevistador}&_senha=${encodeURIComponent(auth.senha)}`);
+
+        const lista = await res.json();
+        const select = document.getElementById("listaEntrevistas");
+
+        select.innerHTML = '<option value="">Selecione uma entrevista</option>';
+
+        lista.forEach((item) => {
+            const opt = document.createElement("option");
+            opt.value = item.id;
+            opt.text = item.label;
+            select.appendChild(opt);
+        });
+    }
+
+    function carregarSelecionada() {
+        const id = document.getElementById("listaEntrevistas").value;
+        if (!id) return alert("Selecione uma entrevista");
+
+        carregarFormularioPorId(id);
+    }
+
+    function novoFormulario() {
+        limparFormulario();
+        document.getElementById("listaEntrevistas").value = "";
     }
 </script>
