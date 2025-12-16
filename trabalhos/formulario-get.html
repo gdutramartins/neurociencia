@@ -492,6 +492,8 @@ title: Formulário Goals Errors Train
                 return;
             }
 
+            console.log(registros);
+
             document.getElementById("formulario_id").value = registros[0].formulario_id;
             const payload = JSON.parse(registros[0].payload);
 
