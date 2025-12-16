@@ -468,6 +468,7 @@ title: Formulário Goals Errors Train
 
         try {
             const url = `${SCRIPT_URL}?id=${id}` + `&entrevistador=${encodeURIComponent(auth.entrevistador)}` + `&_senha=${encodeURIComponent(auth.senha)}`;
+            console.log("Carregando formulário de URL:", url);
             const response = await fetch(url);
             const registros = await response.json();
 
