@@ -699,7 +699,7 @@ title: Formulário Goals Errors Train
     if (!temaSelect.value) return;
 
     if (TEMAS[temaSelect.value]) {
-      hintBox.innerText = TEMAS[temaSelect.value];
+      hintBox.innerText = TEMAS[temaSelect.value].hint;
       hintBox.style.display = "block";
     } else {
       hintBox.style.display = "none";
