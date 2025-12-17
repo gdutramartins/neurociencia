@@ -542,6 +542,21 @@ button:focus-visible {
   margin-top: var(--space-2);
 }
 
+.margin-left-lg {
+  margin-left: var(--space-6);
+}
+
+.margin-left-md {
+  margin-left: var(--space-4);
+}
+
+.margin-left-sm {
+  margin-left: var(--space-2);
+}
+
+
+
+
 /* Grid responsivo — centra e limita largura dos cards */
 .cards-grid {
   display: grid;
