@@ -334,6 +334,7 @@ body {
 .btn:hover {
   transform: translateY(-1px);
   filter: brightness(1.03);
+  cursor: pointer;
 }
 .btn:active {
   transform: translateY(0);
