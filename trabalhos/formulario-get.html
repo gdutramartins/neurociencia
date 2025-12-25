@@ -439,9 +439,15 @@ title: Formulário Goals Errors Train
                 alert("Erro ao salvar o formulário: " + json.message);
                 return;
             }
-            alert(json.status === "updated" ? "Formulário atualizado" : "Formulário salvo");
+            if (json.status === "created") {
+                // ixa o contexto de edição
+                document.getElementById("formulario_id").value = json.id;
+                alert("Formulário criado e salvo");
+            } else if (json.status === "updated") {
+                alert("Formulário atualizado");
+            }
 
-            limparFormulario();
+            // 🔄 atualiza lista, mas mantém contexto
             carregarListaEntrevistas();
         } finally {
             esconderLoading();
