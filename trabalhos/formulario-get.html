@@ -24,16 +24,35 @@ title: Formulário Goals Errors Train
     </div>
 </div>
 
-<div class="neuro-form">
+<div id="dialogCarregar" class="neuro-auth-overlay" style="display: none">
+    <div class="neuro-auth-card">
+        <h3 style="margin-top: 0">Carregar entrevista</h3>
 
-    <div class="neuro-row">
-        <div class="neuro-col">
-            <label class="neuro-label">Selecione uma entrevista</label>
-            <div class="neuro-toolbar-left">
-                <select class="neuro-input" id="listaEntrevistas">
-                    <option value="">Selecione uma entrevista</option>
-                </select>
-            </div>
+        <label class="neuro-label">Selecione uma entrevista</label>
+        <select class="neuro-input" id="listaEntrevistas">
+            <option value="">Selecione uma entrevista</option>
+        </select>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px">
+            <button class="btn btn-outline btn-sm" onclick="fecharDialogCarregar()">Cancelar</button>
+            <button class="btn btn-sm" onclick="confirmarCarregarEntrevista()">Carregar</button>
+        </div>
+    </div>
+</div>
+
+<div class="neuro-form">
+    <div class="neuro-toolbar">
+        <div class="neuro-toolbar-left">
+            <span class="neuro-toolbar-label">Entrevista</span>
+            <span style="font-size: 13px; color: #555"> Salvar, criar novo ou carregar entrevista existente </span>
+        </div>
+
+        <div class="neuro-toolbar-actions">
+            <button type="button" class="btn btn-sm" onclick="salvarFormulario()">💾 Salvar</button>
+
+            <button type="button" class="btn btn-sm btn-outline" onclick="novoFormulario()">✨ Novo</button>
+
+            <button type="button" class="btn btn-sm btn-ghost" onclick="abrirDialogCarregar()">📂 Carregar entrevista</button>
         </div>
     </div>
 
@@ -702,12 +721,12 @@ title: Formulário Goals Errors Train
                 select.appendChild(opt);
             });
 
-            document.getElementById("listaEntrevistas").addEventListener("change", (e) => {
+            /* document.getElementById("listaEntrevistas").addEventListener("change", (e) => {
                 const id = e.target.value;
                 if (!id) return;
 
                 carregarFormularioPorId(id);
-            });
+            }); */
         } finally {
             esconderLoading();
         }
@@ -738,5 +757,27 @@ title: Formulário Goals Errors Train
             opt.dataset.hint = tema.hint;
             select.appendChild(opt);
         });
+    }
+</script>
+<script>
+    function abrirDialogCarregar() {
+        document.getElementById("dialogCarregar").style.display = "flex";
+    }
+
+    function fecharDialogCarregar() {
+        document.getElementById("dialogCarregar").style.display = "none";
+    }
+
+    function confirmarCarregarEntrevista() {
+        const select = document.getElementById("listaEntrevistas");
+        const id = select.value;
+
+        if (!id) {
+            alert("Selecione uma entrevista");
+            return;
+        }
+
+        fecharDialogCarregar();
+        carregarFormularioPorId(id);
     }
 </script>
