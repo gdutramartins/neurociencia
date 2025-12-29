@@ -43,7 +43,7 @@ title: Formulário Goals Errors Train
 <div class="neuro-form">
     <div class="neuro-toolbar">
         <div class="neuro-toolbar-left">
-            <span class="neuro-toolbar-label">Entrevista</span>
+            <span class="neuro-toolbar-label">Entrevista</span> - <i>versão 2.0</i>
             <span style="font-size: 13px; color: #555"> Salvar, criar novo ou carregar entrevista existente </span>
         </div>
 
@@ -439,7 +439,7 @@ title: Formulário Goals Errors Train
             }
             if (json.status === "created") {
                 // ixa o contexto de edição
-                document.getElementById("formulario_id").value = json.id;
+                document.getElementById("formulario_id").value = json.formulario_id;
                 alert("Formulário criado e salvo");
             } else if (json.status === "updated") {
                 alert("Formulário atualizado");
